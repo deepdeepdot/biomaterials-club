@@ -1,7 +1,7 @@
 /*----------------------------*/
 :root {
-    --grid-container-width: 1200px;
-    --grid-columns: 6;
+    --grid-container-width: 400px;
+    --grid-columns: 3;
     --grid-gap: 0px;
 }
 
