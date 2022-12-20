@@ -32,3 +32,9 @@ imgs.forEach(img => {
         window.open(img.src);
     }, false)
 });
+
+if ('addEventListener' in document) {
+    document.addEventListener('DOMContentLoaded', function() {
+        FastClick.attach(document.body);
+    }, false);
+}
