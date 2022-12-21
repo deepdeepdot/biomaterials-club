@@ -27,9 +27,10 @@ function showPoem(state) {
 let imgs = document.querySelectorAll('.container img');
 imgs.forEach(img => {
     img.addEventListener('click', (event) => {
-        var img = event.target;
-        // location = img.src;
-        window.open(img.src);
+        let img = event.target;
+        let newSource = img.src.replace('/th', '');
+        // location = newSource;
+        window.open(newSource);
     }, false)
 });
 
