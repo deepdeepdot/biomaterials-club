@@ -1,3 +1,11 @@
 {
-  "type": "module"
+  "type": "module",
+  "scripts": {
+    "html": "node scripts/createIndexHtml",
+    "thumbnails": "node scripts/createThumbnails"
+  },
+  "dependencies": {
+    "imagemin": "^8.0.1",
+    "sharp": "^0.31.2"
+  }
 }

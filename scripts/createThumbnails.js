@@ -1,20 +1,21 @@
+// @ts-check
 import sharp from 'sharp';
-import fileTraverser from './utils/fileTraverser.js'
+import imageTraverser from './utils/imageTraverser.js';
 
-const processFile = function(file) {
+const IMAGE_WIDTH = 220;
 
-    const outfile = `images/th/${file}`;
+let processFile = function(file) {
+    let outfile = `images/th/${file}`;
 
     sharp(`images/${file}`)
-    .resize(220)
+    .resize(IMAGE_WIDTH)
     .toFile(outfile, (err, info) => {
         if (err) {
             console.log(err);
         } else {
             console.log(info);
         }
-    })
+    });
 }
 
-fileTraverser('./images', processFile);
-
+imageTraverser('./images', processFile)
