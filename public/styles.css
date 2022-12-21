@@ -103,7 +103,6 @@ button:hover {
 .container img,
 .container video {
     width: calc(var(--grid-container-width) / var(--grid-columns) - var(--grid-gap));
-    margin-bottom: var(--grid-gap);
     border-radius: calc(2 * var(--grid-gap));
     cursor: pointer;
 }
@@ -123,7 +122,7 @@ button:hover {
     :root {
         --grid-container-width: 400px;
         --grid-columns: 3;
-        --grid-gap: 2px;
+        --grid-gap: 4px;
     }
 
     .banner .middle {
@@ -135,7 +134,6 @@ button:hover {
     :root {
         --grid-container-width: 800px;
         --grid-columns: 4;
-        --grid-gap: 2px;
     }
 
     .banner {
@@ -147,16 +145,13 @@ button:hover {
     :root {
         --grid-container-width: 1000px;
         --grid-columns: 6;
-        --grid-gap: 2px;
     }
 }
-
 
 @media only screen and (min-width: 1200px) {
     :root {
         --grid-container-width: 1100px;
         --grid-columns: 12;
-        --grid-gap: 2px;
     }
 }
 
