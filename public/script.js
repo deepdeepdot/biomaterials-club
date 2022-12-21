@@ -27,8 +27,8 @@ function showPoem(state) {
 let imgs = document.querySelectorAll('.container img');
 imgs.forEach(img => {
     img.addEventListener('click', (event) => {
-        let img = event.target;
-        let newSource = img.src.replace('/th', '');
+        let image = event.target;
+        let newSource = image.src.replace('/th', '');
         // location = newSource;
         window.open(newSource);
     }, false)

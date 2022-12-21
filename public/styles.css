@@ -3,6 +3,8 @@
     --grid-container-width: 400px;
     --grid-columns: 3;
     --grid-gap: 0px;
+    --button-width: 100px;
+    --button-height: 50px;
 }
 
 * {
@@ -11,8 +13,8 @@
 }
 
 button {
-    min-height: 50px;
-    min-width: 100px;
+    min-height: var(--button-height);
+    min-width: var(--button-width);
     border: 2px solid rgb(26, 183, 183);
     border-radius: 10px;
     background-color: rgba(127, 217, 0, 0.7);
@@ -77,14 +79,14 @@ button:hover {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100px;
+    width: var(--button-width);
 }
 
 .controls-right {
     position: absolute;
     top: 0;
     right: 0;
-    width: 100px;
+    width: var(--button-width);
 }
 
 /*----------------------------*/
@@ -175,9 +177,9 @@ button:hover {
 
 .stairs-bg {
     background:
-linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
-linear-gradient(63deg, transparent 74%, #999 78%),
-linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
-#444;
-background-size: 16px 48px;
+    linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
+    linear-gradient(63deg, transparent 74%, #999 78%),
+    linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
+    #444;
+    background-size: 16px 48px;
 }
