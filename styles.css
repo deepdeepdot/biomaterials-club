@@ -35,7 +35,7 @@ button:hover {
 }
 
 .banner {
-    padding-top: 10vh;
+    padding-top: 0;
     color: #bada55;
     font-family: 'Amatic SC', Arial, sans-serif;
 }
@@ -61,7 +61,7 @@ button:hover {
             width: 480px;
             background-color: rgba(0, 127, 127, 0.5);
             font-family: Lucida Console, Monaco, monospace;
-            font-size: 1rem;
+            font-size: 0.8rem;
         }
 
 /*----------------------------*/
@@ -132,6 +132,10 @@ button:hover {
         --grid-container-width: 800px;
         --grid-columns: 4;
         --grid-gap: 2px;
+    }
+
+    .banner {
+        padding-top: 10vh;
     }
 }
 
