@@ -7,7 +7,7 @@ function getImageTag(file) {
     return `<img loading="lazy" src="images/th/${file}"/>`;
 }
 
-let lines = await imageTraverser('./images', getImageTag);
+let lines = await imageTraverser('./public/images', getImageTag);
 let imageTags = lines.join('\n');
 
 let template = fs.readFileSync('./scripts/utils/index.tpl', {encoding:'utf8', flag:'r'});;

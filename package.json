@@ -1,8 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "html": "node scripts/createIndexHtml",
-    "thumbnails": "node scripts/createThumbnails"
+    "html": "node scripts/create_index_html",
+    "thumbnails": "node scripts/create_thumbnails"
   },
   "dependencies": {
     "imagemin": "^8.0.1",
