@@ -22,7 +22,7 @@ function showPoem(state) {
         poem.style.display = 'none';
 }
 
-// For SEO, use <a href=""> when generating images
+// For better SEO, use <a href=""> when generating images
 
 let imgs = document.querySelectorAll('.container img');
 imgs.forEach(img => {
