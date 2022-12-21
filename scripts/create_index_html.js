@@ -1,7 +1,7 @@
 import fs from 'fs';
 import imageTraverser from './utils/imageTraverser.js';
 
-const HTML_FILE = 'index.html';
+const HTML_FILE = 'public/index.html';
 
 function getImageTag(file) {
     return `<img loading="lazy" src="images/th/${file}"/>`;
