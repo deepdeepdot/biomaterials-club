@@ -13,12 +13,13 @@
 button {
     min-height: 50px;
     min-width: 100px;
-    border: 2px solid rgba(26, 183, 183, 1.0);
+    border: 2px solid rgb(26, 183, 183);
     border-radius: 10px;
+    background-color: rgba(127, 217, 0, 0.7);
 }
 
 button:hover {
-    border: 2px solid rgba(126, 83, 83, 1.0);
+    border: 2px solid rgb(126, 83, 83);
 }
 
 /*----------------------------*/
