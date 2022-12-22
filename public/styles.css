@@ -53,12 +53,16 @@ button:hover {
         .banner h1 {
             font-family: 'Amatic SC', Arial, sans-serif;
             font-weight: bold;
-            font-size: 72px;
+            font-size: 48px;
         }
 
         .banner div {
             background-color: rgba(0, 0, 0, 0.3);
             width: 310px;
+        }
+
+        .banner img {
+            width: 150px;
         }
 
         .poem {
@@ -138,6 +142,14 @@ button:hover {
 
     .banner {
         padding-top: 10vh;
+    }
+
+    .banner h1 {
+        font-size: 72px;
+    }
+
+    .banner img {
+        width: 250px;
     }
 }
 
