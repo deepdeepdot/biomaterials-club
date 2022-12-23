@@ -77,8 +77,8 @@
         </div>
     
         <div class="container">
-            <video controls width="250">
-                <source src="videos/20220728_122356.mp4"
+            <video controls width="250" preload="metadata">
+                <source src="videos/20220728_122356.mp4#t=2.5"
                         type="video/mp4">
             </video>
 
