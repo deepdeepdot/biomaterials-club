@@ -17,9 +17,9 @@ function setBackground(name) {
 function showPoem(state) {
     let poem = document.querySelector('.poem');
     if (state)
-        poem.removeAttribute('style');
+        poem.classList.add('fadeIn')
     else
-        poem.style.display = 'none';
+        poem.classList.remove('fadeIn');
 }
 
 // For better SEO, use <a href=""> when generating images

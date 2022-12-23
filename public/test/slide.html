@@ -1,0 +1,141 @@
+<style>
+
+.slider {
+	overflow-y: hidden;
+
+	transition-property: all;
+	transition-duration: .5s;
+	transition-timing-function: cubic-bezier(0, 1, 0.5, 1);
+
+    animation-direction: alternate;
+
+    background-color: red;
+	max-height: 500px; /* approximate max height */
+}
+
+.slider.closed {
+	max-height: 0;
+}
+
+.container {
+    background-color: pink;
+}
+
+</style>
+
+<div class="container" style="height: 200px; width: 200px; border: 1px solid #ccc;">
+    <div class="slider" id="slider">
+        <p>Blah blah blah blah blah....</p>
+    </div>
+</div>
+<button onclick="document.getElementById('slider').classList.toggle('closed');">Toggle slider</button>
+
+
+
+https://dzone.com/articles/pure-css-slide-down-animation-1
+
+<style>
+    * { margin:0; padding:0; }
+body { font-family: sans-serif;} 
+#content { margin: 50px; } 
+a { text-decoration: none; }  
+ 
+.expandable {
+  background: #fff;
+  overflow: hidden;
+
+  transition: all .5s ease-in-out;
+  line-height: 0;
+  padding: 0 1em;
+  color: transparent;
+}
+ 
+.expandable:target {
+  line-height: 1.5;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  color: black;
+}
+ 
+</style>
+
+
+<div id="content"> 
+  <a href="#nav"><span>Click Here</span></a>
+  <div class="expandable" id="nav">
+    <p>Cum enim magna parturient ac elementum, tincidunt tempor ac lectus platea placerat. Eros dis lectus. Ut aliquam. Porttitor risus mattis mauris lacus a, aliquam augue cras elementum! Adipiscing, vel ridiculus diam pellentesque sociis habitasse pellentesque, augue parturient sed elementum aenean. Tincidunt tristique.</p>
+  </div>
+  <a href="#nav2"><span>Click Here</span></a>
+
+</div> 
+
+<style>
+
+#this {
+    width: 500px;
+    height: 0;
+    max-height: 9999px;
+    overflow: hidden;
+    background: #BBBBBB;
+    -webkit-transition: height 1s ease-in-out;
+    -moz-transition: height 1s ease-in-out;
+    -ms-transition: height 1s ease-in-out;
+    -o-transition: height 1s ease-in-out;
+    transition: height 1s ease-in-out;
+}
+
+#click-me {
+    cursor: pointer;   
+}
+
+</style>
+
+<p id="click-me">click me</p>
+<div id="this">here<br />is<br />a<br />bunch<br />of<br />content<br />sdf</div>
+<div>always shows</div>
+
+
+
+Gist: https://gist.github.com/webarthur/0fb22721264562c7aa74b07c7fe0f227
+
+<style>
+.slide-up, .slide-down {
+    overflow:hidden;
+  }
+  .slide-up > div, .slide-down > div {
+    transform: translateY(-100%);
+    transition: .4s ease-in-out;
+  }
+  .slide-down > div {            
+    transform: translateY(0);
+  }
+
+  .content {
+    width: 400px;
+    height: 300px;
+  }
+
+</style>
+
+<div id="anchor" class="slide-up">
+    <div class="content">
+        Some content here
+    </div>
+</div>
+
+<button id="slideToggle">Toggle</button>
+
+<script>
+    document.querySelector('#slideToggle').onclick = function() {
+        let slider = document.querySelector('#anchor');
+        let isUp = slider.classList.value === 'slide-up';
+
+        if (isUp) {
+            slider.classList.remove('slide-up');
+            slider.classList.add('slide-down');
+        } else {
+            slider.classList.remove('slide-down');
+            slider.classList.add('slide-up');
+        }
+    };
+</script>
