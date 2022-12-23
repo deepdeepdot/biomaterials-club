@@ -79,7 +79,7 @@ By GPT3 ChatAI
     
         <div class="container">
             <video controls width="250" preload="metadata">
-                <source src="videos/20220728_122356.mp4"
+                <source src="videos/20220728_122356.mp4#t=0"
                         type="video/mp4">
             </video>
 
