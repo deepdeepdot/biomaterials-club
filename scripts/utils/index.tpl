@@ -44,33 +44,33 @@
                     <img class="logo" width="250" src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w" />
                 </div>    
                 <pre class="poem anim">
-    We live in a world of plastics and pollution,
-    A world of destruction, of land and of ocean,
-    Where our air and water is filled with debris,
-    And the future of our planet is unclear to me.
+We live in a world of plastics and pollution,
+A world of destruction, of land and of ocean,
+Where our air and water is filled with debris,
+And the future of our planet is unclear to me.
 
-    But biomaterials offer a new solution,
-    A future of hope for us all to live in,
-    A future of clean air, water, and land,
-    A future we can all understand.
+But biomaterials offer a new solution,
+A future of hope for us all to live in,
+A future of clean air, water, and land,
+A future we can all understand.
 
-    Biomaterials offer a new way,
-    A way to reduce our plastic waste,
-    A way to restore the Earth’s balance and peace,
-    A way to create a future that will never cease.
+Biomaterials offer a new way,
+A way to reduce our plastic waste,
+A way to restore the Earth’s balance and peace,
+A way to create a future that will never cease.
 
-    Biomaterials are made from renewable sources,
-    From plants and animals and more,
-    They require less energy to create and use,
-    And can help us reduce our global emissions too.
+Biomaterials are made from renewable sources,
+From plants and animals and more,
+They require less energy to create and use,
+And can help us reduce our global emissions too.
 
-    No longer will our planet suffer
-    From the effects of plastic pollution,
-    Biomaterials will help us create a better world,
-    A world of clean air and water and land,
-    A world of hope and new possibilities.
+No longer will our planet suffer
+From the effects of plastic pollution,
+Biomaterials will help us create a better world,
+A world of clean air and water and land,
+A world of hope and new possibilities.
 
-    By GPT3 ChatAI
+By GPT3 ChatAI
 
     ${version}
                 </pre>
