@@ -44,4 +44,11 @@ let dashboard = document.querySelector('#dashboard');
 dashboard.addEventListener('click', function() {
     let controls = document.querySelector('.controls');
     controls.classList.toggle('visible');
+
+    let visible = controls.classList.contains('visible');
+    if (visible) {
+        dashboard.innerText = 'Go Less Bananas!';
+    } else {
+        dashboard.innerText = 'Go Bananas!';
+    }
 }, false);
