@@ -40,3 +40,8 @@ imgs.forEach(img => {
     }, false)
 });
 
+let dashboard = document.querySelector('#dashboard');
+dashboard.addEventListener('click', function() {
+    let controls = document.querySelector('.controls');
+    controls.classList.toggle('visible');
+}, false);
