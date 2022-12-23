@@ -23,9 +23,8 @@
                 <button onclick="setBackground('blue')">Background: Blue lines</button>
                 <button onclick="setBackground('green')">Background: Plant</button>
                 <button onclick="setBackground('gray')">Background: Stairs</button>
-                <button onclick="showPoem(false)">Hide Poem</button>
-                <button onclick="showPoem(true)">Show Poem</button>
-            </div>
+                <button onclick="togglePoem(this)">Show Poem</button>
+           </div>
             <div class="controls-right">
                 <button onclick="setColumnSize(3)">3 Columns</button>
                 <button onclick="setColumnSize(5)">5 Columns</button>

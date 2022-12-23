@@ -16,12 +16,16 @@ function setBackground(name) {
         alert('Background not found: ' + name);
 }
 
-function showPoem(state) {
+function togglePoem(button) {
     let poem = document.querySelector('.poem');
-    if (state)
+    let show = button.innerText.startsWith('Show');
+    if (show) {
         poem.classList.add('fadeIn')
-    else
+        button.innerText = 'Hide Poem';
+    } else {
         poem.classList.remove('fadeIn');
+        button.innerText = 'Show Poem'; 
+    }
 }
 
 // For better SEO, use <a href=""> when generating images
