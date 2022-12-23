@@ -16,7 +16,7 @@
 <body class="dark-bg">
 
     <div class="page">
-        <button class="dashboard" id="dashboard">Dashboard</button>    
+        <button class="dashboard" id="dashboard">Go Bananas!</button>    
         <div class="controls">
             <div class="controls-left">
                 <button onclick="setBackground('black')">Background: Black</button>
