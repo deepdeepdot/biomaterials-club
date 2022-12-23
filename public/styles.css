@@ -76,12 +76,10 @@ button:hover {
             overflow: hidden;
             height: 0;
             transition: .4s ease-in-out;
-            /* transform: translateY(-100%); */
         }
 
         .poem.fadeIn {
             height: 500px;
-            /* transform: translateY(0); */
         }
 
 /*----------------------------*/
