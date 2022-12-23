@@ -17,7 +17,7 @@ let lines = await imageTraverser('./public/images', getImageTag);
 let imageTags = lines.join('\n');
 let version = incrementVersion();
 
-let template = readTextFile('./scripts/utils/index.tpl');
+let template = readTextFile('./templates/index.tpl');
 let html = template
     .replace('${images}', imageTags)
     .replace('${version}', version);
