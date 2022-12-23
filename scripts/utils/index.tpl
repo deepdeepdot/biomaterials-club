@@ -32,7 +32,6 @@
                 <button onclick="setColumnSize(10)">10 Columns</button>
                 <button onclick="setColumnSize(12)">12 Columns</button>
                 <button onclick="setColumnSize(20)">20Columns</button>
-                <button onclick="setColumnSize(30)">30Columns</button>    
             </div>
         </div>
     
@@ -72,13 +71,15 @@
     A world of hope and new possibilities.
 
     By GPT3 ChatAI
+
+    ${version}
                 </pre>
             </div>
         </div>
     
         <div class="container">
             <video controls width="250" preload="metadata">
-                <source src="videos/20220728_122356.mp4#t=2.5"
+                <source src="videos/20220728_122356.mp4"
                         type="video/mp4">
             </video>
 
