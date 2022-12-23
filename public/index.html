@@ -13,12 +13,13 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="blue-line-bg">
+<body class="dark-bg">
 
     <div class="page">
     
         <div class="controls">
             <div class="controls-left">
+                <button onclick="setBackground('black')">Background: Black</button>
                 <button onclick="setBackground('blue')">Background: Blue lines</button>
                 <button onclick="setBackground('green')">Background: Plant</button>
                 <button onclick="setBackground('gray')">Background: Stairs</button>

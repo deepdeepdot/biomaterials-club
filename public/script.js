@@ -10,6 +10,8 @@ function setBackground(name) {
         document.body.classList = 'blue-line-bg';
     else if (name == 'gray')
         document.body.classList = 'stairs-bg';
+    else if (name == 'black')
+        document.body.classList = 'dark-bg';
     else
         alert('Background not found: ' + name);
 }
