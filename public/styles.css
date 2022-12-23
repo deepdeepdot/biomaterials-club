@@ -94,11 +94,13 @@ button:hover {
     position: relative;
     top: 0;
     z-index: 2;
+    display: none;
     opacity: 0;
     animation: opacity 0.2s ease-in-out;
 }
 
 .controls.visible {
+    display: block;
     opacity: 1;
 }
 
