@@ -7,8 +7,10 @@ It requires an installation of [nodejs](https://nodejs.org/en/) 16 or above
 ```console
 
 $ npm install
-$ npm run html           # To generate index.html
-$ npm run thumbnails     # To generate thumbnails from /images
+$ npm run html    # To generate index.html
+
+$ # To generate thumbnails from /public/images to /public/images/th
+$ npm run thumbnails
 
 ```
 

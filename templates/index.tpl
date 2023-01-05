@@ -16,9 +16,9 @@
 <body class="dark-bg">
 
     <div class="page">
-        <button class="dashboard" id="dashboard">Go Bananas!</button>    
-        <button class="togglePoem" onclick="togglePoem(this)">Show Poem</button>
-        <div class="controls">
+        <button class="toggleDashboard command" id="dashboard">Go Bananas!</button>    
+        <button class="togglePoem command" onclick="togglePoem(this)">Show Poem</button>
+        <div class="controls command">
             <div class="controls-left">
                 <button onclick="setBackground('black')">Background: Black</button>
                 <button onclick="setBackground('blue')">Background: Blue lines</button>
