@@ -53,7 +53,7 @@ button:hover {
 /*----------------------------*/
 /* Modal */
 
-.modal {
+.modal.position {
   z-index: 10;
   position: fixed;
   width: 100%;
@@ -63,7 +63,7 @@ button:hover {
   align-items: center;
 }
 
-.modal {
+.modal.style {
   opacity: 1;
   color: white;
   font-size: 48px;

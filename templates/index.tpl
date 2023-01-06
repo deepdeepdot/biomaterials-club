@@ -16,7 +16,7 @@
 <body class="dark-bg">
 
     <div class="page">
-        <div class="modal max-view hidden invisible">
+        <div class="modal position style hidden invisible">
           <div id="detailed-view">
           </div>
         </div>
@@ -39,7 +39,7 @@
             </div>
         </div>
     
-        <div class="banner max-view">
+        <div class="banner">
             <div class="middle">
                 <h1>
                     BioMaterials Club
