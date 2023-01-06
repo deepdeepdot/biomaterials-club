@@ -43,7 +43,8 @@ function hideModal() {
   modal.classList.add('hidden');
   setTimeout(() => {
     modal.style.visibility = 'hidden';
-  }, 1000);
+    modal.style.cursor = 'default';
+  }, 650);
 }
 
 // For better SEO, use <a href=""> when generating images
