@@ -21,7 +21,7 @@ function setBackground(name) {
 }
 
 function togglePoem(button) {
-    let poem = $('.poem');
+    let poem = $('.poem.anim');
     let show = button.innerText.startsWith('Show');
     if (show) {
         poem.classList.add('fadeIn')

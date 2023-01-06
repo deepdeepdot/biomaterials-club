@@ -20,8 +20,8 @@
           <div id="detailed-view">
           </div>
         </div>
-        <button class="toggleDashboard command" id="dashboard">Go Bananas!</button>    
-        <button class="togglePoem command" onclick="togglePoem(this)">Show Poem</button>
+        <button class="toggle dashboard command" id="dashboard">Go Bananas!</button>    
+        <button class="toggle poem command" onclick="togglePoem(this)">Show Poem</button>
         <div class="controls command">
             <div class="controls-left">
                 <button onclick="setBackground('black')">Background: Black</button>
