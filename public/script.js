@@ -33,33 +33,28 @@ function togglePoem(button) {
 function setupLightBoxModal() {
   let modal = $('.modal');
 
-  function displayModal() {
+  function displayModal(html) {
+    modal.innerHTML = html;
     modal.classList.remove('transparent');
     modal.classList.remove('invisible');
   }
 
   function hideModal() {
     modal.classList.add('transparent'); // start fade animation
-    setTimeout(() => {
-      modal.classList.add('invisible');
-    }, 650);
+    setTimeout(() => modal.classList.add('invisible'), 650);
   }
-
   modal.addEventListener('click', hideModal, false);
 
-  // For better SEO, use <a href=""> when generating images
   let imgs = document.querySelectorAll('.container img');
   imgs.forEach(img => {
     img.addEventListener('click', (event) => {
       let image = event.target;
       let newSource = image.src.replace('/th', '');
       let wide = image.width > image.height ? 'class="wide"': '';
-      modal.innerHTML = `<img ${wide} src="${newSource}">`;
-      displayModal();
+      displayModal(`<img ${wide} src="${newSource}">`);
     }, false)
   });
 }
-
 
 function setupControls() {
   let dashboard = $('#dashboard');
