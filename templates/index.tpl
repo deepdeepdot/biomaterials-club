@@ -16,7 +16,7 @@
 <body class="dark-bg">
 
     <div class="page">
-        <div class="detailed-frame max-view bye">
+        <div class="modal max-view hidden">
           <div id="detailed-view">
           </div>
         </div>

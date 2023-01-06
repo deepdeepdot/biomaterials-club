@@ -32,18 +32,18 @@ function togglePoem(button) {
     }
 }
 
-let frame = $('.detailed-frame');
+let modal = $('.modal');
 
-function displayFrame() {
-  frame.classList.remove('bye');
-  frame.removeAttribute('style');
+function displayModal() {
+  modal.removeAttribute('style');
+  modal.classList.remove('hidden');
 }
 
-function hideFrame() {
-  frame.classList.add('bye');
+function hideModal() {
+  modal.classList.add('hidden');
   setTimeout(() => {
-    frame.style.display = 'none';
-  }, 600);
+    modal.style.visibility = 'hidden';
+  }, 1000);
 }
 
 // For better SEO, use <a href=""> when generating images
@@ -52,12 +52,12 @@ imgs.forEach(img => {
     img.addEventListener('click', (event) => {
       let image = event.target;
       let newSource = image.src.replace('/th', '');
-      frame.innerHTML = `<img src="${newSource}">`;
-      displayFrame();
+      modal.innerHTML = `<img src="${newSource}">`;
+      displayModal();
     }, false)
 });
 
-frame.addEventListener('click', hideFrame, false);
+modal.addEventListener('click', hideModal, false);
 
 
 let dashboard = $('#dashboard');
@@ -66,9 +66,5 @@ dashboard.addEventListener('click', function() {
     controls.classList.toggle('visible');
 
     let visible = controls.classList.contains('visible');
-    if (visible) {
-        dashboard.innerText = 'Go Less Bananas!';
-    } else {
-        dashboard.innerText = 'Go Bananas!';
-    }
+    dashboard.innerText = visible? 'Go Less Bananas!' : 'Go Bananas!';
 }, false);

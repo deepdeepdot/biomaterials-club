@@ -29,6 +29,7 @@ button:hover {
 }
 
 /*----------------------------*/
+/* Toggle buttons */
 
 .command {
   z-index: 2;
@@ -50,8 +51,9 @@ button:hover {
 }
 
 /*----------------------------*/
+/* Modal */
 
-.detailed-frame {
+.modal {
   z-index: 10;
   position: fixed;
   width: 100%;
@@ -61,23 +63,24 @@ button:hover {
   align-items: center;
 }
 
-.detailed-frame {
+.modal {
   opacity: 1;
   color: white;
   font-size: 48px;
-  transition: 0.7s opacity;
   background-color: black;
+  transition: 0.7s opacity;
 }
 
-.detailed-frame.bye {
+.modal.hidden {
   opacity: 0;
 }
 
-  .detailed-view img {
+  .modal img {
     height: 100%;
   }
 
 /*----------------------------*/
+/* Banner */
 
 .banner {
     z-index: 5;
@@ -131,6 +134,7 @@ button:hover {
         }
 
 /*----------------------------*/
+/* Controls */
 
 .controls {
     position: relative;
@@ -162,6 +166,7 @@ button:hover {
 }
 
 /*----------------------------*/
+/* Masonry layout */
 
 .container {
     width: var(--grid-container-width);
@@ -187,6 +192,7 @@ button:hover {
 }
 
 /*----------------------------*/
+/* Responsive */
 
 @media only screen and (min-width: 400px) {
     :root {
@@ -234,6 +240,7 @@ button:hover {
 }
 
 /*----------------------------*/
+/* Backgrounds */
 
 .blue-line-bg {
     background-color: #026873;
