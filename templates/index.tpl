@@ -16,7 +16,7 @@
 <body class="dark-bg">
 
     <div class="page">
-        <div class="modal position style hidden invisible">
+        <div class="modal position style transparent invisible">
           <div id="detailed-view">
           </div>
         </div>

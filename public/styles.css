@@ -71,7 +71,7 @@ button:hover {
   transition: 0.7s opacity;
 }
 
-.modal.hidden {
+.modal.transparent {
   opacity: 0;
 }
 

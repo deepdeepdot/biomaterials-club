@@ -34,12 +34,12 @@ function setupLightBoxModal() {
   let modal = $('.modal');
 
   function displayModal() {
-    modal.classList.remove('hidden');
+    modal.classList.remove('transparent');
     modal.classList.remove('invisible');
   }
 
   function hideModal() {
-    modal.classList.add('hidden'); // start fade animation
+    modal.classList.add('transparent'); // start fade animation
     setTimeout(() => {
       modal.classList.add('invisible');
     }, 650);
