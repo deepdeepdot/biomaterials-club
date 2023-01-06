@@ -75,6 +75,10 @@ button:hover {
   opacity: 0;
 }
 
+.modal.invisible {
+  visibility: hidden;
+}
+
   .modal img {
     height: 100%;
   }

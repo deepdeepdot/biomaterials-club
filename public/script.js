@@ -20,8 +20,8 @@ function setBackground(name) {
 
 function togglePoem(button) {
     let poem = $('.poem.anim');
-    let show = button.innerText.startsWith('Show');
-    if (show) {
+    let showing = button.innerText.startsWith('Show');
+    if (showing) {
         poem.classList.add('fadeIn')
         button.innerText = 'Hide Poem';
     } else {
@@ -34,15 +34,14 @@ function setupLightBoxModal() {
   let modal = $('.modal');
 
   function displayModal() {
-    modal.removeAttribute('style');
     modal.classList.remove('hidden');
+    modal.classList.remove('invisible');
   }
 
   function hideModal() {
-    modal.classList.add('hidden');
+    modal.classList.add('hidden'); // start fade animation
     setTimeout(() => {
-      modal.style.visibility = 'hidden';
-      modal.style.cursor = 'default';
+      modal.classList.add('invisible');
     }, 650);
   }
 
