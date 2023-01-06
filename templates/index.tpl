@@ -9,6 +9,7 @@
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Amatic+SC">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="responsive.css">
 </head>
 
 <body class="dark-bg">

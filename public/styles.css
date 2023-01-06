@@ -1,6 +1,6 @@
 /*----------------------------*/
 :root {
-    --grid-container-width: 400px;
+    --grid-container-width: 100vw;
     --grid-columns: 3;
     --grid-gap: 0px;
     --button-width: 100px;
@@ -177,7 +177,6 @@ button:hover {
 /* Masonry layout */
 
 .container {
-    width: var(--grid-container-width);
     margin: 0px auto;
     columns: var(--grid-columns);
     column-gap: var(--grid-gap);
@@ -197,54 +196,6 @@ button:hover {
 
 .container img {
     filter: none;
-}
-
-/*----------------------------*/
-/* Responsive */
-
-@media only screen and (min-width: 400px) {
-    :root {
-        --grid-container-width: 400px;
-        --grid-columns: 3;
-        --grid-gap: 4px;
-    }
-
-    .banner .middle {
-        padding-left: 40px;
-    }
-}
-
-@media only screen and (min-width: 768px) {
-    :root {
-        --grid-container-width: 800px;
-        --grid-columns: 4;
-    }
-
-    .banner {
-        padding-top: 10vh;
-    }
-
-    .banner h1 {
-        font-size: 72px;
-    }
-
-    .banner img {
-        width: 250px;
-    }
-}
-
-@media only screen and (min-width: 1080px) {
-    :root {
-        --grid-container-width: 1000px;
-        --grid-columns: 6;
-    }
-}
-
-@media only screen and (min-width: 1200px) {
-    :root {
-        --grid-container-width: 1100px;
-        --grid-columns: 12;
-    }
 }
 
 /*----------------------------*/
