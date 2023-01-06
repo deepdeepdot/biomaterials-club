@@ -1,6 +1,4 @@
-function $(sel) {
-  return document.querySelector(sel);
-}
+const $ = (selector) => document.querySelector(selector);
 
 function setColumnSize(size) {
     let style = document.documentElement.style;
@@ -32,39 +30,48 @@ function togglePoem(button) {
     }
 }
 
-let modal = $('.modal');
+function setupLightBoxModal() {
+  let modal = $('.modal');
 
-function displayModal() {
-  modal.removeAttribute('style');
-  modal.classList.remove('hidden');
-}
+  function displayModal() {
+    modal.removeAttribute('style');
+    modal.classList.remove('hidden');
+  }
 
-function hideModal() {
-  modal.classList.add('hidden');
-  setTimeout(() => {
-    modal.style.visibility = 'hidden';
-    modal.style.cursor = 'default';
-  }, 650);
-}
+  function hideModal() {
+    modal.classList.add('hidden');
+    setTimeout(() => {
+      modal.style.visibility = 'hidden';
+      modal.style.cursor = 'default';
+    }, 650);
+  }
 
-modal.addEventListener('click', hideModal, false);
+  modal.addEventListener('click', hideModal, false);
 
-// For better SEO, use <a href=""> when generating images
-let imgs = document.querySelectorAll('.container img');
-imgs.forEach(img => {
+  // For better SEO, use <a href=""> when generating images
+  let imgs = document.querySelectorAll('.container img');
+  imgs.forEach(img => {
     img.addEventListener('click', (event) => {
       let image = event.target;
       let newSource = image.src.replace('/th', '');
       modal.innerHTML = `<img src="${newSource}">`;
       displayModal();
     }, false)
-});
+  });
+}
 
-let dashboard = $('#dashboard');
-dashboard.addEventListener('click', function() {
+
+function setupControls() {
+  let dashboard = $('#dashboard');
+  dashboard.addEventListener('click', () => {
     let controls = $('.controls');
     controls.classList.toggle('visible');
 
     let visible = controls.classList.contains('visible');
     dashboard.innerText = visible? 'Go Less Bananas!' : 'Go Bananas!';
-}, false);
+  }, false);
+} 
+ 
+setupLightBoxModal();
+setupControls();
+
