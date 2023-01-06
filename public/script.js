@@ -47,6 +47,8 @@ function hideModal() {
   }, 650);
 }
 
+modal.addEventListener('click', hideModal, false);
+
 // For better SEO, use <a href=""> when generating images
 let imgs = document.querySelectorAll('.container img');
 imgs.forEach(img => {
@@ -57,9 +59,6 @@ imgs.forEach(img => {
       displayModal();
     }, false)
 });
-
-modal.addEventListener('click', hideModal, false);
-
 
 let dashboard = $('#dashboard');
 dashboard.addEventListener('click', function() {
