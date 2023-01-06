@@ -53,7 +53,8 @@ function setupLightBoxModal() {
     img.addEventListener('click', (event) => {
       let image = event.target;
       let newSource = image.src.replace('/th', '');
-      modal.innerHTML = `<img src="${newSource}">`;
+      let wide = image.width > image.height ? 'class="wide"': '';
+      modal.innerHTML = `<img ${wide} src="${newSource}">`;
       displayModal();
     }, false)
   });

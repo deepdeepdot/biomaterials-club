@@ -79,8 +79,12 @@ button:hover {
   visibility: hidden;
 }
 
-  .modal img {
+  .modal img:not(.wide) {
     height: 100%;
+  }
+
+  .modal img.wide {
+    width: 100%;
   }
 
 /*----------------------------*/
@@ -143,13 +147,13 @@ button:hover {
 .controls {
     position: relative;
     top: 0;
-    display: none;
+    visibility: hidden;
     opacity: 0;
     animation: opacity 0.2s ease-in-out;
 }
 
 .controls.visible {
-    display: block;
+    visibility: visible;
     opacity: 1;
 }
 

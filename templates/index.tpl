@@ -6,10 +6,8 @@
     <meta name="viewport" content="width=device-width">
     <title>Biomaterials Club @Genspace</title>
     <link rel="shortcut icon" type="image/png" href="genspace-icon.png"/>
-
     <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Amatic+SC">
-  
     <link rel="stylesheet" href="styles.css">
 </head>
 
@@ -17,7 +15,7 @@
 
     <div class="page">
         <div class="modal position style transparent invisible">
-          <div id="detailed-view">
+          <div id="modal-content">
           </div>
         </div>
         <button class="toggle dashboard command" id="dashboard">Go Bananas!</button>    
