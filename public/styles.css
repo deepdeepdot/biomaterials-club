@@ -2,7 +2,7 @@
 :root {
     --grid-container-width: 100vw;
     --grid-columns: 3;
-    --grid-gap: 0px;
+    --grid-gap: 10px;
     --button-width: 100px;
     --button-height: 50px;
 }
