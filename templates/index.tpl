@@ -16,6 +16,10 @@
 <body class="dark-bg">
 
     <div class="page">
+        <div class="detailed-frame max-view bye">
+          <div id="detailed-view">
+          </div>
+        </div>
         <button class="toggleDashboard command" id="dashboard">Go Bananas!</button>    
         <button class="togglePoem command" onclick="togglePoem(this)">Show Poem</button>
         <div class="controls command">
@@ -35,7 +39,7 @@
             </div>
         </div>
     
-        <div class="banner">
+        <div class="banner max-view">
             <div class="middle">
                 <h1>
                     BioMaterials Club
