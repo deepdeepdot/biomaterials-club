@@ -101,7 +101,7 @@ button:hover {
 .banner {
   padding-top: 0;
   color: #bada55;
-  font-family: "Amatic SC", Arial, sans-serif;
+  font-family: 'Amatic SC', Arial, sans-serif;
 }
 
 .banner .middle {
@@ -111,7 +111,7 @@ button:hover {
 }
 
 .banner h1 {
-  font-family: "Amatic SC", Arial, sans-serif;
+  font-family: 'Amatic SC', Arial, sans-serif;
   font-weight: bold;
   font-size: 48px;
 }

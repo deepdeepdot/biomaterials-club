@@ -2,6 +2,7 @@
   "type": "module",
   "scripts": {
     "html": "node scripts/create_index_html",
+    "pretty": "npx prettier --write --single-quote ./public",
     "thumbnails": "node scripts/create_thumbnails"
   },
   "dependencies": {

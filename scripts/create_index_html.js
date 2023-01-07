@@ -10,7 +10,7 @@ function readTextFile(file) {
 }
 
 function getImageTag(file) {
-    return `         <img loading="lazy" src="images/th/${file}"/>`;
+    return `        <img loading="lazy" src="images/th/${file}"/>`;
 }
 
 let lines = await imageTraverser('./public/images', getImageTag);
