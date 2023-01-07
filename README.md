@@ -9,8 +9,11 @@ It requires an installation of [nodejs](https://nodejs.org/en/) 16 or above
 $ npm install
 $ npm run html    # To generate index.html
 
-$ # To generate thumbnails from /public/images to /public/images/th
+# To generate thumbnails from /public/images to /public/images/th
 $ npm run thumbnails
+
+$ npm run pretty
+$ npm run lint
 
 ```
 
