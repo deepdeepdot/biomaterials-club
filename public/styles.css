@@ -1,31 +1,31 @@
 /*----------------------------*/
 :root {
-    --grid-container-width: 100vw;
-    --grid-columns: 3;
-    --grid-gap: 10px;
-    --button-width: 100px;
-    --button-height: 50px;
+  --grid-container-width: 100vw;
+  --grid-columns: 3;
+  --grid-gap: 10px;
+  --button-width: 100px;
+  --button-height: 50px;
 }
 
 * {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 button {
-    color: white;
-    min-height: var(--button-height);
-    min-width: var(--button-width);
-    border-radius: 10px;
-    background-color: rgba(64, 64, 0, 0.7);
-    border: 4px solid rgb(126, 83, 83);
-    margin-bottom: 6px;
-    padding: 10px;
+  color: white;
+  min-height: var(--button-height);
+  min-width: var(--button-width);
+  border-radius: 10px;
+  background-color: rgba(64, 64, 0, 0.7);
+  border: 4px solid rgb(126, 83, 83);
+  margin-bottom: 6px;
+  padding: 10px;
 }
 
 button:hover {
-    border: 4px solid rgb(26, 183, 183);
-    transform:scale(1.1,1.1);
+  border: 4px solid rgb(26, 183, 183);
+  transform: scale(1.1, 1.1);
 }
 
 /*----------------------------*/
@@ -79,152 +79,170 @@ button:hover {
   visibility: hidden;
 }
 
-  .modal img:not(.wide) {
-    height: 100%;
-  }
+.modal img:not(.wide) {
+  height: 100%;
+}
 
-  .modal img.wide {
-    width: 100%;
-  }
+.modal img.wide {
+  width: 100%;
+}
 
 /*----------------------------*/
 /* Banner */
 
 .banner {
-    z-index: 5;
-    position: fixed;
-    pointer-events: none;
-    width: 100%;
-    height: 100vh;
+  z-index: 5;
+  position: fixed;
+  pointer-events: none;
+  width: 100%;
+  height: 100vh;
 }
 
 .banner {
-    padding-top: 0;
-    color: #bada55;
-    font-family: 'Amatic SC', Arial, sans-serif;
+  padding-top: 0;
+  color: #bada55;
+  font-family: "Amatic SC", Arial, sans-serif;
 }
 
-    .banner .middle {
-        background-color: rgba(216, 0, 0, 0.3);
-        width: 100%;
-        padding-left: 0;
-    }
+.banner .middle {
+  background-color: rgba(216, 0, 0, 0.3);
+  width: 100%;
+  padding-left: 0;
+}
 
-        .banner h1 {
-            font-family: 'Amatic SC', Arial, sans-serif;
-            font-weight: bold;
-            font-size: 48px;
-        }
+.banner h1 {
+  font-family: "Amatic SC", Arial, sans-serif;
+  font-weight: bold;
+  font-size: 48px;
+}
 
-        .banner div {
-            background-color: rgba(0, 0, 0, 0.3);
-            width: 310px;
-        }
+.banner div {
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 310px;
+}
 
-        .banner img {
-            width: 150px;
-        }
+.banner img {
+  width: 150px;
+}
 
-        .poem {
-            background-color: rgba(0, 127, 127, 0.7);
-            font-family: Lucida Console, Monaco, monospace;
-            font-size: 0.8rem;
-            max-width: 500px;
-        }
+.poem {
+  background-color: rgba(0, 127, 127, 0.7);
+  font-family: Lucida Console, Monaco, monospace;
+  font-size: 0.8rem;
+  max-width: 500px;
+}
 
-        .poem.anim {
-            overflow: hidden;
-            height: 0;
-            transition: .4s ease-in-out;
-        }
+.poem.anim {
+  overflow: hidden;
+  height: 0;
+  transition: 0.4s ease-in-out;
+}
 
-        .poem.anim.fadeIn {
-            height: 500px;
-        }
+.poem.anim.fadeIn {
+  height: 500px;
+}
 
 /*----------------------------*/
 /* Controls */
 
 .controls {
-    position: relative;
-    top: 0;
-    visibility: hidden;
-    opacity: 0;
-    animation: opacity 0.2s ease-in-out;
+  position: relative;
+  top: 0;
+  visibility: hidden;
+  opacity: 0;
+  animation: opacity 0.2s ease-in-out;
 }
 
 .controls.visible {
-    visibility: visible;
-    opacity: 1;
+  visibility: visible;
+  opacity: 1;
 }
 
 .controls-left {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: var(--button-width);
-    padding: 10px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--button-width);
+  padding: 10px;
 }
 
 .controls-right {
-    position: absolute;
-    top: 56px;
-    right: 0;
-    width: var(--button-width);
-    padding: 10px;
+  position: absolute;
+  top: 56px;
+  right: 0;
+  width: var(--button-width);
+  padding: 10px;
 }
 
 /*----------------------------*/
 /* Masonry layout */
 
 .container {
-    margin: 0px auto;
-    columns: var(--grid-columns);
-    column-gap: var(--grid-gap);
+  margin: 0px auto;
+  columns: var(--grid-columns);
+  column-gap: var(--grid-gap);
 }
 
 .container img,
 .container video {
-    width: calc(var(--grid-container-width) / var(--grid-columns) - var(--grid-gap));
-    border-radius: 4px;
-    cursor: pointer;
+  width: calc(
+    var(--grid-container-width) / var(--grid-columns) - var(--grid-gap)
+  );
+  border-radius: 4px;
+  cursor: pointer;
 }
 
 .container img:hover {
-    filter: contrast(200%);
-    /* filter: sepia(60%); */
+  filter: contrast(200%);
+  /* filter: sepia(60%); */
 }
 
 .container img {
-    filter: none;
+  filter: none;
 }
 
 /*----------------------------*/
 /* Backgrounds */
 
 .blue-line-bg {
-    background-color: #026873;
-    background-size: 13px 13px, 29px 29px, 37px 37px, 53px 53px;
-    background-image: linear-gradient(0, rgba(255, 255, 255, .07) 50%, transparent 50%), linear-gradient(0, rgba(255, 255, 255, .13) 50%, transparent 50%), linear-gradient(0, transparent 50%, rgba(255, 255, 255, .17) 50%), linear-gradient(0, transparent 50%, rgba(255, 255, 255, .19) 50%);
+  background-color: #026873;
+  background-size: 13px 13px, 29px 29px, 37px 37px, 53px 53px;
+  background-image: linear-gradient(
+      0,
+      rgba(255, 255, 255, 0.07) 50%,
+      transparent 50%
+    ),
+    linear-gradient(0, rgba(255, 255, 255, 0.13) 50%, transparent 50%),
+    linear-gradient(0, transparent 50%, rgba(255, 255, 255, 0.17) 50%),
+    linear-gradient(0, transparent 50%, rgba(255, 255, 255, 0.19) 50%);
 }
 
 .plant-bg {
-    background:
-    radial-gradient(circle at 0% 50%, rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px) 0px 10px,
-    radial-gradient(at 100% 100%,      rgba(96, 16, 48, 0) 9px, #613 10px, rgba(96, 16, 48, 0) 11px),
+  background: radial-gradient(
+        circle at 0% 50%,
+        rgba(96, 16, 48, 0) 9px,
+        #613 10px,
+        rgba(96, 16, 48, 0) 11px
+      )
+      0px 10px,
+    radial-gradient(
+      at 100% 100%,
+      rgba(96, 16, 48, 0) 9px,
+      #613 10px,
+      rgba(96, 16, 48, 0) 11px
+    ),
     #8a3;
-    background-size: 20px 20px;
+  background-size: 20px 20px;
 }
 
 .stairs-bg {
-    background:
-    linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
+  background: linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
     linear-gradient(63deg, transparent 74%, #999 78%),
     linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
     #444;
-    background-size: 16px 48px;
+  background-size: 16px 48px;
 }
 
 .dark-bg {
-    background-color: rgba(16, 16, 16, 1.0);
+  background-color: rgba(16, 16, 16, 1);
 }
