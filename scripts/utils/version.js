@@ -11,7 +11,7 @@ function incrementVersion() {
 
   let idx = version.lastIndexOf('.');
   let lastSuffix = version.substring(idx + 1);
-  let incrSuffix = parseInt(lastSuffix) + 1;
+  let incrSuffix = parseInt(lastSuffix, 10) + 1;
 
   let newVersion = version.substring(0, idx + 1) + incrSuffix;
   fs.writeFileSync(VERSION_FILE, newVersion);
