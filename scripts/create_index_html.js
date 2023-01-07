@@ -6,11 +6,11 @@ import incrementVersion from './utils/version.js';
 const HTML_FILE = 'public/index.html';
 
 function readTextFile(file) {
-    return fs.readFileSync(file, {encoding:'utf8', flag:'r'});
+  return fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 }
 
 function getImageTag(file) {
-    return `        <img loading="lazy" src="images/th/${file}"/>`;
+  return `        <img loading="lazy" src="images/th/${file}"/>`;
 }
 
 let lines = await imageTraverser('./public/images', getImageTag);
@@ -19,7 +19,7 @@ let version = incrementVersion();
 
 let template = readTextFile('./templates/index.tpl');
 let html = template
-    .replace('${images}', imageTags)
-    .replace('${version}', version);
+  .replace('${images}', imageTags)
+  .replace('${version}', version);
 
 fs.writeFileSync(HTML_FILE, html);

@@ -1,22 +1,22 @@
 import fs from 'fs';
 
-const VERSION_FILE = 'version.txt'
+const VERSION_FILE = 'version.txt';
 
 function readTextFile(file) {
-    return fs.readFileSync(file, {encoding:'utf8', flag:'r'});
+  return fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 }
 
 function incrementVersion() {
-    let version = readTextFile(VERSION_FILE);
+  let version = readTextFile(VERSION_FILE);
 
-    let idx = version.lastIndexOf('.');
-    let lastSuffix = version.substring(idx+1);
-    let incrSuffix = parseInt(lastSuffix) + 1;
+  let idx = version.lastIndexOf('.');
+  let lastSuffix = version.substring(idx + 1);
+  let incrSuffix = parseInt(lastSuffix) + 1;
 
-    let newVersion = version.substring(0, idx+1) + incrSuffix;
-    fs.writeFileSync(VERSION_FILE, newVersion);
+  let newVersion = version.substring(0, idx + 1) + incrSuffix;
+  fs.writeFileSync(VERSION_FILE, newVersion);
 
-    return newVersion;
+  return newVersion;
 }
 
 export default incrementVersion;
