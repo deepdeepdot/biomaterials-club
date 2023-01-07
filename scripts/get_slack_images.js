@@ -18,9 +18,9 @@ function downloadLink(url) {
 let thumbnails = document.querySelectorAll(
   'img[data-qa="file_image_thumbnail_img"]',
 );
-thumbnails.length;
+
+console.log(thumbnails.length);
 
 downloadLink(thumbnails[0].src);
 downloadLink(thumbnails[1].src);
 downloadLink(thumbnails[2].src);
-

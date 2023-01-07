@@ -3,7 +3,7 @@
   "scripts": {
     "html": "node scripts/create_index_html",
     "pretty": "npx prettier --write --single-quote ./public ./scripts",
-    "lint": "npx eslint public/*.js scripts/*.js",
+    "lint": "npx eslint public/*.js scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
     "thumbnails": "node scripts/create_thumbnails"
   },
   "dependencies": {

@@ -10,14 +10,14 @@ function imageTraverser(folder, callback, filter = isImage) {
       if (err) {
         reject(new Error(`Unable to scan directory:${err}`));
       }
-      let reversed = files.reverse();
       let lines = [];
 
       let lineCollector = (file) => {
         if (filter(file)) {
           lines.push(callback(file));
         }
-      }
+      };
+      let reversed = files.reverse();
       reversed.forEach(lineCollector);
       resolve(lines);
     }
