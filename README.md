@@ -119,5 +119,6 @@ Most are older index.html with an updated `<base href>` meta tag.
 
 - Test image optimizers, in particular from the Rust ecosystem.
 - Video management and optimization and interactivity
-- Migrate eslint to a Rust-based linter (roma!)
+- Migrate eslint to a Rust-based linter (rome?!)
+  eslint pollution: hundreds of packages downloaded and executed
 

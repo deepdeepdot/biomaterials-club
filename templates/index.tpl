@@ -27,20 +27,20 @@
       </button>
       <div class="dashboard">
         <div class="dashboard-left command">
-          <button onclick="setBackground('black')">Background: Black</button>
+          <button onclick="setBackground('black')">Background Black</button>
           <button onclick="setBackground('blue')">
-            Background: Blue lines
+            Background Blue lines
           </button>
-          <button onclick="setBackground('green')">Background: Plant</button>
-          <button onclick="setBackground('gray')">Background: Stairs</button>
+          <button onclick="setBackground('green')">Background Plant</button>
+          <button onclick="setBackground('gray')">Background Stairs</button>
         </div>
         <div class="dashboard-right command">
           <button onclick="setColumnSize(3)">3 Columns</button>
           <button onclick="setColumnSize(5)">5 Columns</button>
           <button onclick="setColumnSize(7)">7 Columns</button>
           <button onclick="setColumnSize(10)">10 Columns</button>
-          <button onclick="setColumnSize(12)">12 Columns</button>
-          <button onclick="setColumnSize(20)">20Columns</button>
+          <button class="desktop" onclick="setColumnSize(12)">12 Columns</button>
+          <button class="desktop" onclick="setColumnSize(20)">20 Columns</button>
         </div>
       </div>
 

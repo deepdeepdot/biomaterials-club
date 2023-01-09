@@ -28,6 +28,11 @@ button:hover {
   transform: scale(1.1, 1.1);
 }
 
+.desktop {
+  visibility: hidden;
+}
+
+
 /*----------------------------*/
 /* Toggle buttons */
 

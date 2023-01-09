@@ -17,6 +17,10 @@
     --grid-columns: 4;
   }
 
+  .desktop {
+    visibility: visible;
+  }
+
   .banner {
     padding-top: 10vh;
   }
