@@ -121,4 +121,5 @@ Most are older index.html with an updated `<base href>` meta tag.
 - Video management and optimization and interactivity
 - Migrate eslint to a Rust-based linter (rome?!)
   eslint pollution: hundreds of packages downloaded and executed
+- Responsive: landscape for ipads and table
 

@@ -38,9 +38,15 @@
           <button onclick="setColumnSize(3)">3 Columns</button>
           <button onclick="setColumnSize(5)">5 Columns</button>
           <button onclick="setColumnSize(7)">7 Columns</button>
-          <button onclick="setColumnSize(10)">10 Columns</button>
-          <button class="desktop" onclick="setColumnSize(12)">12 Columns</button>
-          <button class="desktop" onclick="setColumnSize(20)">20 Columns</button>
+          <button class="desktop" onclick="setColumnSize(10)">
+            10 Columns
+          </button>
+          <button class="desktop" onclick="setColumnSize(12)">
+            12 Columns
+          </button>
+          <button class="desktop" onclick="setColumnSize(20)">
+            20 Columns
+          </button>
         </div>
       </div>
 
