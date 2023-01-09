@@ -87,7 +87,7 @@
         </div>
       </div>
 
-      <div class="main"
+      <div class="main">
         <video controls width="250" preload="metadata">
           <source src="videos/20220728_122356.mp4#t=1" type="video/mp4" />
         </video>
