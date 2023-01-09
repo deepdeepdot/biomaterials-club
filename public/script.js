@@ -12,6 +12,7 @@ function setBackground(name) {
     gray: 'stairs-bg',
     green: 'plant-bg',
     black: 'dark-bg',
+    gradient: 'gradient-bg',
   };
   if (name in mapping) {
     document.body.classList.value = mapping[name];

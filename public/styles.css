@@ -246,3 +246,8 @@ button:hover {
 .dark-bg {
   background-color: rgba(16, 16, 16, 1);
 }
+
+.gradient-bg {
+  background: linear-gradient(to left top, red, yellow);
+  background-attachment: fixed; /*edit*/
+}
