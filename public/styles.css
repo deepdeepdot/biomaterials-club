@@ -32,7 +32,6 @@ button:hover {
   visibility: hidden;
 }
 
-
 /*----------------------------*/
 /* Toggle buttons */
 
@@ -188,9 +187,7 @@ button:hover {
 
 .main img,
 .main video {
-  width: calc(
-    100vw / var(--grid-columns) - var(--grid-gap)
-  );
+  width: calc(100vw / var(--grid-columns) - var(--grid-gap));
   border-radius: 4px;
   cursor: pointer;
 }

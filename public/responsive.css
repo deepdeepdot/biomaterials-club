@@ -14,7 +14,7 @@
 
 @media only screen and (min-width: 768px) {
   :root {
-    --grid-columns: 4;
+    --grid-columns: 6;
   }
 
   .desktop {
@@ -36,7 +36,7 @@
 
 @media only screen and (min-width: 1080px) {
   :root {
-    --grid-columns: 6;
+    --grid-columns: 8;
   }
 }
 
