@@ -1,4 +1,6 @@
-// Based on
+// @ts-check
+
+// From:
 // https://www.npmjs.com/package/minimal-http-server
 
 // const http = require("http");
@@ -25,7 +27,7 @@ const mimeTypes = {
 };
 
 const request = (directory) => (req, res) => {
-  const uri = url.parse(req.url).pathname;
+  const uri = url.parse(req.url).pathname || '';
   const __dirname = path.resolve();
   const dir = path.join(__dirname, directory);
   const filepath = path.join(dir, unescape(uri));
