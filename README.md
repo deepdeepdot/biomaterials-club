@@ -92,19 +92,3 @@ Most are older index.html with an updated `<base href>` meta tag.
 - Migrate eslint to a Rust-based linter (roma!)
 
 
-## Dev Tools
-
-On a Mac, I am testing a development workflow using [Alacritty](https://alacritty.org)'s GPU Terminal
-and [NeoVim](https://neovim.org)
-
-For shell, I am using [nushell]() and [starship]()
-
-The Rust ecosystem has some great utilities such as [bat], search,
-It is incredible fast for file searching
-
-The neovim config I am using is from [Neovim-from-scratch]()
-Alternatively, [LunarVim]() is also a fully packed NeoVim ready for use.
-
-On Windows, `Windows Terminal` to open an Ubuntu shell. LWS 2.
-
-Considering [Lazy-Git]() for git commands.

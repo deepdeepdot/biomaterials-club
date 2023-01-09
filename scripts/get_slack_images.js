@@ -16,7 +16,7 @@ function downloadLink(url) {
 }
 
 let thumbnails = document.querySelectorAll(
-  'img[data-qa="file_image_thumbnail_img"]',
+  'img[data-qa="file_image_thumbnail_img"]'
 );
 
 console.log(thumbnails.length);
