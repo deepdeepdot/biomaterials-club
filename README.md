@@ -24,8 +24,8 @@ Once we put the slack images into the `public/images`, we create the thumbnails
 with `create_thumbnails.js` into `public\images\th`.
 
 We run `npm run html` to produce `public/index.html` based on the template `templates/index.tpl`.
-During the page creation, it uses `imageTraverser.js` to produce the markup for the imagesi
-and `version.js` to get a page versioning that it's displayed in the poem's panel.
+During the page creation, it uses `imageTraverser.js` to produce the markup for the images
+and `config/version.js` to get a page versioning that it's displayed in the poem's panel.
 
 During development, we can run `npm run pretty` to format files in `/public` and
 `npm run lint` to verify linting issues with `/public/script.js` and `npm run lint:all` for all other Javascript files in `/public` and `/scripts`.
@@ -42,7 +42,23 @@ $ npm run thumbnails # To generate thumbnails from /public/images to /public/ima
 $ npm run pretty
 $ npm run lint
 $ npm run lint:all
+$ npm run web
 ```
+
+## Running locally
+
+```bash
+git clone https://github.com/deepdeepdot/biomaterials-club.git
+
+cd biomaterials-club
+npm i
+
+npm run web
+
+# Open a browser in http://localhost:8080
+# If you get a port conflict, you can modify it in config/server.json
+```
+
 
 ## Architecture
 
@@ -60,19 +76,23 @@ body
     modal:     popup for single image view
     dashboard: right and left controls
     banner:    Biomaterials Club + Logo + poem
-    main: i    images and videos
-      button.bananas -> show `controls`
+    main:      images and videos
+      button.bananas -> show `dashboard`
       button.poem -> show poem inside `banner`
 ---
 
 CSS: mobile-first
 
+
 ## Technology
 
-There are myriads of web frameworks, such as React, Vue, and Svelte. However, I decided to use vanilla JS and DOM apis, targeting the current browsers (disregarding IE11)
-I tried to focus on minimal code, bare minimum html, css, and js, and yet readable to be maintainable.
+The focus was on minimal code, bare minimal html, css, and js,
+and yet very readable and maintainable.
+There are myriads of web frameworks, such as React, Vue, and Svelte. However, I decided to use vanilla JS and DOM apis, and targeting the
+current browsers (Sorry IE11 ;)
 
-Currently, this is a single page and in no need of any framework. Once we move towards into a multi page site, I am interested in using
+Currently, this is a single page and in no need of any framework.
+Once we move towards into a multi page site, I am interested in using
 [Astro](https://astro.build)
 
 We are using Netlify for deployment.
@@ -87,7 +107,16 @@ There's a folder `/test` where we have some older versions. The web page was qui
 
 Most are older index.html with an updated `<base href>` meta tag.
 
+### Note
+- Running Ubuntu bash on WSL 2 is extremely slow when using /mnt/
+  Eslint is about 100x slower it needs to loads hundreds of npm packages
+  Alternatives:
+  - Either switch to WSL 1
+  - Use /home/user and NOT the mount folders (vscode is happy either way)
+
+
 ### TODO
+
 - Test image optimizers, in particular from the Rust ecosystem.
 - Video management and optimization and interactivity
 - Migrate eslint to a Rust-based linter (roma!)

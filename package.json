@@ -3,9 +3,10 @@
   "scripts": {
     "html": "node scripts/create_index_html",
     "pretty": "npx prettier --write --single-quote ./public ./scripts",
-    "lint:all": "npx eslint public/*.js scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
-    "lint": "npx eslint public/script.js",
-    "thumbnails": "node scripts/create_thumbnails"
+    "lint:all": "npx eslint -c config/.eslintrc.cjs public/*.js scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
+    "lint": "npx eslint -c config/.eslintrc.cjs public/script.js",
+    "thumbnails": "node scripts/create_thumbnails",
+    "web": "node ./scripts/server.js"
   },
   "dependencies": {
     "imagemin": "^8.0.1",

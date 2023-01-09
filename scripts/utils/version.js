@@ -1,6 +1,6 @@
 import fs from 'fs';
 
-const VERSION_FILE = 'version.txt';
+const VERSION_FILE = 'config/version.txt';
 
 function readTextFile(file) {
   return fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
