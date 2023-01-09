@@ -1,3 +1,4 @@
+// @ts-check
 // https://app.slack.com/client/T9NK8472R/C03AG47UC84
 
 function downloadLink(url) {

@@ -1,3 +1,4 @@
+// @ts-check
 let $ = (selector) => document.querySelector(selector);
 
 function setColumnSize(size) {
@@ -6,11 +7,17 @@ function setColumnSize(size) {
 }
 
 function setBackground(name) {
-  if (name === 'green') document.body.classList = 'plant-bg';
-  else if (name === 'blue') document.body.classList = 'blue-line-bg';
-  else if (name === 'gray') document.body.classList = 'stairs-bg';
-  else if (name === 'black') document.body.classList = 'dark-bg';
-  else alert(`Background not found: ${name}`);
+  let mapping = {
+    blue: 'blue-line-bg',
+    gray: 'stairs-bg',
+    green: 'plant-bg',
+    black: 'dark-bg',
+  };
+  if (name in mapping) {
+    document.body.classList.value = mapping[name];
+  } else {
+    alert(`Background not found: ${name}`);
+  }
 }
 
 function togglePoem(button) {

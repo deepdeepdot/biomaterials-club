@@ -28,7 +28,7 @@ During the page creation, it uses `imageTraverser.js` to produce the markup for 
 and `version.js` to get a page versioning that it's displayed in the poem's panel.
 
 During development, we can run `npm run pretty` to format files in `/public` and
-`npm run lint` to verify linting issues with the Javascript files in `/public` and a `/scripts`.
+`npm run lint` to verify linting issues with `/public/script.js` and `npm run lint:all` for all other Javascript files in `/public` and `/scripts`.
 
 It requires an installation of [nodejs](https://nodejs.org/en/) 16 or above 
 and run `npm install` after cloning this repository
@@ -41,6 +41,7 @@ $ npm run html       # To generate index.html
 $ npm run thumbnails # To generate thumbnails from /public/images to /public/images/th
 $ npm run pretty
 $ npm run lint
+$ npm run lint:all
 ```
 
 ## Architecture
