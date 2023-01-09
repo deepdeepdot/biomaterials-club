@@ -48,19 +48,19 @@ $ npm run lint
 For the html markup, any theme-based css is applied to the `<body>` tag. All the applicable backgrounds are applied through a class on the body tag.
 
 These are the layers:
-- modal:   z-index: 20 (popup overlay)
-- command: z-index: 10 (for buttons and ui controls)
-- banner:  z-index: 5  (non-interactive: pointer-events:none )
+- modal:     z-index: 20 (popup overlay)
+- dashboard: z-index: 10 (for buttons and ui controls)
+- banner:    z-index: 5  (non-interactive: pointer-events:none )
 
 HTML
 ---
 body
   page
-    modal:    popup for single image view
-    controls: right and left controls
-    banner:   Biomaterials Club + Logo + poem
-    main: i   images and videos
-      button.dashboard -> show `controls`
+    modal:     popup for single image view
+    dashboard: right and left controls
+    banner:    Biomaterials Club + Logo + poem
+    main: i    images and videos
+      button.bananas -> show `controls`
       button.poem -> show poem inside `banner`
 ---
 
@@ -86,9 +86,8 @@ There's a folder `/test` where we have some older versions. The web page was qui
 
 Most are older index.html with an updated `<base href>` meta tag.
 
-* TODO
+### TODO
 - Test image optimizers, in particular from the Rust ecosystem.
 - Video management and optimization and interactivity
 - Migrate eslint to a Rust-based linter (roma!)
-
 
