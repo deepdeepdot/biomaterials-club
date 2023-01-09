@@ -48,9 +48,9 @@ $ npm run lint
 For the html markup, any theme-based css is applied to the `<body>` tag. All the applicable backgrounds are applied through a class on the body tag.
 
 These are the layers:
-- command: z-index: 2 (for buttons and ui controls)
-- banner:  z-index: 5 (non-interactive: pointer-events:none )
-- modal:   z-index: 10 (popup overlay)
+- modal:   z-index: 20 (popup overlay)
+- command: z-index: 10 (for buttons and ui controls)
+- banner:  z-index: 5  (non-interactive: pointer-events:none )
 
 HTML
 ---

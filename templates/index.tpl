@@ -19,14 +19,14 @@
       <div class="modal position style transparent invisible">
         <div id="modal-content"></div>
       </div>
-      <button class="toggle dashboard command" id="dashboard">
+      <button class="toggle bananas command" id="bananas">
         Go Bananas!
       </button>
       <button class="toggle poem command" onclick="togglePoem(this)">
         Show Poem
       </button>
-      <div class="controls command">
-        <div class="controls-left">
+      <div class="dashboard">
+        <div class="dashboard-left command">
           <button onclick="setBackground('black')">Background: Black</button>
           <button onclick="setBackground('blue')">
             Background: Blue lines
@@ -34,7 +34,7 @@
           <button onclick="setBackground('green')">Background: Plant</button>
           <button onclick="setBackground('gray')">Background: Stairs</button>
         </div>
-        <div class="controls-right">
+        <div class="dashboard-right command">
           <button onclick="setColumnSize(3)">3 Columns</button>
           <button onclick="setColumnSize(5)">5 Columns</button>
           <button onclick="setColumnSize(7)">7 Columns</button>
@@ -87,13 +87,14 @@
         </div>
       </div>
 
-      <div class="container">
+      <main class="main">
         <video controls width="250" preload="metadata">
           <source src="videos/20220728_122356.mp4#t=1" type="video/mp4" />
         </video>
 
 ${images}
-      </div>
+
+      </main>
     </div>
   </body>
 </html>

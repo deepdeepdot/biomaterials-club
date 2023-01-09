@@ -1,6 +1,6 @@
 /*----------------------------*/
 :root {
-  --grid-container-width: 100vw;
+  /* --grid-container-width: 100vw; */
   --grid-columns: 3;
   --grid-gap: 10px;
   --button-width: 100px;
@@ -32,7 +32,7 @@ button:hover {
 /* Toggle buttons */
 
 .command {
-  z-index: 2;
+  z-index: 10;
 }
 
 .toggle {
@@ -40,7 +40,7 @@ button:hover {
   margin: 10px;
 }
 
-.toggle.dashboard {
+.toggle.bananas {
   bottom: 0;
   left: 0;
 }
@@ -54,7 +54,7 @@ button:hover {
 /* Modal */
 
 .modal.position {
-  z-index: 10;
+  z-index: 20;
   position: fixed;
   width: 100%;
   height: 100%;
@@ -79,12 +79,12 @@ button:hover {
   visibility: hidden;
 }
 
-.modal img:not(.wide) {
-  height: 100%;
-}
-
 .modal img.wide {
   width: 100%;
+}
+
+.modal img:not(.wide) {
+  height: 100%;
 }
 
 /*----------------------------*/
@@ -143,31 +143,29 @@ button:hover {
 }
 
 /*----------------------------*/
-/* Controls */
+/* Dashboard */
 
-.controls {
-  position: relative;
-  top: 0;
+.dashboard {
   visibility: hidden;
   opacity: 0;
   animation: opacity 0.2s ease-in-out;
 }
 
-.controls.visible {
+.dashboard.visible {
   visibility: visible;
   opacity: 1;
 }
 
-.controls-left {
-  position: absolute;
+.dashboard-left {
+  position: fixed;
   top: 0;
   left: 0;
   width: var(--button-width);
   padding: 10px;
 }
 
-.controls-right {
-  position: absolute;
+.dashboard-right {
+  position: fixed;
   top: 56px;
   right: 0;
   width: var(--button-width);
@@ -177,27 +175,27 @@ button:hover {
 /*----------------------------*/
 /* Masonry layout */
 
-.container {
+.main {
   margin: 0px auto;
   columns: var(--grid-columns);
   column-gap: var(--grid-gap);
 }
 
-.container img,
-.container video {
+.main img,
+.main video {
   width: calc(
-    var(--grid-container-width) / var(--grid-columns) - var(--grid-gap)
+    100vw / var(--grid-columns) - var(--grid-gap)
   );
   border-radius: 4px;
   cursor: pointer;
 }
 
-.container img:hover {
+.main img:hover {
   filter: contrast(200%);
   /* filter: sepia(60%); */
 }
 
-.container img {
+.main img {
   filter: none;
 }
 

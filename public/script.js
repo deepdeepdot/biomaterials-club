@@ -49,24 +49,25 @@ function setupLightBoxModal() {
     displayModal(`<img ${wide} src="${newSource}">`);
   };
 
-  let imgs = document.querySelectorAll('.container img');
+  let imgs = document.querySelectorAll('.main img');
   imgs.forEach((img) => {
     img.addEventListener('click', popupModal, false);
   });
 }
 
-function setupControls() {
-  let dashboard = $('#dashboard');
+function setupDashboard() {
+  let bananas = $('#bananas');
 
-  let toggleBananas = () => {
-    let controls = $('.controls');
-    controls.classList.toggle('visible');
+  function toggleBananas() {
+    let dashboard = $('.dashboard');
+    dashboard.classList.toggle('visible');
 
-    let visible = controls.classList.contains('visible');
-    dashboard.innerText = visible ? 'Go Less Bananas!' : 'Go Bananas!';
-  };
-  dashboard.addEventListener('click', toggleBananas, false);
+    let visible = dashboard.classList.contains('visible');
+    bananas.innerText = visible ? 'Go Less Bananas!' : 'Go Bananas!';
+  }
+
+  bananas.addEventListener('click', toggleBananas, false);
 }
 
 setupLightBoxModal();
-setupControls();
+setupDashboard();
