@@ -1,11 +1,14 @@
 {
   "type": "module",
+  "engines" : {
+    "node": ">=20"
+  },
   "scripts": {
     "html": "node scripts/create_index_html",
     "pretty": "npx prettier --write --single-quote ./public ./scripts",
     "lint:all": "npx eslint -c config/.eslintrc.cjs public/*.js scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
     "lint": "npx eslint -c config/.eslintrc.cjs public/script.js",
-    "thumbnails": "node scripts/create_thumbnails",
+    "thumbnails": "node scripts/create_thumbnails.js",
     "web": "node ./scripts/server.js"
   },
   "dependencies": {

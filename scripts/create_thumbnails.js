@@ -1,7 +1,7 @@
 // @ts-check
 import fs from 'fs';
 import sharp from 'sharp';
-import imageTraverser from './utils/imageTraverser';
+import imageTraverser from './utils/imageTraverser.js';
 
 const IMAGE_WIDTH = 220; // For thumbnails
 
