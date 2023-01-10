@@ -57,33 +57,34 @@
             />
           </div>
           <pre class="poem anim">
-  We live in a world of plastics and pollution,
-  A world of destruction, of land and of ocean,
-  Where our air and water is filled with debris,
-  And the future of our planet is unclear to me.
 
-  But biomaterials offer a new solution,
-  A future of hope for us all to live in,
-  A future of clean air, water, and land,
-  A future we can all understand.
+ We live in a world of plastics and pollution,
+ A world of destruction, of land and of ocean,
+ Where our air and water is filled with debris,
+ And the future of our planet is unclear to me.
 
-  Biomaterials offer a new way,
-  A way to reduce our plastic waste,
-  A way to restore the Earth’s balance and peace,
-  A way to create a future that will never cease.
+ But biomaterials offer a new solution,
+ A future of hope for us all to live in,
+ A future of clean air, water, and land,
+ A future we can all understand.
 
-  Biomaterials are made from renewable sources,
-  From plants and animals and more,
-  They require less energy to create and use,
-  And can help us reduce our global emissions too.
+ Biomaterials offer a new way,
+ A way to reduce our plastic waste,
+ A way to restore the Earth’s balance and peace,
+ A way to create a future that will never cease.
 
-  No longer will our planet suffer
-  From the effects of plastic pollution,
-  Biomaterials will help us create a better world,
-  A world of clean air and water and land,
-  A world of hope and new possibilities.
+ Biomaterials are made from renewable sources,
+ From plants and animals and more,
+ They require less energy to create and use,
+ And can help us reduce our global emissions too.
 
-  By GPT3 ChatAI. ${version}
+ No longer will our planet suffer
+ From the effects of plastic pollution,
+ Biomaterials will help us create a better world,
+ A world of clean air and water and land,
+ A world of hope and new possibilities.
+
+ By GPT3 ChatAI. ${version}
           </pre>
         </div>
       </div>
