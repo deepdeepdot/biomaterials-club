@@ -3,8 +3,7 @@
 
 @media only screen and (min-width: 400px) {
   :root {
-    --grid-columns: 3;
-    --grid-gap: 4px;
+    --grid-gap: 3px;
   }
 
   .banner .middle {
@@ -15,6 +14,12 @@
 @media only screen and (min-width: 768px) {
   :root {
     --grid-columns: 6;
+    --grid-gap: 10px;
+  }
+
+  .main img,
+  .main video {
+    width: calc(100vw / var(--grid-columns) - var(--grid-gap) / 2);
   }
 
   .desktop {

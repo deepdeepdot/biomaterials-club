@@ -7,18 +7,7 @@ function setColumnSize(size) {
 }
 
 function setBackground(name) {
-  let mapping = {
-    blue: 'blue-line-bg',
-    gray: 'stairs-bg',
-    green: 'plant-bg',
-    black: 'dark-bg',
-    gradient: 'gradient-bg',
-  };
-  if (name in mapping) {
-    document.body.classList.value = mapping[name];
-  } else {
-    alert(`Background not found: ${name}`);
-  }
+  document.body.classList.value = `${name}-bg`;
 }
 
 function togglePoem(button) {
@@ -45,13 +34,13 @@ function setupLightBoxModal() {
     };
     image.onload = showContent;
   }
-  
+
   function hideModal() {
     modal.classList.add('transparent'); // start fade animation
     let setInvisible = () => modal.classList.add('invisible');
     setTimeout(setInvisible, 650);
   }
-  
+
   function popupModal(event) {
     let image = event.target;
     let largeImage = new Image();
@@ -62,8 +51,8 @@ function setupLightBoxModal() {
       image.classList.add('wide');
     }
     displayModal(largeImage);
-  };
-  
+  }
+
   let imgs = document.querySelectorAll('.main img');
   imgs.forEach((img) => {
     img.addEventListener('click', popupModal, false);

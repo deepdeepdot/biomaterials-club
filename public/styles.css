@@ -1,8 +1,8 @@
 /*----------------------------*/
 :root {
   /* --grid-container-width: 100vw; */
-  --grid-columns: 3;
-  --grid-gap: 10px;
+  --grid-columns: 5;
+  --grid-gap: 3px;
   --button-width: 100px;
   --button-height: 50px;
 }
@@ -117,7 +117,7 @@ button:hover {
 .banner h1 {
   font-family: 'Amatic SC', Arial, sans-serif;
   font-weight: bold;
-  font-size: 48px;
+  font-size: 2.5rem;
 }
 
 .banner div {
@@ -134,6 +134,7 @@ button:hover {
   font-family: Lucida Console, Monaco, monospace;
   font-size: 0.8rem;
   max-width: 500px;
+  padding: 5px;
 }
 
 .poem.anim {
@@ -187,7 +188,7 @@ button:hover {
 
 .main img,
 .main video {
-  width: calc(100vw / var(--grid-columns) - var(--grid-gap));
+  width: calc(100vw / var(--grid-columns) - 10px);
   border-radius: 4px;
   cursor: pointer;
 }
@@ -204,7 +205,16 @@ button:hover {
 /*----------------------------*/
 /* Backgrounds */
 
-.blue-line-bg {
+.gradient-bg {
+  background: linear-gradient(to left top, red, yellow);
+  background-attachment: fixed;
+}
+
+.black-bg {
+  background-color: rgba(16, 16, 16, 1);
+}
+
+.blue-bg {
   background-color: #026873;
   background-size: 13px 13px, 29px 29px, 37px 37px, 53px 53px;
   background-image: linear-gradient(
@@ -217,7 +227,7 @@ button:hover {
     linear-gradient(0, transparent 50%, rgba(255, 255, 255, 0.19) 50%);
 }
 
-.plant-bg {
+.green-bg {
   background: radial-gradient(
         circle at 0% 50%,
         rgba(96, 16, 48, 0) 9px,
@@ -233,21 +243,4 @@ button:hover {
     ),
     #8a3;
   background-size: 20px 20px;
-}
-
-.stairs-bg {
-  background: linear-gradient(63deg, #999 23%, transparent 23%) 7px 0,
-    linear-gradient(63deg, transparent 74%, #999 78%),
-    linear-gradient(63deg, transparent 34%, #999 38%, #999 58%, transparent 62%),
-    #444;
-  background-size: 16px 48px;
-}
-
-.dark-bg {
-  background-color: rgba(16, 16, 16, 1);
-}
-
-.gradient-bg {
-  background: linear-gradient(to left top, red, yellow);
-  background-attachment: fixed; /*edit*/
 }
