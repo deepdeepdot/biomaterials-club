@@ -16,13 +16,16 @@
 
   <body class="gradient-bg">
     <div class="page">
+
       <div class="modal position style transparent invisible">
         <div id="modal-content"></div>
       </div>
+
       <button class="toggle bananas command" id="bananas">Go Bananas!</button>
       <button class="toggle poem command" onclick="togglePoem(this)">
         Show Poem
       </button>
+
       <div class="dashboard">
         <div class="dashboard-left command">
           <button onclick="setBackground('gradient')">
@@ -85,6 +88,7 @@
  A world of hope and new possibilities.
 
  By GPT3 ChatAI. ${version}
+
           </pre>
         </div>
       </div>

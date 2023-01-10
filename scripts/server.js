@@ -6,7 +6,7 @@ import config from '../config/server.json' assert { type: 'json' };
 const { dir, port } = config;
 
 const serverUp = () => {
-  console.log('server up ' + port);
+  console.log(`server up ${port}`);
 };
 
 server(dir)(port)(serverUp);

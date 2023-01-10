@@ -1,17 +1,18 @@
 {
   "type": "module",
-  "engines" : {
-    "node": ">=20"
-  },
   "scripts": {
+    "web": "node ./scripts/server.js",
     "html": "node scripts/create_index_html",
-    "pretty": "npx prettier --write --single-quote ./public ./scripts",
-    "lint:all": "npx eslint -c config/.eslintrc.cjs public/*.js scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
-    "lint": "npx eslint -c config/.eslintrc.cjs public/script.js",
     "thumbnails": "node scripts/create_thumbnails.js",
-    "web": "node ./scripts/server.js"
+    "pretty": "npx prettier --write --single-quote ./public ./scripts",
+    "lint": "npx eslint -c config/.eslintrc.cjs public/script.js",
+    "lint:all": "npx eslint -c config/.eslintrc.cjs public/*.js scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
+    "rome": "npx rome check ./scripts ./public",
+    "check:css": "dprint check --config config/dprint.json ./public/*.css",
+    "--not-ready-fmt:css": "dprint fmt --config config/dprint.json ./public/*.css"
   },
   "dependencies": {
+    "dprint": "^0.34.1",
     "imagemin": "^8.0.1",
     "sharp": "^0.31.2"
   },

@@ -25,7 +25,7 @@ button {
 
 button:hover {
   border: 4px solid rgb(26, 183, 183);
-  transform: scale(1.1, 1.1);
+  transform: scale(1.1);
 }
 
 .desktop {
@@ -132,14 +132,14 @@ button:hover {
 .poem {
   background-color: rgba(0, 127, 127, 0.7);
   font-family: Lucida Console, Monaco, monospace;
-  font-size: 0.8rem;
+  font-size: .8rem;
   max-width: 500px;
 }
 
 .poem.anim {
   overflow: hidden;
   height: 0;
-  transition: 0.4s ease-in-out;
+  transition: height .4s ease-in-out;
 }
 
 .poem.anim.fadeIn {
@@ -152,7 +152,7 @@ button:hover {
 .dashboard {
   visibility: hidden;
   opacity: 0;
-  animation: opacity 0.2s ease-in-out;
+  animation: opacity .2s ease-in-out;
 }
 
 .dashboard.visible {
@@ -188,6 +188,7 @@ button:hover {
 .main img,
 .main video {
   width: calc(100vw / var(--grid-columns) - 10px);
+
   border-radius: 4px;
   cursor: pointer;
 }
@@ -205,7 +206,7 @@ button:hover {
 /* Backgrounds */
 
 .gradient-bg {
-  background: linear-gradient(to left top, red, yellow);
+  background: linear-gradient(to top left, red, yellow);
   background-attachment: fixed;
 }
 

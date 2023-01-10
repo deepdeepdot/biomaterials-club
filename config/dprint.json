@@ -1,0 +1,25 @@
+{
+    "lineWidth": 80,
+    "typescript": {
+      // This applies to both JavaScript & TypeScript
+      "quoteStyle": "preferSingle",
+      "binaryExpression.operatorPosition": "sameLine"
+    },
+    "json": {
+      "indentWidth": 2
+    },
+    "includes": [
+      "**/*.{ts,tsx,js,jsx,mjs,json,md}"
+    ],
+    "excludes": [
+      "**/node_modules",
+      "**/*-lock.json"
+    ],
+    "plugins": [
+      // You may specify any urls or file paths here that you wish.
+      "https://plugins.dprint.dev/typescript-0.80.2.wasm",
+      "https://plugins.dprint.dev/json-0.17.0.wasm",
+      "https://plugins.dprint.dev/markdown-0.15.1.wasm",
+      "https://plugins.dprint.dev/disrupted/css-0.1.3.wasm"
+    ]
+  }

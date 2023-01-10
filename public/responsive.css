@@ -17,9 +17,8 @@
     --grid-gap: 10px;
   }
 
-  .main img,
-  .main video {
-    width: calc(100vw / var(--grid-columns) - var(--grid-gap) / 2);
+  .main img, .main video {
+    width: calc(100vw / var(--grid-columns)  - var(--grid-gap) / 2);
   }
 
   .desktop {
