@@ -25,6 +25,8 @@ function togglePoem(button) {
   setTimeout(updateButtonMessage, 150);
 }
 
+alert('ok')
+
 function setupLightBoxModal() {
   let modal = $('.modal');
 
@@ -46,7 +48,7 @@ function setupLightBoxModal() {
 
   function createLargeImage(src, isWide) {
     let largeImage = new Image();
-    largeImage.src = src.replace('/th', '');
+    largeImage.src = src;
     if (isWide) {
       largeImage.classList.add('wide');
     }
@@ -56,7 +58,8 @@ function setupLightBoxModal() {
   function popupModal(event) {
     let image = event.target;
     let isWide = image.width > image.height;
-    let largeImage = createLargeImage(image.src, isWide);
+    let largeImageSrc = image.src.replace('/th', '');
+    let largeImage = createLargeImage(largeImageSrc, isWide);
     displayModal(largeImage);
   }
 
