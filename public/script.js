@@ -12,14 +12,17 @@ function setBackground(name) {
 
 function togglePoem(button) {
   let poem = $('.poem.anim');
-  let showing = button.innerText.startsWith('Show');
-  if (showing) {
-    poem.classList.add('fadeIn');
-    button.innerText = 'Hide Poem';
-  } else {
-    poem.classList.remove('fadeIn');
-    button.innerText = 'Show Poem';
+  poem.classList.toggle('fadeIn');
+
+  function updateButtonMessage() {
+    let showing = button.innerText.startsWith('Show');
+    if (showing) {
+      button.innerText = 'Hide Poem';
+    } else {
+      button.innerText = 'Show Poem';
+    }
   }
+  setTimeout(updateButtonMessage, 150);
 }
 
 function setupLightBoxModal() {
@@ -41,15 +44,19 @@ function setupLightBoxModal() {
     setTimeout(setInvisible, 650);
   }
 
+  function createLargeImage(src, isWide) {
+    let largeImage = new Image();
+    largeImage.src = src.replace('/th', '');
+    if (isWide) {
+      largeImage.classList.add('wide');
+    }
+    return largeImage;
+  }
+
   function popupModal(event) {
     let image = event.target;
-    let largeImage = new Image();
-    largeImage.src = image.src.replace('/th', '');
-
     let isWide = image.width > image.height;
-    if (isWide) {
-      image.classList.add('wide');
-    }
+    let largeImage = createLargeImage(image.src, isWide);
     displayModal(largeImage);
   }
 
