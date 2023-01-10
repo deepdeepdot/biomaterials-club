@@ -25,8 +25,6 @@ function togglePoem(button) {
   setTimeout(updateButtonMessage, 150);
 }
 
-alert('ok')
-
 function setupLightBoxModal() {
   let modal = $('.modal');
 
