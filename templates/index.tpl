@@ -16,7 +16,6 @@
 
   <body class="gradient-bg">
     <div class="page">
-
       <div class="modal position style transparent invisible">
         <div id="modal-content"></div>
       </div>
@@ -99,7 +98,6 @@
         </video>
 
 ${images}
-
       </main>
     </div>
   </body>

@@ -132,14 +132,14 @@ button:hover {
 .poem {
   background-color: rgba(0, 127, 127, 0.7);
   font-family: Lucida Console, Monaco, monospace;
-  font-size: .8rem;
+  font-size: 0.8rem;
   max-width: 500px;
 }
 
 .poem.anim {
   overflow: hidden;
   height: 0;
-  transition: height .4s ease-in-out;
+  transition: height 0.4s ease-in-out;
 }
 
 .poem.anim.fadeIn {
@@ -152,7 +152,7 @@ button:hover {
 .dashboard {
   visibility: hidden;
   opacity: 0;
-  animation: opacity .2s ease-in-out;
+  animation: opacity 0.2s ease-in-out;
 }
 
 .dashboard.visible {
