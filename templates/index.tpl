@@ -19,32 +19,30 @@
       <div class="modal position style transparent invisible">
         <div id="modal-content"></div>
       </div>
-      <button class="toggle bananas command" id="bananas">
-        Go Bananas!
-      </button>
+      <button class="toggle bananas command" id="bananas">Go Bananas!</button>
       <button class="toggle poem command" onclick="togglePoem(this)">
         Show Poem
       </button>
       <div class="dashboard">
         <div class="dashboard-left command">
-          <div class="dashboard-left command">
-            <button onclick="setBackground('gradient')">Background Gradient</button>
-            <button onclick="setBackground('black')">Background Black</button>
-            <button onclick="setBackground('blue')">Background Blue lines</button>
-            <button onclick="setBackground('green')">Background Plant</button>
-          </div>
-          <div class="dashboard-right command">
-            <button onclick="setColumnSize(3)">3 Columns</button>
-            <button onclick="setColumnSize(5)">5 Columns</button>
-            <button onclick="setColumnSize(7)">7 Columns</button>
-            <button onclick="setColumnSize(10)">10 Columns</button>
-            <button onclick="setColumnSize(12)" class="desktop">
-              12 Columns
-            </button>
-            <button onclick="setColumnSize(20)" class="desktop">
-              20 Columns
-            </button>
-          </div>
+          <button onclick="setBackground('gradient')">
+            Background Gradient
+          </button>
+          <button onclick="setBackground('black')">Background Black</button>
+          <button onclick="setBackground('blue')">Background Blue lines</button>
+          <button onclick="setBackground('green')">Background Plant</button>
+        </div>
+        <div class="dashboard-right command">
+          <button onclick="setColumnSize(3)">3 Columns</button>
+          <button onclick="setColumnSize(5)">5 Columns</button>
+          <button onclick="setColumnSize(7)">7 Columns</button>
+          <button onclick="setColumnSize(10)">10 Columns</button>
+          <button onclick="setColumnSize(12)" class="desktop">
+            12 Columns
+          </button>
+          <button onclick="setColumnSize(20)" class="desktop">
+            20 Columns
+          </button>
         </div>
       </div>
 
