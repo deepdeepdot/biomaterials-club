@@ -36,31 +36,39 @@ function togglePoem(button) {
 function setupLightBoxModal() {
   let modal = $('.modal');
 
-  function displayModal(html) {
-    modal.innerHTML = html;
-    modal.classList.remove('transparent');
-    modal.classList.remove('invisible');
+  function displayModal(image) {
+    let showContent = () => {
+      modal.innerHTML = ''; // Remove all children
+      modal.appendChild(image);
+      modal.classList.remove('transparent');
+      modal.classList.remove('invisible');
+    };
+    image.onload = showContent;
   }
-
+  
   function hideModal() {
     modal.classList.add('transparent'); // start fade animation
     let setInvisible = () => modal.classList.add('invisible');
     setTimeout(setInvisible, 650);
   }
-
-  modal.addEventListener('click', hideModal, false);
-
-  let popupModal = (event) => {
+  
+  function popupModal(event) {
     let image = event.target;
-    let newSource = image.src.replace('/th', '');
-    let wide = image.width > image.height ? 'class="wide"' : '';
-    displayModal(`<img ${wide} src="${newSource}">`);
-  };
+    let largeImage = new Image();
+    largeImage.src = image.src.replace('/th', '');
 
+    let isWide = image.width > image.height;
+    if (isWide) {
+      image.classList.add('wide');
+    }
+    displayModal(largeImage);
+  };
+  
   let imgs = document.querySelectorAll('.main img');
   imgs.forEach((img) => {
     img.addEventListener('click', popupModal, false);
   });
+  modal.addEventListener('click', hideModal, false);
 }
 
 function setupDashboard() {
