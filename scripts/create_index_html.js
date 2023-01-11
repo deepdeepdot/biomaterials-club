@@ -1,7 +1,7 @@
 // @ts-check
 import fs from 'fs';
 import imageTraverser from './utils/imageTraverser.js';
-import incrementVersion from './utils/version.js';
+import incrementVersion from './utils/versioning.js';
 
 const HTML_FILE = 'public/index.html';
 

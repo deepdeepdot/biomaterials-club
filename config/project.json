@@ -7,5 +7,8 @@
         "thumbnailWidth" : 125,
         "imageSourceFolder": "./public/images",
         "thumbnailsFolder": "./public/images/th"
+    },
+    "versioning": {
+        "version": "v1.0.32"
     }
 }
