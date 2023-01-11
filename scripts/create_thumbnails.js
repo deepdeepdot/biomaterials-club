@@ -7,11 +7,7 @@ import project from '../config/project.json' assert { type: 'json' };
 const { thumbnailWidth, imageSourceFolder, thumbnailsFolder } =
   project['create_thumbnails'];
 
-if (!fs.existsSync(thumbnailsFolder)) {
-  fs.mkdirSync(thumbnailsFolder);
-}
-
-let processFile = function (file) {
+function processFile(file) {
   let outfile = `${thumbnailsFolder}/${file}`;
 
   sharp(`${imageSourceFolder}/${file}`)
@@ -23,6 +19,13 @@ let processFile = function (file) {
         console.log(info);
       }
     });
-};
+}
 
-imageTraverser(`${imageSourceFolder}`, processFile);
+function createThumbnails() {
+  if (!fs.existsSync(thumbnailsFolder)) {
+    fs.mkdirSync(thumbnailsFolder);
+  }
+  imageTraverser(`${imageSourceFolder}`, processFile);
+}
+
+createThumbnails();

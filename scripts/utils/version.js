@@ -14,7 +14,7 @@ function getNewVersion(version) {
 }
 
 function incrementVersion() {
-  let { version } = project['versioning'];
+  let { version } = project['create_index_html'];
   let newVersion = getNewVersion(version);
   let text = fs.readFileSync(VERSION_FILE, { encoding: 'utf8', flag: 'r' });
   let replaced = text.replace(version, newVersion);

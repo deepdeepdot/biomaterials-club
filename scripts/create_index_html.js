@@ -1,7 +1,7 @@
 // @ts-check
 import fs from 'fs';
 import imageTraverser from './utils/imageTraverser.js';
-import incrementVersion from './utils/versioning.js';
+import incrementVersion from './utils/version.js';
 
 const HTML_FILE = 'public/index.html';
 
@@ -9,17 +9,26 @@ function readTextFile(file) {
   return fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 }
 
-function getImageTag(file) {
-  return `        <img loading="lazy" src="images/th/${file}" />`;
+async function getImageTags() {
+  let getImageTag = (file) =>
+    `        <img loading="lazy" src="images/th/${file}" />`;
+  let lines = await imageTraverser('./public/images', getImageTag);
+  return lines.join('\n');
 }
 
-let lines = await imageTraverser('./public/images', getImageTag);
-let imageTags = lines.join('\n');
-let version = incrementVersion();
+function getHtml(imageTags) {
+  let version = incrementVersion();
+  let template = readTextFile('./templates/index.tpl');
+  let html = template
+    .replace('${images}', imageTags)
+    .replace('${version}', version);
+  return html;
+}
 
-let template = readTextFile('./templates/index.tpl');
-let html = template
-  .replace('${images}', imageTags)
-  .replace('${version}', version);
+async function createIndexHtml() {
+  let imageTags = await getImageTags();
+  let html = getHtml(imageTags);
+  fs.writeFileSync(HTML_FILE, html);
+}
 
-fs.writeFileSync(HTML_FILE, html);
+createIndexHtml();

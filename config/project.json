@@ -8,7 +8,7 @@
         "imageSourceFolder": "./public/images",
         "thumbnailsFolder": "./public/images/th"
     },
-    "versioning": {
+    "create_index_html": {
         "version": "v1.0.32"
     }
 }
