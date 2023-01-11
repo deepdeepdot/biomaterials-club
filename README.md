@@ -107,6 +107,11 @@ There's a folder `/test` where we have some older versions. The web page was qui
 
 Most are older index.html with an updated `<base href>` meta tag.
 
+Thumbnail size from 220 to 125
+du
+2256    ./th-width-220
+1132    ./th
+
 ### Note
 - Running Ubuntu bash on WSL 2 is extremely slow when using /mnt/
   Eslint is about 100x slower it needs to loads hundreds of npm packages

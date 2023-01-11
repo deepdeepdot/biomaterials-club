@@ -2,21 +2,20 @@
 import fs from 'fs';
 import sharp from 'sharp';
 import imageTraverser from './utils/imageTraverser.js';
+import project from '../config/project.json' assert { type: 'json' };
 
-const IMAGE_WIDTH = 220; // For thumbnails
+const { thumbnailWidth, imageSourceFolder, thumbnailsFolder } =
+  project['create_thumbnails'];
 
-const ROOT_FOLDER = './public/images';
-
-let thumbnailsFolder = `${ROOT_FOLDER}/th`;
 if (!fs.existsSync(thumbnailsFolder)) {
   fs.mkdirSync(thumbnailsFolder);
 }
 
 let processFile = function (file) {
-  let outfile = `${ROOT_FOLDER}/th/${file}`;
+  let outfile = `${thumbnailsFolder}/${file}`;
 
-  sharp(`${ROOT_FOLDER}/${file}`)
-    .resize(IMAGE_WIDTH)
+  sharp(`${imageSourceFolder}/${file}`)
+    .resize(thumbnailWidth)
     .toFile(outfile, (err, info) => {
       if (err) {
         console.log(err);
@@ -26,4 +25,4 @@ let processFile = function (file) {
     });
 };
 
-imageTraverser(`${ROOT_FOLDER}`, processFile);
+imageTraverser(`${imageSourceFolder}`, processFile);

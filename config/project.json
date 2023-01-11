@@ -1,0 +1,11 @@
+{
+    "web_server": {
+        "dir": "./public",
+        "port": 8000
+    },
+    "create_thumbnails": {
+        "thumbnailWidth" : 125,
+        "imageSourceFolder": "./public/images",
+        "thumbnailsFolder": "./public/images/th"
+    }
+}
