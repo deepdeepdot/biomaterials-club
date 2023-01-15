@@ -3,11 +3,13 @@
 
 @media only screen and (min-width: 400px) {
   :root {
+    --grid-columns: 5;
     --grid-gap: 3px;
   }
 
-  .banner .middle {
-    padding-left: 40px;
+  .main img,
+  .main video {
+    width: calc(100vw / var(--grid-columns) - 10px);
   }
 }
 

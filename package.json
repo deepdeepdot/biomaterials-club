@@ -2,7 +2,7 @@
   "type": "module",
   "scripts": {
     "e2e": "DISPLAY=squirrel:0.0 cypress open",
-    "web": "node ./scripts/web_server.js",
+    "web": "npx vite --port 8000 public",
     "html": "node scripts/create_index_html",
     "thumbnails": "node scripts/create_thumbnails.js",
     "pretty": "npx prettier --write --single-quote ./public ./scripts",
