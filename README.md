@@ -70,7 +70,7 @@ These are the layers:
 - banner:    z-index: 5  (non-interactive: pointer-events:none )
 
 HTML
----
+```
 body
   page
     modal:     popup for single image view
@@ -79,7 +79,7 @@ body
     main:      images and videos
       button.bananas -> show `dashboard`
       button.poem -> show poem inside `banner`
----
+```
 
 CSS: mobile-first
 
