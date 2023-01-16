@@ -1,31 +1,41 @@
 /*----------------------------*/
 :root {
-  /* --grid-container-width: 100vw; */
   --grid-columns: 5;
   --grid-gap: 3px;
   --button-width: 100px;
   --button-height: 50px;
+  --button-radius: 20px;
 }
 
 * {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
+  /* Debugging CSS */
+  /* outline: 3px solid limegreen !important; */
+  /* background: rgb(0 100 0 / 0.05) !important; */
 }
 
 button {
+  appearance: none;
   color: white;
   min-height: var(--button-height);
   min-width: var(--button-width);
-  border-radius: 10px;
+  border-radius: var(--button-radius);
   background-color: rgba(64, 64, 0, 0.7);
-  border: 4px solid rgb(126, 83, 83);
+  border: 4px solid rgb(94, 47, 47);
   margin-bottom: 6px;
   padding: 10px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.7);
 }
 
 button:hover {
   border: 4px solid rgb(26, 183, 183);
   transform: scale(1.1);
+}
+
+button:active {
+  transform: translateY(10%);
 }
 
 .desktop {
@@ -52,6 +62,7 @@ button:hover {
 .toggle.poem {
   top: 0;
   right: 0;
+  border-radius: var(--button-radius);
 }
 
 /*----------------------------*/
@@ -111,7 +122,7 @@ button:hover {
 .banner .middle {
   background-color: rgba(216, 0, 0, 0.3);
   width: 100%;
-  padding-left: 0;
+  padding: 10px;
 }
 
 .banner h1 {
@@ -133,7 +144,8 @@ button:hover {
   background-color: rgba(0, 127, 127, 0.7);
   font-family: Lucida Console, Monaco, monospace;
   font-size: 0.8rem;
-  max-width: 500px;
+  max-width: 420px;
+  border-radius: var(--button-radius);
 }
 
 .poem.anim {
@@ -171,7 +183,7 @@ button:hover {
 .dashboard-right {
   position: fixed;
   top: 56px;
-  right: 0;
+  right: var(--button-radius);
   width: var(--button-width);
   padding: 10px;
 }

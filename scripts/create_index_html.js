@@ -5,9 +5,8 @@ import incrementVersion from './utils/version.js';
 
 const HTML_FILE = 'public/index.html';
 
-function readTextFile(file) {
-  return fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
-}
+let readTextFile = (file) =>
+  fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 
 async function getImageTags() {
   let getImageTag = (file) =>
