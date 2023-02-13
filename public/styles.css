@@ -1,3 +1,5 @@
+@import "https://unpkg.com/open-props";
+
 /*----------------------------*/
 :root {
   --grid-columns: 5;
@@ -255,6 +257,16 @@ span.close:active {
 /* Backgrounds */
 
 .gradient-bg {
+  background: var(--gradient-18);
+  background-attachment: fixed;
+}
+
+.gradient2-bg {
+  background: var(--gradient-21);
+  background-attachment: fixed;
+}
+
+.gradient3-bg {
   background: linear-gradient(to top left, red, yellow);
   background-attachment: fixed;
 }

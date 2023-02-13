@@ -33,6 +33,12 @@
           <button onclick="setBackground('gradient')">
             Background Gradient
           </button>
+          <button onclick="setBackground('gradient2')">
+            Background Gradient 2
+          </button>
+          <button onclick="setBackground('gradient3')">
+            Background Gradient 3
+          </button>
           <button onclick="setBackground('black')">Background Black</button>
           <button onclick="setBackground('blue')">Background Blue lines</button>
           <button onclick="setBackground('green')">Background Plant</button>
