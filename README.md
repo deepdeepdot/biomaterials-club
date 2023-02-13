@@ -21,7 +21,7 @@ I scraped these photos from our Slack channel to create a page using a masonry l
 Using `get_slack_images.js` to retrieve images from slack from the chrome's dev tools console.
 
 Once we put the slack images into the `public/images`, we create the thumbnails
-with `create_thumbnails.js` into `public\images\th`.
+with `create_thumbnails.js` into `public/images/th`.
 
 We run `npm run html` to produce `public/index.html` based on the template `templates/index.tpl`.
 During the page creation, it uses `imageTraverser.js` to produce the markup for the images
@@ -30,8 +30,8 @@ and `config/version.js` to get a page versioning that it's displayed in the poem
 During development, we can run `npm run pretty` to format files in `/public` and
 `npm run lint` to verify linting issues with `/public/script.js` and `npm run lint:all` for all other Javascript files in `/public` and `/scripts`.
 
-It requires an installation of [nodejs](https://nodejs.org/en/) 16 or above 
-and run `npm install` after cloning this repository
+It requires an installation of [nodejs](https://nodejs.org/en/) 16
+or above and execute `npm install` after cloning this repository
 https://github.com/deepdeepdot/bio-materials
 
 
@@ -64,10 +64,11 @@ npm run web
 
 For the html markup, any theme-based css is applied to the `<body>` tag. All the applicable backgrounds are applied through a class on the body tag.
 
-These are the layers:
-- modal:     z-index: 20 (popup overlay)
-- dashboard: z-index: 10 (for buttons and ui controls)
-- banner:    z-index: 5  (non-interactive: pointer-events:none )
+These are the layers
+|-----------|----------------------------------------------------|
+| modal     | z-index: 20 (popup overlay)
+| dashboard | z-index: 10 (for buttons and ui controls)
+| banner    | z-index: 5  (non-interactive: pointer-events:none )
 
 HTML
 ```
