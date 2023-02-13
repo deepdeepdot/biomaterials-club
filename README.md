@@ -65,6 +65,8 @@ npm run web
 For the html markup, any theme-based css is applied to the `<body>` tag. All the applicable backgrounds are applied through a class on the body tag.
 
 These are the layers
+
+| Component | Layer                                              |
 |-----------|----------------------------------------------------|
 | modal     | z-index: 20 (popup overlay)
 | dashboard | z-index: 10 (for buttons and ui controls)
