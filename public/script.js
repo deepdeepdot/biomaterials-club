@@ -80,5 +80,18 @@ function setupDashboard() {
   bananas.addEventListener('click', toggleBananas, false);
 }
 
+function startLogoAnimation() {
+  let rotation = 0;
+
+  function rotate() {
+    let logo  = document.querySelector('.logo');
+    rotation = (rotation + 10) % 360;
+    logo.style.setProperty('--rotation', `${rotation}deg`);
+  }
+  setInterval(rotate, 500);
+}
+
+
+startLogoAnimation();
 setupLightBoxModal();
 setupDashboard();

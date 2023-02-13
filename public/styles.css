@@ -176,6 +176,11 @@ span.close:active {
   width: 150px;
 }
 
+.banner .logo {
+  --rotation: 0deg;
+  filter: hue-rotate(var(--rotation));
+}
+
 .poem {
   background-color: rgba(0, 127, 127, 0.7);
   font-family: Lucida Console, Monaco, monospace;
