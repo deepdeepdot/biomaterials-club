@@ -94,12 +94,11 @@ button:active {
   visibility: hidden;
 }
 
-.modal img.wide {
+#modal-content {
   width: 100%;
-}
-
-.modal img:not(.wide) {
   height: 100%;
+  background-position: center;
+  background-size: cover;
 }
 
 /*----------------------------*/

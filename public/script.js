@@ -28,12 +28,11 @@ function togglePoem(button) {
 function setupLightBoxModal() {
   let modal = $('.modal');
 
-  function displayModal(image) {
+  function displayModal(imageSource, image) {
     let modalContent = document.getElementById('modal-content');
 
     let showContent = () => {
-      modalContent.innerHTML = '';
-      modalContent.appendChild(image);
+      modalContent.style.backgroundImage = `url(${imageSource})`;
 
       modal.classList.remove('transparent');
       modal.classList.remove('invisible');
@@ -47,21 +46,17 @@ function setupLightBoxModal() {
     setTimeout(setInvisible, 650);
   }
 
-  function createLargeImage(src, isWide) {
+  function createLargeImage(src) {
     let largeImage = new Image();
     largeImage.src = src;
-    if (isWide) {
-      largeImage.classList.add('wide');
-    }
     return largeImage;
   }
 
   function popupModal(event) {
     let image = event.target;
-    let isWide = image.width > image.height;
     let largeImageSrc = image.src.replace('/th', '');
-    let largeImage = createLargeImage(largeImageSrc, isWide);
-    displayModal(largeImage);
+    let largeImage = createLargeImage(largeImageSrc);
+    displayModal(largeImageSrc, largeImage);
   }
 
   let imgs = document.querySelectorAll('.main img');
