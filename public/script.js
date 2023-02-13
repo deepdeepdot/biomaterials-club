@@ -29,9 +29,12 @@ function setupLightBoxModal() {
   let modal = $('.modal');
 
   function displayModal(image) {
+    let modalContent = document.getElementById('modal-content');
+
     let showContent = () => {
-      modal.innerHTML = ''; // Remove all children
-      modal.appendChild(image);
+      modalContent.innerHTML = '';
+      modalContent.appendChild(image);
+
       modal.classList.remove('transparent');
       modal.classList.remove('invisible');
     };

@@ -103,6 +103,41 @@ button:active {
 }
 
 /*----------------------------*/
+/* Close */
+
+span.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  line-height: 0;
+  border-radius: 50%;
+  background-color: purple;
+  transition: 0.5s;
+}
+
+span.close:hover {
+  transform: scale(1.1);
+  padding: 10px;
+  top: 10px;
+  right: 10px;
+}
+
+span.close:active {
+  transform: scale(0.8);
+  padding: 0;
+  top: 20px;
+  right: 20px;
+}
+
+.close > svg:hover > path {
+  fill: red;
+}
+
+.close:active > svg > path {
+  fill: orange;
+}
+
+/*----------------------------*/
 /* Banner */
 
 .banner {
@@ -195,19 +230,22 @@ button:active {
   margin: 0px auto;
   columns: var(--grid-columns);
   column-gap: var(--grid-gap);
+  grid-auto-flow: row dense;
 }
 
 .main img,
 .main video {
   width: calc(100vw / var(--grid-columns) - 10px);
-
   border-radius: 4px;
   cursor: pointer;
+  transition: 0.3s;
 }
 
 .main img:hover {
   filter: contrast(200%);
   /* filter: sepia(60%); */
+  transform: scale(1.1);
+  outline: 2px solid orange;
 }
 
 .main img {
