@@ -133,7 +133,7 @@ span.close:active {
 }
 
 .close:active > svg > path {
-  fill: orange;
+  fill: #bada55;
 }
 
 /*----------------------------*/
