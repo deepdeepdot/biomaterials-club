@@ -54,6 +54,22 @@ function togglePoem(button) {
   setTimeout(updateButtonMessage, 150);
 }
 
+// ---------------- Dashboard
+
+function setupDashboard() {
+  let bananas = $('#bananas');
+
+  function toggleBananas() {
+    let dashboard = $('.dashboard');
+    dashboard.classList.toggle('visible');
+
+    let visible = dashboard.classList.contains('visible');
+    bananas.innerText = visible ? 'Go Less Bananas!' : 'Go Bananas!';
+  }
+
+  bananas.addEventListener('click', toggleBananas, false);
+}
+
 // ---------------- LightBox Modal
 
 let ModalContent = {
@@ -111,19 +127,7 @@ function setupLightBoxModal() {
   modal.addEventListener('click', hideModal, false);
 }
 
-function setupDashboard() {
-  let bananas = $('#bananas');
-
-  function toggleBananas() {
-    let dashboard = $('.dashboard');
-    dashboard.classList.toggle('visible');
-
-    let visible = dashboard.classList.contains('visible');
-    bananas.innerText = visible ? 'Go Less Bananas!' : 'Go Bananas!';
-  }
-
-  bananas.addEventListener('click', toggleBananas, false);
-}
+// ----------------------------------
 
 setupLightBoxModal();
 setupDashboard();
