@@ -20,6 +20,8 @@ function doLogoAnimation() {
 }
 
 doLogoAnimation();
+
+/*
 // ---------------- Column Size + Background
 
 function setColumnSize(size) {
@@ -125,3 +127,5 @@ function setupLightBoxModal() {
 
 setupLightBoxModal();
 setupDashboard();
+
+*/
