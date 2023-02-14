@@ -136,3 +136,4 @@ du
 
 ### Issues
 - Logo hue rotation does not work in some mobiles, desktop is fine
+- Performance decrease due to huge number of photos => ImageLoader!

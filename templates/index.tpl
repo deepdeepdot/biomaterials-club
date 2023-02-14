@@ -112,4 +112,10 @@ ${images}
   </body>
 </html>
 
-<script src="script.js"></script>
+<script type="module">
+  import { setColumnSize, togglePoem, setBackground } from "./script.mjs";
+
+  window.setColumnSize = setColumnSize;
+  window.setBackground = setBackground;
+  window.togglePoem = togglePoem;
+</script>

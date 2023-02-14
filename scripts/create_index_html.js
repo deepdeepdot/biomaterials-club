@@ -15,6 +15,21 @@ async function getImageTags() {
   return lines.join('\n');
 }
 
+async function getJSForImages() {
+  let images = [];
+  let getImageFileName = (file) => {
+    images.push(file);
+  }
+  await imageTraverser('./public/images', getImageFileName);
+  let array = JSON.stringify(images);
+  let code = `
+<script>
+  var images = ${array};
+</script>
+`;
+  return code;
+}
+
 function getHtml(imageTags) {
   let version = incrementVersion();
   let template = readTextFile('./templates/index.tpl');
@@ -25,7 +40,8 @@ function getHtml(imageTags) {
 }
 
 async function createIndexHtml() {
-  let imageTags = await getImageTags();
+  // let imageTags = await getImageTags();
+  let imageTags = await getJSForImages();
   let html = getHtml(imageTags);
   fs.writeFileSync(HTML_FILE, html);
 }

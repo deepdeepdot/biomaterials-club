@@ -1,4 +1,7 @@
 // @ts-check
+
+import ImageLoader from './imageloader.mjs';
+
 let $ = (selector) => document.querySelector(selector);
 
 // ---------------- Logo Animation
@@ -16,18 +19,18 @@ function doLogoAnimation() {
 
 // ---------------- Column Size + Background
 
-function setColumnSize(size) {
+export function setColumnSize(size) {
   let style = document.documentElement.style;
   style.setProperty('--grid-columns', size);
 }
 
-function setBackground(name) {
+export function setBackground(name) {
   document.body.classList.value = `${name}-bg`;
 }
 
 // ---------------- Poem
 
-function togglePoem(button) {
+export function togglePoem(button) {
   let poem = $('.poem.anim');
   poem.classList.toggle('fadeIn');
 
@@ -64,9 +67,11 @@ let ModalContent = {
   lastFocusElement: null,
   fadeOut: () => {
     let { lastFocusElement } = ModalContent;
-    lastFocusElement.classList.add('fadeOut');
-    let clearImageFadeOut = () => lastFocusElement.classList.remove('fadeOut');
-    setTimeout(clearImageFadeOut, 300);
+    if (lastFocusElement) {
+      lastFocusElement.classList.add('fadeOut');
+      let clearImageFadeOut = () => lastFocusElement.classList.remove('fadeOut');
+      setTimeout(clearImageFadeOut, 300);
+    }
   },
 };
 
@@ -108,15 +113,21 @@ function setupLightBoxModal() {
     ModalContent.lastFocusElement = image;
   }
 
-  let imgs = document.querySelectorAll('.main img');
-  imgs.forEach((img) => {
-    img.addEventListener('click', popupModal, false);
-  });
+  // let imgs = document.querySelectorAll('.main img');
+  // imgs.forEach((img) => {
+  //   img.addEventListener('click', popupModal, false);
+  // });
   modal.addEventListener('click', hideModal, false);
+
+  return popupModal;
 }
 
 // ----------------------------------
 
-setupLightBoxModal();
 setupDashboard();
 doLogoAnimation();
+
+let popupModal = setupLightBoxModal();
+
+ImageLoader.setup({ batchSize: 50, interval: 5000 });
+ImageLoader.loadImages(images, popupModal);
