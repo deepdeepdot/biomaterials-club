@@ -13,6 +13,7 @@ function doLogoAnimation() {
 
     logo.offsetHeight; // Force a redraw?
 
+
     // let p = logo.style.getPropertyValue('--rotation');
     // let output = `${rotation}: ${p}`;
     // document.querySelector('.debug').innerText = output;
@@ -20,8 +21,6 @@ function doLogoAnimation() {
   }
   setInterval(rotate, 500);
 }
-
-// doLogoAnimation();
 
 // ---------------- Column Size + Background
 
@@ -128,3 +127,4 @@ function setupLightBoxModal() {
 
 setupLightBoxModal();
 setupDashboard();
+doLogoAnimation();
