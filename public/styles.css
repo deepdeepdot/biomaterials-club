@@ -245,22 +245,24 @@ span.close:active {
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s;
+  border: 2px solid rgba(0, 0, 0, 0.0); /* placeholder */
 }
 
 .main img:hover {
   filter: contrast(200%);
   transform: scale(1.4);
-  border: 4px solid orange;
+  border-color: orange;
 }
 
 .main img:active {
-    transform: scale(1.2);
-    border: 4px solid #bada55;
+  transform: scale(1.2);
+  border-color: #bada55;
 }
 
 .main img.fadeOut {
   transform: scale(3);
-  border: 4px solid #bada55;
+  border-color: #bada55;
+  transition: 0.2s;
 }
 
 .main img {
