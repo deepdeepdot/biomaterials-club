@@ -4,19 +4,12 @@ let $ = (selector) => document.querySelector(selector);
 // ---------------- Logo Animation
 
 function doLogoAnimation() {
-  let rotation = 0;
   let logo = $('.logo');
+  let rotation = 0;
 
   function rotate() {
     rotation = (rotation + 10) % 360;
     logo.style.setProperty('--rotation', `${rotation}deg`);
-
-    logo.offsetHeight; // Force a redraw?
-    logo.style.webkitTransform = "scale (1)"; // Just for Chrome
-    // let p = logo.style.getPropertyValue('--rotation');
-    // let output = `${rotation}: ${p}`;
-    // document.querySelector('.debug').innerText = output;
-    // console.log(output);
   }
   setInterval(rotate, 500);
 }

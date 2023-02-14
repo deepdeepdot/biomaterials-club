@@ -111,9 +111,12 @@ There's a folder `/test` where we have some older versions. The web page was qui
 Most are older index.html with an updated `<base href>` meta tag.
 
 Thumbnail size from 220 to 125
+
 du
-2256    ./th-width-220
-1132    ./th
+| Size  | thumbnails
+|-------|---------------
+| 2256  | ./th-width-220
+| 1132  | ./th
 
 ### Note
 - Running Ubuntu bash on WSL 2 is extremely slow when using /mnt/
@@ -131,3 +134,5 @@ du
   eslint pollution: hundreds of packages downloaded and executed
 - Responsive: landscape for ipads and table
 
+### Issues
+- Logo hue rotation does not work in some mobiles, desktop is fine
