@@ -10,19 +10,17 @@ function doLogoAnimation() {
     let logo = $('.logo');
     rotation = (rotation + 10) % 360;
     logo.style.setProperty('--rotation', `${rotation}deg`);
-
-    let p = logo.style.getPropertyValue('--rotation');
-    let output = `${rotation}: ${p}`;
-
-    document.querySelector('.debug').innerText = output;
-    console.log(output);
+    logo.style.zIndex = '2';
+    // let p = logo.style.getPropertyValue('--rotation');
+    // let output = `${rotation}: ${p}`;
+    // document.querySelector('.debug').innerText = output;
+    // console.log(output);
   }
   setInterval(rotate, 500);
 }
 
 doLogoAnimation();
 
-/*
 // ---------------- Column Size + Background
 
 function setColumnSize(size) {
@@ -128,5 +126,3 @@ function setupLightBoxModal() {
 
 setupLightBoxModal();
 setupDashboard();
-
-*/
