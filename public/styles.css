@@ -177,7 +177,7 @@ span.close:active {
 }
 
 .banner .logo {
-  --rotation: 0deg;
+  --rotation: 60deg;
   filter: hue-rotate(var(--rotation, '0deg'));
 }
 
