@@ -10,36 +10,30 @@ function doLogoAnimation() {
     let logo = $('.logo');
     rotation = (rotation + 10) % 360;
     logo.style.setProperty('--rotation', `${rotation}deg`);
+
+    let p = logo.style.getPropertyValue('--rotation');
+    let output = `${rotation}: ${p}`;
+    // document.querySelector('.debug').innerText = output;
+    console.log(output);
   }
-  setInterval(rotate, 100);
+  setInterval(rotate, 500);
 }
 
-let animationStarted = false;
-function startLogoAnimation() {
-  if (!animationStarted) {
-    doLogoAnimation();
-    animationStarted = true;
-  }
-}
-
+doLogoAnimation();
 // ---------------- Column Size + Background
 
 function setColumnSize(size) {
   let style = document.documentElement.style;
   style.setProperty('--grid-columns', size);
-  startLogoAnimation();
 }
 
 function setBackground(name) {
   document.body.classList.value = `${name}-bg`;
-  startLogoAnimation();
 }
 
 // ---------------- Poem
 
 function togglePoem(button) {
-  startLogoAnimation();
-
   let poem = $('.poem.anim');
   poem.classList.toggle('fadeIn');
 
