@@ -12,8 +12,7 @@ function doLogoAnimation() {
     logo.style.setProperty('--rotation', `${rotation}deg`);
 
     logo.offsetHeight; // Force a redraw?
-
-
+    logo.style.webkitTransform = "scale (1)"; // Just for Chrome
     // let p = logo.style.getPropertyValue('--rotation');
     // let output = `${rotation}: ${p}`;
     // document.querySelector('.debug').innerText = output;
