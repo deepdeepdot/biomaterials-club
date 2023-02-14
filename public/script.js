@@ -5,12 +5,14 @@ let $ = (selector) => document.querySelector(selector);
 
 function doLogoAnimation() {
   let rotation = 0;
+  let logo = $('.logo');
 
   function rotate() {
-    let logo = $('.logo');
     rotation = (rotation + 10) % 360;
     logo.style.setProperty('--rotation', `${rotation}deg`);
-    logo.style.zIndex = '2';
+
+    logo.offsetHeight; // Force a redraw?
+
     // let p = logo.style.getPropertyValue('--rotation');
     // let output = `${rotation}: ${p}`;
     // document.querySelector('.debug').innerText = output;
@@ -19,7 +21,7 @@ function doLogoAnimation() {
   setInterval(rotate, 500);
 }
 
-doLogoAnimation();
+// doLogoAnimation();
 
 // ---------------- Column Size + Background
 
