@@ -34,7 +34,7 @@ function createImageLoader() {
         images.forEach(image => {
             let thumbnail = createThumbnail(image);
             thumbnail.onclick = clickHandler;
-            main.appendChild(thumbnail);
+            thumbnail.onload = () => main.appendChild(thumbnail);
         });
     }
 
