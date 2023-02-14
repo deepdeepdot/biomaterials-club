@@ -13,7 +13,8 @@ function doLogoAnimation() {
 
     let p = logo.style.getPropertyValue('--rotation');
     let output = `${rotation}: ${p}`;
-    // document.querySelector('.debug').innerText = output;
+
+    document.querySelector('.debug').innerText = output;
     console.log(output);
   }
   setInterval(rotate, 500);
