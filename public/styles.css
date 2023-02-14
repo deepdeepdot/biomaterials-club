@@ -249,9 +249,18 @@ span.close:active {
 
 .main img:hover {
   filter: contrast(200%);
-  /* filter: sepia(60%); */
-  transform: scale(1.1);
-  outline: 2px solid orange;
+  transform: scale(1.4);
+  border: 4px solid orange;
+}
+
+.main img:active {
+    transform: scale(1.2);
+    border: 4px solid #bada55;
+}
+
+.main img.fadeOut {
+  transform: scale(3);
+  border: 4px solid #bada55;
 }
 
 .main img {

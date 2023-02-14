@@ -1,16 +1,45 @@
 // @ts-check
 let $ = (selector) => document.querySelector(selector);
 
+// ---------------- Logo Animation
+
+function doLogoAnimation() {
+  let rotation = 0;
+
+  function rotate() {
+    let logo = $('.logo');
+    rotation = (rotation + 10) % 360;
+    logo.style.setProperty('--rotation', `${rotation}deg`);
+  }
+  setInterval(rotate, 100);
+}
+
+let animationStarted = false;
+function startLogoAnimation() {
+  if (!animationStarted) {
+    doLogoAnimation();
+    animationStarted = true;
+  }
+}
+
+// ---------------- Column Size + Background
+
 function setColumnSize(size) {
   let style = document.documentElement.style;
   style.setProperty('--grid-columns', size);
+  startLogoAnimation();
 }
 
 function setBackground(name) {
   document.body.classList.value = `${name}-bg`;
+  startLogoAnimation();
 }
 
+// ---------------- Poem
+
 function togglePoem(button) {
+  startLogoAnimation();
+
   let poem = $('.poem.anim');
   poem.classList.toggle('fadeIn');
 
@@ -25,11 +54,23 @@ function togglePoem(button) {
   setTimeout(updateButtonMessage, 150);
 }
 
+// ---------------- LightBox Modal
+
+let ModalContent = {
+  lastFocusElement: null,
+  fadeOut: () => {
+    let { lastFocusElement } = ModalContent;
+    lastFocusElement.classList.add('fadeOut');
+    let clearImageFadeOut = () => lastFocusElement.classList.remove('fadeOut');
+    setTimeout(clearImageFadeOut, 300);
+  },
+};
+
 function setupLightBoxModal() {
   let modal = $('.modal');
 
   function displayModal(imageSource, image) {
-    let modalContent = document.getElementById('modal-content');
+    let modalContent = $('#modal-content');
 
     let showContent = () => {
       modalContent.style.backgroundImage = `url(${imageSource})`;
@@ -44,6 +85,8 @@ function setupLightBoxModal() {
     modal.classList.add('transparent'); // start fade animation
     let setInvisible = () => modal.classList.add('invisible');
     setTimeout(setInvisible, 650);
+
+    ModalContent.fadeOut();
   }
 
   function createLargeImage(src) {
@@ -57,6 +100,8 @@ function setupLightBoxModal() {
     let largeImageSrc = image.src.replace('/th', '');
     let largeImage = createLargeImage(largeImageSrc);
     displayModal(largeImageSrc, largeImage);
+
+    ModalContent.lastFocusElement = image;
   }
 
   let imgs = document.querySelectorAll('.main img');
@@ -80,17 +125,5 @@ function setupDashboard() {
   bananas.addEventListener('click', toggleBananas, false);
 }
 
-function startLogoAnimation() {
-  let rotation = 0;
-
-  function rotate() {
-    let logo = document.querySelector('.logo');
-    rotation = (rotation + 10) % 360;
-    logo.style.setProperty('--rotation', `${rotation}deg`);
-  }
-  setInterval(rotate, 500);
-}
-
-startLogoAnimation();
 setupLightBoxModal();
 setupDashboard();
