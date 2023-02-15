@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Biomaterials Studio @Genspace</title>
+    <link rel="shortcut icon" type="image/png" href="genspace-icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Amatic+SC"
+    />
+    <style>
+        .banner .logo {
+          filter: hue-rotate(var(--rotation, '0deg'));
+        }
+    </style>
+  </head>
+
+  <body class="gradient-bg">
+    <div class="page">
+
+        <div class="banner">
+        <div class="middle">
+          <h1>BioMaterials Studio</h1>
+          <div>
+            <img
+              class="logo"
+              width="250"
+              src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w"
+            />
+          </div>
+        </div>
+          
+    </div>
+  </body>
+</html>
+
+<script>
+    let $ = (selector) => document.querySelector(selector);
+
+    function doLogoAnimation() {
+      let logo = $('.logo');
+      let rotation = 0;
+  
+      function rotate() {
+        rotation = (rotation + 10) % 360;
+        logo.style.setProperty('--rotation', `${rotation}deg`);
+  
+        let p = logo.style.getPropertyValue('--rotation');
+        let output = `${rotation}: ${p}`;
+  
+        document.querySelector('.debug').innerText = output;
+        console.log(output);
+      }
+      setInterval(rotate, 200);
+    }
+  
+    doLogoAnimation();
+</script>
