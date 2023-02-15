@@ -4,14 +4,24 @@
 
 let $ = (selector) => document.querySelector(selector);
 
+// Transparency starts: opacity animation until INVISIBLE state
+// Set invisible (so content can be clickable)
+const MODAL_HIDE_TRANSPARENCY_DURATION = 650;
+const HIGHLIGHT_DURATION = 300;
+
 let ModalContent = {
   lastFocusElement: null,
-  fadeOut: () => {
+  setupHighlight: function() {
     let { lastFocusElement } = ModalContent;
     if (lastFocusElement) {
-      lastFocusElement.classList.add('fadeOut');
-      let clearFadeOut = () => lastFocusElement.classList.remove('fadeOut');
-      setTimeout(clearFadeOut, 300);
+      lastFocusElement.classList.add('highlight');
+    }
+  },
+  whileFadingOut: () => {
+    let { lastFocusElement } = ModalContent;
+    if (lastFocusElement) {
+      let clearFadeOut = () => lastFocusElement.classList.remove('highlight');
+      setTimeout(clearFadeOut, HIGHLIGHT_DURATION);
     }
   },
 };
@@ -30,12 +40,13 @@ export default function setupLightBoxModal() {
   }
 
   function hideModal() {
+    ModalContent.setupHighlight();
+
     modal.classList.add('transparent'); // start fade animation
     let setInvisible = () => modal.classList.add('invisible');
-    setTimeout(setInvisible, 650);
+    setTimeout(setInvisible, MODAL_HIDE_TRANSPARENCY_DURATION);
 
-    let fadeOut = () => ModalContent.fadeOut();
-    setTimeout(fadeOut, 250);
+    ModalContent.whileFadingOut();
   }
 
   function createLargeImage(src) {

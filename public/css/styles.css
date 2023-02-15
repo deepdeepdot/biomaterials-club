@@ -245,19 +245,19 @@ span.close:active {
 
 .main img:hover {
   filter: contrast(200%);
-  transform: scale(1.4);
   border-color: orange;
+  transform: scale(1.4);
 }
 
 .main img:active {
-  transform: scale(1.2);
   border-color: #bada55;
+  transform: scale(1.2);
 }
 
-.main img.fadeOut {
-  transform: scale(3);
+.main img.highlight {
   border-color: #bada55;
-  transition: 0.2s;
+  transform: scale(3);
+  transition: 0.1s;
 }
 
 .main img {
