@@ -241,17 +241,16 @@ span.close:active {
   cursor: pointer;
   transition: 0.3s;
   border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
-  overflow: visible !important; /* border gets cutoff in mobile after scaling back (?) */
 }
 
 .main img:hover {
   filter: contrast(200%);
-  transform: scale(1.4);
+  /* transform: scale(1.4); */
   border-color: orange;
 }
 
 .main img:active {
-  transform: scale(1.2);
+  /* transform: scale(1.2); */
   border-color: #bada55;
 }
 
