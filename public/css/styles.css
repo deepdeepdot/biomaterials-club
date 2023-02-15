@@ -241,6 +241,8 @@ span.close:active {
   cursor: pointer;
   transition: 0.3s;
   border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
+  overflow: visible !important; /* border gets cutoff in mobile after scaling back (?) */
+  transform: scale(1); /* useless ? */
 }
 
 .main img:hover {
