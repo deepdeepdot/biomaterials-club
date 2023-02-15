@@ -5,31 +5,35 @@ import incrementVersion from './utils/version.js';
 
 const HTML_FILE = 'public/index.html';
 
-let readTextFile = (file) =>
-  fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
+async function getImages() {
+  let images = [];
+  let getImageFileName = (file) => images.push(file);
+  await imageTraverser('./public/images', getImageFileName);
+  return images;
+}
 
 async function getImageTags() {
+  let images = await getImages();
   let getImageTag = (file) =>
     `        <img loading="lazy" src="images/th/${file}" />`;
-  let lines = await imageTraverser('./public/images', getImageTag);
+  let lines = images.map(getImageTag);
   return lines.join('\n');
 }
 
 async function getJSForImages() {
-  let images = [];
-  let getImageFileName = (file) => images.push(file);
-
-  await imageTraverser('./public/images', getImageFileName);
-  // let array = JSON.stringify(images);
+  let images = await getImages();
   let blanks = ' '.repeat(12);
-  let array = images.map((img) => `${blanks}'${img}',`).join('\n');
+  let array = images.map((img) => `${blanks}'${img}',`);
   let code = `        <script>
           var images = [
-${array}
+${array.join('\n')}
           ];
         </script>`;
   return code;
 }
+
+let readTextFile = (file) =>
+  fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 
 function getHtml(imageTags) {
   let version = incrementVersion();
