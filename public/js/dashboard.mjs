@@ -3,6 +3,7 @@
 
 import ImageLoader from './imageloader.mjs';
 import setupLightBoxModal from './lightbox.mjs';
+import CounterWait from './counterwait.mjs';
 
 let $ = (selector) => document.querySelector(selector);
 
@@ -49,7 +50,7 @@ export function togglePoem(button) {
 
 // ---------------- Dashboard
 
-function setupDashboard() {
+function setupDashboardButtons() {
   let bananas = $('#bananas');
 
   function toggleBananas() {
@@ -65,15 +66,35 @@ function setupDashboard() {
 
 // ----------------------------------
 
-setupDashboard();
-doLogoAnimation();
+function setupImages(popupModal, startTime) {
+  let imgs = document.querySelectorAll('.main img');
 
-let popupModal = setupLightBoxModal();
+  CounterWait.resetCounter();
+  CounterWait.waitFor(() => {
+    let completed = 0;
+    imgs.forEach((img) => {
+      if (img.complete) {
+        completed++;
+      }
+    });
+    return completed == imgs.length;
+  }, () => {
+    let endTime = window.performance.now();
+    let timeDiff = endTime - startTime;
+    console.log('setup: ' + timeDiff);
+    ImageLoader.setup({ batchSize: 50, interval: 3000 });
+    ImageLoader.loadImages(images, popupModal, timeDiff);
+  });
 
-let imgs = document.querySelectorAll('.main img');
-imgs.forEach((img) => {
-  img.addEventListener('click', popupModal, false);
-});
+  imgs.forEach((img) => {
+    img.addEventListener('click', popupModal, false);
+  });
+}
 
-ImageLoader.setup({ batchSize: 50, interval: 3000 });
-ImageLoader.loadImages(images, popupModal);
+export function setupDashboard(startTime) {
+  let popupModal = setupLightBoxModal();
+  setupImages(popupModal, startTime);
+
+  setupDashboardButtons();
+  doLogoAnimation();
+}

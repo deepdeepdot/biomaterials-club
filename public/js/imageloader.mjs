@@ -1,6 +1,8 @@
 // @ts-check
 // ---------------- Image Loader
 
+import CounterWait from "./counterwait.mjs";
+
 let createThumbnail = (img) => {
   let image = new Image();
   image.src = `images/th/${img}`;
@@ -23,15 +25,6 @@ function splitIntoBatches(images, batchSize) {
   return batches;
 }
 
-function waitFor(condition, execution, waitCycleDuration = 500) {
-  let interval = setInterval(() => {
-    if (condition()) {
-      execution();
-      clearInterval(interval);
-    }
-  }, waitCycleDuration);
-}
-
 function createImageLoader() {
   let main = document.querySelector('.main');
   let batchSize, interval;
@@ -42,23 +35,18 @@ function createImageLoader() {
 
   function loadImagesForBatch(images, clickHandler) {
     let thumbnails = [];
-    let count = 0;
-
-    function incrementCount() {
-      requestAnimationFrame(() => {
-        count++;
-      });
-    }
 
     images.forEach((image) => {
       let thumbnail = createThumbnail(image);
       thumbnail.onclick = clickHandler;
-      thumbnail.onload = incrementCount; // make it atomic, avoid race conditions
+      thumbnail.onload = CounterWait.incrementCount;
       thumbnails.push(thumbnail);
     });
 
-    waitFor(
-      function () {
+    CounterWait.resetCounter();
+
+    CounterWait.waitFor(
+      function (count) {
         return count >= images.length;
       },
       () => {
@@ -77,12 +65,20 @@ function createImageLoader() {
     });
   }
 
-  function loadImages(images, clickHandler) {
-    // if (isSuperSlow()) return; // Do not bother with all images, use IntersectionObserver?
+  const SECOND = 1000;
+
+  function loadImages(images, clickHandler, timeDiff) {
+    let isSuperSlow = timeDiff > 5 * SECOND;
+    if (isSuperSlow) return;
 
     let myImages = [...images]; // clone this
 
-    if (isDesktop() && isFastSpeed()) {
+    let isFastSpeed = timeDiff < 3 * SECOND;
+
+    console.log(`isSuperSlow: ${isSuperSlow}`);
+    console.log(`isFastSpeed: ${isFastSpeed}`);
+
+    if (isDesktop() && isFastSpeed) {
       loadAllImages(myImages, clickHandler);
     }
     else {
@@ -102,14 +98,6 @@ function createImageLoader() {
 }
 
 // ----------------------------- Device detection
-
-function isSuperSlow() {
-  return navigator.connection.effectiveType == '2g' || navigator.connection.downlink < 2 || navigator.connection.rtt >= 1000
-}
-
-function isFastSpeed() {
-  return navigator.connection.effectiveType == '4g' || navigator.connection.downlink >= 10 || navigator.connection.rtt >= 50;
-}
 
 function isDesktop() {
   let isTouch = ('ontouchstart' in window); // exception: surface, some Android/chrome laptops?
