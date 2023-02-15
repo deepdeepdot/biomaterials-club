@@ -236,7 +236,6 @@ span.close:active {
   margin: 0px auto;
   columns: var(--grid-columns);
   column-gap: var(--grid-gap);
-  grid-auto-flow: row dense;
 }
 
 .main img,
@@ -245,7 +244,7 @@ span.close:active {
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s;
-  border: 2px solid rgba(0, 0, 0, 0.0); /* placeholder */
+  border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
 }
 
 .main img:hover {

@@ -69,8 +69,8 @@ let ModalContent = {
     let { lastFocusElement } = ModalContent;
     if (lastFocusElement) {
       lastFocusElement.classList.add('fadeOut');
-      let clearImageFadeOut = () => lastFocusElement.classList.remove('fadeOut');
-      setTimeout(clearImageFadeOut, 300);
+      let clearFadeOut = () => lastFocusElement.classList.remove('fadeOut');
+      setTimeout(clearFadeOut, 300);
     }
   },
 };

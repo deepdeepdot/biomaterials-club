@@ -19,7 +19,7 @@ async function getJSForImages() {
   let images = [];
   let getImageFileName = (file) => {
     images.push(file);
-  }
+  };
   await imageTraverser('./public/images', getImageFileName);
   let array = JSON.stringify(images);
   let code = `

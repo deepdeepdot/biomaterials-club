@@ -7,7 +7,7 @@
     "thumbnails": "node scripts/create_thumbnails.js",
     "pretty": "npx prettier --write --single-quote ./public ./scripts",
     "lint": "npx eslint -c config/.eslintrc.cjs public/script.mjs",
-    "lint:all": "npx eslint -c config/.eslintrc.cjs public/*.js public/*.mjs scripts/*.js scripts/utils/imageTraverser.js scripts/utils/version.js",
+    "lint:all": "npx eslint -c config/.eslintrc.cjs public/js/*.js public/js/*.mjs scripts/*.js scripts/utils/*.js",
     "rome": "npx rome check ./scripts ./public",
     "check:css": "dprint check --config config/dprint.json ./public/*.css",
     "--not-ready-fmt:css": "dprint fmt --config config/dprint.json ./public/*.css"
