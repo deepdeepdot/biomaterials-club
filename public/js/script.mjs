@@ -113,10 +113,10 @@ function setupLightBoxModal() {
     ModalContent.lastFocusElement = image;
   }
 
-  // let imgs = document.querySelectorAll('.main img');
-  // imgs.forEach((img) => {
-  //   img.addEventListener('click', popupModal, false);
-  // });
+  let imgs = document.querySelectorAll('.main img');
+  imgs.forEach((img) => {
+    img.addEventListener('click', popupModal, false);
+  });
   modal.addEventListener('click', hideModal, false);
 
   return popupModal;

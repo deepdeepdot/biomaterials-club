@@ -7,19 +7,19 @@ let createThumbnail = (img) => {
 };
 
 function splitIntoBatches(images, batchSize) {
-  let containers = [];
-  let newContainer;
+  let batches = [];
+  let newBatch;
   let i = 0;
 
   while (i < images.length) {
-    newContainer = [];
-    containers.push(newContainer);
-    while (newContainer.length < batchSize && i < images.length) {
-      newContainer.push(images[i]);
+    newBatch = [];
+    batches.push(newBatch);
+    while (newBatch.length < batchSize && i < images.length) {
+      newBatch.push(images[i]);
       i++;
     }
   }
-  return containers;
+  return batches;
 }
 
 function waitFor(condition, execution) {
@@ -52,7 +52,7 @@ function createImageLoader() {
     images.forEach((image) => {
       let thumbnail = createThumbnail(image);
       thumbnail.onclick = clickHandler;
-      thumbnail.onload = incrementCount; // not atomic, race conditions!!!
+      thumbnail.onload = incrementCount; // make it atomic, avoid race conditions
       thumbnails.push(thumbnail);
     });
 
