@@ -373,8 +373,18 @@
   </body>
 </html>
 
+
+<script type="importmap">
+{
+  "imports": {
+    "dashboard": "./js/dashboard.mjs",
+    "imageloader": "./js/imageloader.mjs",
+    "lightbox": "./js/lightbox.mjs"
+  }
+}
+</script>
 <script type="module">
-  import { setColumnSize, togglePoem, setBackground } from './js/dashboard.mjs';
+  import { setColumnSize, togglePoem, setBackground } from 'dashboard';
 
   window.setColumnSize = setColumnSize;
   window.setBackground = setBackground;

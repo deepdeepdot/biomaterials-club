@@ -1,8 +1,8 @@
 // @ts-check
 /* global images */
 
-import ImageLoader from './imageloader.mjs';
-import setupLightBoxModal from './lightbox.mjs';
+import ImageLoader from 'imageloader';
+import setupLightBoxModal from 'lightbox';
 
 let $ = (selector) => document.querySelector(selector);
 
