@@ -24,9 +24,7 @@ export default function setupLightBoxModal() {
 
     let showContent = () => {
       modalContent.style.backgroundImage = `url(${imageSource})`;
-
-      modal.classList.remove('transparent');
-      modal.classList.remove('invisible');
+      modal.classList.remove('transparent', 'invisible');
     };
     image.onload = showContent;
   }
@@ -36,7 +34,8 @@ export default function setupLightBoxModal() {
     let setInvisible = () => modal.classList.add('invisible');
     setTimeout(setInvisible, 650);
 
-    ModalContent.fadeOut();
+    let fadeOut = () => ModalContent.fadeOut();
+    setTimeout(fadeOut, 250);
   }
 
   function createLargeImage(src) {

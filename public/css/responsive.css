@@ -1,6 +1,10 @@
 /*----------------------------*/
 /* Responsive */
 
+.desktop {
+  visibility: hidden;
+}
+
 @media only screen and (min-width: 400px) {
   :root {
     --grid-columns: 5;

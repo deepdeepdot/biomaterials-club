@@ -40,10 +40,6 @@ button:active {
   transform: translateY(10%);
 }
 
-.desktop {
-  visibility: hidden;
-}
-
 /*----------------------------*/
 /* Toggle buttons */
 
@@ -239,8 +235,7 @@ span.close:active {
   column-gap: var(--grid-gap);
 }
 
-.main img,
-.main video {
+.main img {
   width: calc(100vw / var(--grid-columns) - 10px);
   border-radius: 4px;
   cursor: pointer;
