@@ -243,21 +243,35 @@ span.close:active {
   border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
 }
 
+
+@keyframes grow {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(var(--proportion, 1.4));
+  }
+}
+
 .main img:hover {
+  --proportion: 1.4;
   filter: contrast(200%);
-  /* transform: scale(1.4); */
+  animation: grow 0.3s both;
   border-color: orange;
 }
 
 .main img:active {
-  /* transform: scale(1.2); */
+  --proportion: 1.2;
+  animation: grow 1s both;
   border-color: #bada55;
 }
 
 .main img.fadeOut {
+  --proportion: 3;
   /* transform: scale(3); */
   border-color: #bada55;
-  transition: 0.2s;
+  animation: grow 0.2s both;
+  /* transition: 0.2s; */
 }
 
 .main img {
