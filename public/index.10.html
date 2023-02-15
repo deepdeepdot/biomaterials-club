@@ -35,23 +35,23 @@
 
 <script>
     let $ = (selector) => document.querySelector(selector);
-
+  
     function doLogoAnimation() {
-        let logo = $('.logo');
-        let rotation = 0;
-
-        function rotate() {
-            rotation = (rotation + 10) % 360;
-            logo.style.setProperty('--rotation', `${rotation}deg`);
-
-            let p = logo.style.getPropertyValue('--rotation');
-            let output = `${rotation}: ${p}`;
-
-            document.querySelector('.debug').innerText = output;
-            console.log(output);
-        }
-        setInterval(rotate, 100);
+      let logo = $('.logo');
+      let rotation = 0;
+  
+      function rotate() {
+        rotation = (rotation + 10) % 360;
+        logo.style.setProperty('--rotation', `${rotation}deg`);
+  
+        let p = logo.style.getPropertyValue('--rotation');
+        let output = `${rotation}: ${p}`;
+  
+        document.querySelector('.debug').innerText = output;
+        console.log(output);
+      }
+      setInterval(rotate, 500);
     }
-
+  
     doLogoAnimation();
 </script>
