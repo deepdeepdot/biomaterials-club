@@ -17,15 +17,17 @@ async function getImageTags() {
 
 async function getJSForImages() {
   let images = [];
-  let getImageFileName = (file) => {
-    images.push(file);
-  };
+  let getImageFileName = (file) => images.push(file);
+
   await imageTraverser('./public/images', getImageFileName);
-  let array = JSON.stringify(images);
+  // let array = JSON.stringify(images);
+  let array = images.map((img) => `           '${img}',`).join('\n');
   let code = `
-<script>
-  var images = ${array};
-</script>
+        <script>
+          var images = [
+${array};
+          ];
+        </script>
 `;
   return code;
 }
