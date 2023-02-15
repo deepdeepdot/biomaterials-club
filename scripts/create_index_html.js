@@ -23,13 +23,11 @@ async function getJSForImages() {
   // let array = JSON.stringify(images);
   let blanks = ' '.repeat(12);
   let array = images.map((img) => `${blanks}'${img}',`).join('\n');
-  let code = `
-        <script>
+  let code = `        <script>
           var images = [
 ${array}
           ];
-        </script>
-`;
+        </script>`;
   return code;
 }
 
