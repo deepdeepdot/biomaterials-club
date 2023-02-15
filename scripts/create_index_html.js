@@ -19,10 +19,11 @@ function getImageTags(images) {
   return lines.join('\n');
 }
 
-function getJSForImages(images) {
+function getJSForImagesAndTime(images) {
   let blanks = ' '.repeat(12);
   let array = images.map((img) => `${blanks}'${img}',`);
   let code = `        <script>
+          var startTime = window.performance.now();
           var images = [
 ${array.join('\n')}
           ];
@@ -49,7 +50,7 @@ async function createIndexHtml(threshold = 50) {
   let rest = images.slice(threshold);
 
   let imageTags = getImageTags(first);
-  let imagesAsJS = getJSForImages(rest);
+  let imagesAsJS = getJSForImagesAndTime(rest);
 
   let code = `${imageTags}\n${imagesAsJS}`;
   let html = getHtml(code);
