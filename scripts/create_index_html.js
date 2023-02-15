@@ -21,7 +21,8 @@ async function getJSForImages() {
 
   await imageTraverser('./public/images', getImageFileName);
   // let array = JSON.stringify(images);
-  let array = images.map((img) => `             '${img}',`).join('\n');
+  let blanks = ' '.repeat(12);
+  let array = images.map((img) => `${blanks}'${img}',`).join('\n');
   let code = `
         <script>
           var images = [

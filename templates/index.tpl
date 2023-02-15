@@ -113,14 +113,13 @@
 
       <main class="main">
 ${images}
-
       </main>
     </div>
   </body>
 </html>
 
 <script type="module">
-  import { setColumnSize, togglePoem, setBackground } from "./js/script.mjs";
+  import { setColumnSize, togglePoem, setBackground } from './js/script.mjs';
 
   window.setColumnSize = setColumnSize;
   window.setBackground = setBackground;
