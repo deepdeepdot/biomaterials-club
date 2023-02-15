@@ -21,11 +21,11 @@ async function getJSForImages() {
 
   await imageTraverser('./public/images', getImageFileName);
   // let array = JSON.stringify(images);
-  let array = images.map((img) => `           '${img}',`).join('\n');
+  let array = images.map((img) => `             '${img}',`).join('\n');
   let code = `
         <script>
           var images = [
-${array};
+${array}
           ];
         </script>
 `;
