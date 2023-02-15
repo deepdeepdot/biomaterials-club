@@ -1,5 +1,4 @@
 // @ts-check
-
 // ---------------- Image Loader
 
 let createThumbnail = (img) => {
@@ -24,13 +23,13 @@ function splitIntoBatches(images, batchSize) {
   return batches;
 }
 
-function waitFor(condition, execution) {
+function waitFor(condition, execution, waitCycleDuration = 500) {
   let interval = setInterval(() => {
     if (condition()) {
       execution();
       clearInterval(interval);
     }
-  }, 500);
+  }, waitCycleDuration);
 }
 
 function createImageLoader() {
@@ -70,14 +69,29 @@ function createImageLoader() {
     );
   }
 
-  function loadImages(images, clickHandler) {
-    let myImages = [...images]; // clone this
-    let batches = splitIntoBatches(myImages, batchSize);
+  function loadAllImages(images, clickHandler) {
+    images.forEach((image) => {
+      let thumbnail = createThumbnail(image);
+      thumbnail.onclick = clickHandler;
+      thumbnail.onload = () => main.appendChild(thumbnail);
+    });
+  }
 
-    for (let i = 0; i < batches.length; i++) {
-      let batch = batches[i];
-      let load = () => loadImagesForBatch(batch, clickHandler);
-      setTimeout(load, interval * i);
+  function loadImages(images, clickHandler) {
+    if (isSuperSlow()) return; // Do not bother with all images, use IntersectionObserver?
+
+    let myImages = [...images]; // clone this
+
+    if (isDesktop() && isFastSpeed()) {
+      loadAllImages(myImages, clickHandler);
+    }
+    else {
+      let batches = splitIntoBatches(myImages, batchSize);
+      for (let i = 0; i < batches.length; i++) {
+        let batch = batches[i];
+        let load = () => loadImagesForBatch(batch, clickHandler);
+        setTimeout(load, interval * i); // batch every interval
+      }
     }
   }
 
@@ -85,6 +99,21 @@ function createImageLoader() {
     setup,
     loadImages,
   };
+}
+
+// ----------------------------- Device detection
+
+function isSuperSlow() {
+  return navigator.connection.effectiveType == '2g' || navigator.connection.downlink < 2 || navigator.connection.rtt >= 1000
+}
+
+function isFastSpeed() {
+  return navigator.connection.effectiveType == '4g' || navigator.connection.downlink >= 10 || navigator.connection.rtt >= 50;
+}
+
+function isDesktop() {
+  let isTouch = ('ontouchstart' in window); // exception: surface, some Android/chrome laptops?
+  return !isTouch;
 }
 
 let ImageLoader = createImageLoader();

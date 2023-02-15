@@ -75,5 +75,5 @@ imgs.forEach((img) => {
   img.addEventListener('click', popupModal, false);
 });
 
-ImageLoader.setup({ batchSize: 50, interval: 5000 });
+ImageLoader.setup({ batchSize: 50, interval: 3000 });
 ImageLoader.loadImages(images, popupModal);
