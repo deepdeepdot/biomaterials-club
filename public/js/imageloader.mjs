@@ -78,7 +78,7 @@ function createImageLoader() {
   }
 
   function loadImages(images, clickHandler) {
-    if (isSuperSlow()) return; // Do not bother with all images, use IntersectionObserver?
+    // if (isSuperSlow()) return; // Do not bother with all images, use IntersectionObserver?
 
     let myImages = [...images]; // clone this
 
