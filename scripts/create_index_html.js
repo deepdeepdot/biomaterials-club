@@ -12,16 +12,14 @@ async function getImages() {
   return images;
 }
 
-async function getImageTags() {
-  let images = await getImages();
+function getImageTags(images) {
   let getImageTag = (file) =>
     `        <img loading="lazy" src="images/th/${file}" />`;
   let lines = images.map(getImageTag);
   return lines.join('\n');
 }
 
-async function getJSForImages() {
-  let images = await getImages();
+function getJSForImages(images) {
   let blanks = ' '.repeat(12);
   let array = images.map((img) => `${blanks}'${img}',`);
   let code = `        <script>
@@ -44,10 +42,18 @@ function getHtml(imageTags) {
   return html;
 }
 
-async function createIndexHtml() {
-  // let imageTags = await getImageTags();
-  let imageTags = await getJSForImages();
-  let html = getHtml(imageTags);
+async function createIndexHtml(threshold = 50) {
+  let images = await getImages();
+
+  let first = images.slice(0, threshold);
+  let rest = images.slice(threshold);
+
+  let imageTags = getImageTags(first);
+  let imagesAsJS = getJSForImages(rest);
+
+  let code = `${imageTags}\n${imagesAsJS}`;
+  let html = getHtml(code);
+
   fs.writeFileSync(HTML_FILE, html);
 }
 
