@@ -9,16 +9,16 @@ let $ = (selector) => document.querySelector(selector);
 const MODAL_HIDE_TRANSPARENCY_DURATION = 650;
 const HIGHLIGHT_DURATION = 300;
 
-let ModalContent = {
+let OutsideModal = {
   lastFocusElement: null,
   setupHighlight: function() {
-    let { lastFocusElement } = ModalContent;
+    let { lastFocusElement } = OutsideModal;
     if (lastFocusElement) {
       lastFocusElement.classList.add('highlight');
     }
   },
   whileFadingOut: () => {
-    let { lastFocusElement } = ModalContent;
+    let { lastFocusElement } = OutsideModal;
     if (lastFocusElement) {
       let clearFadeOut = () => lastFocusElement.classList.remove('highlight');
       setTimeout(clearFadeOut, HIGHLIGHT_DURATION);
@@ -40,13 +40,13 @@ export default function setupLightBoxModal() {
   }
 
   function hideModal() {
-    ModalContent.setupHighlight();
+    OutsideModal.setupHighlight();
 
     modal.classList.add('transparent'); // start fade animation
     let setInvisible = () => modal.classList.add('invisible');
     setTimeout(setInvisible, MODAL_HIDE_TRANSPARENCY_DURATION);
 
-    ModalContent.whileFadingOut();
+    OutsideModal.whileFadingOut();
   }
 
   function createLargeImage(src) {
@@ -61,7 +61,7 @@ export default function setupLightBoxModal() {
     let largeImage = createLargeImage(largeImageSrc);
     displayModal(largeImageSrc, largeImage);
 
-    ModalContent.lastFocusElement = image;
+    OutsideModal.lastFocusElement = image;
   }
 
   modal.addEventListener('click', hideModal, false);
