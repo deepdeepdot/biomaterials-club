@@ -35,7 +35,7 @@ export default function setupLightBoxModal() {
     setTimeout(setInvisible, 650);
 
     let fadeOut = () => ModalContent.fadeOut();
-    setTimeout(fadeOut, 250);
+    setTimeout(fadeOut, 0);
   }
 
   function createLargeImage(src) {
