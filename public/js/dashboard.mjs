@@ -1,6 +1,8 @@
 // @ts-check
+/* global images */
 
 import ImageLoader from './imageloader.mjs';
+import setupLightBoxModal from './lightbox.mjs';
 
 let $ = (selector) => document.querySelector(selector);
 
@@ -61,73 +63,17 @@ function setupDashboard() {
   bananas.addEventListener('click', toggleBananas, false);
 }
 
-// ---------------- LightBox Modal
-
-let ModalContent = {
-  lastFocusElement: null,
-  fadeOut: () => {
-    let { lastFocusElement } = ModalContent;
-    if (lastFocusElement) {
-      lastFocusElement.classList.add('fadeOut');
-      let clearFadeOut = () => lastFocusElement.classList.remove('fadeOut');
-      setTimeout(clearFadeOut, 300);
-    }
-  },
-};
-
-function setupLightBoxModal() {
-  let modal = $('.modal');
-
-  function displayModal(imageSource, image) {
-    let modalContent = $('#modal-content');
-
-    let showContent = () => {
-      modalContent.style.backgroundImage = `url(${imageSource})`;
-
-      modal.classList.remove('transparent');
-      modal.classList.remove('invisible');
-    };
-    image.onload = showContent;
-  }
-
-  function hideModal() {
-    modal.classList.add('transparent'); // start fade animation
-    let setInvisible = () => modal.classList.add('invisible');
-    setTimeout(setInvisible, 650);
-
-    ModalContent.fadeOut();
-  }
-
-  function createLargeImage(src) {
-    let largeImage = new Image();
-    largeImage.src = src;
-    return largeImage;
-  }
-
-  function popupModal(event) {
-    let image = event.target;
-    let largeImageSrc = image.src.replace('/th', '');
-    let largeImage = createLargeImage(largeImageSrc);
-    displayModal(largeImageSrc, largeImage);
-
-    ModalContent.lastFocusElement = image;
-  }
-
-  let imgs = document.querySelectorAll('.main img');
-  imgs.forEach((img) => {
-    img.addEventListener('click', popupModal, false);
-  });
-  modal.addEventListener('click', hideModal, false);
-
-  return popupModal;
-}
-
 // ----------------------------------
 
 setupDashboard();
 doLogoAnimation();
 
 let popupModal = setupLightBoxModal();
+
+let imgs = document.querySelectorAll('.main img');
+imgs.forEach((img) => {
+  img.addEventListener('click', popupModal, false);
+});
 
 ImageLoader.setup({ batchSize: 50, interval: 5000 });
 ImageLoader.loadImages(images, popupModal);

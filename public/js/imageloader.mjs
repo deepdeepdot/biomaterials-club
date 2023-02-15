@@ -1,5 +1,7 @@
 // @ts-check
 
+// ---------------- Image Loader
+
 let createThumbnail = (img) => {
   let image = new Image();
   image.src = `images/th/${img}`;

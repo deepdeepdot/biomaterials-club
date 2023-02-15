@@ -119,7 +119,7 @@ ${images}
 </html>
 
 <script type="module">
-  import { setColumnSize, togglePoem, setBackground } from './js/script.mjs';
+  import { setColumnSize, togglePoem, setBackground } from './js/dashboard.mjs';
 
   window.setColumnSize = setColumnSize;
   window.setBackground = setBackground;
