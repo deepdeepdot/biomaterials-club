@@ -4,6 +4,7 @@
 import ImageLoader from './imageloader.mjs';
 import setupLightBoxModal from './lightbox.mjs';
 import CounterWait from './counterwait.mjs';
+import { bounce } from './anim.mjs';
 
 let $ = (selector) => document.querySelector(selector);
 
@@ -53,28 +54,44 @@ function setupDashboardButtons() {
 
 // ---------------- Setup Images (and meassure timing)
 
+function measureImageLoadingTime(imgs, startTime) {
+  return new Promise((resolve) => {
+    CounterWait.resetCounter();
+    CounterWait.waitFor(
+      () => {
+        let completed = 0;
+        imgs.forEach((img) => {
+          if (img.complete) {
+            completed += 1;
+          }
+        });
+        return completed === imgs.length;
+      },
+      () => {
+        let endTime = window.performance.now();
+        let timeDiff = endTime - startTime;
+        resolve(timeDiff);
+      }
+    );
+  });
+}
+
 function setupImages(popupModal, startTime) {
+  let clickHandler = (event) => {
+    let { target } = event;
+    bounce(target);
+    popupModal(target);
+  };
   let imgs = document.querySelectorAll('.main img');
 
-  CounterWait.resetCounter();
-  CounterWait.waitFor(() => {
-    let completed = 0;
-    imgs.forEach((img) => {
-      if (img.complete) {
-        completed++;
-      }
-    });
-    return completed == imgs.length;
-  }, () => {
-    let endTime = window.performance.now();
-    let timeDiff = endTime - startTime;
-    console.log('setup: ' + timeDiff);
+  measureImageLoadingTime(imgs, startTime).then((timeDiff) => {
+    console.log(`timeDiff: ${timeDiff}`);
     ImageLoader.setup({ batchSize: 50, interval: 3000 });
-    ImageLoader.loadImages(images, popupModal, timeDiff);
+    ImageLoader.loadImages(images, clickHandler, timeDiff);
   });
 
   imgs.forEach((img) => {
-    img.addEventListener('click', popupModal, false);
+    img.addEventListener('click', clickHandler, false);
   });
 }
 

@@ -1,4 +1,5 @@
 // @ts-check
+import { bounce, reset } from './anim.mjs';
 
 // ---------------- LightBox Modal
 
@@ -7,36 +8,43 @@ let $ = (selector) => document.querySelector(selector);
 // Transparency starts: opacity animation until INVISIBLE state
 // Set invisible (so content can be clickable)
 const MODAL_HIDE_TRANSPARENCY_DURATION = 650;
-const HIGHLIGHT_DURATION = 300;
 
 let OutsideModal = {
   lastFocusElement: null,
-  setupHighlight: function() {
-    let { lastFocusElement } = OutsideModal;
-    if (lastFocusElement) {
-      lastFocusElement.classList.add('highlight');
-    }
+  setupHighlight: function () {
+    // I guess nothing here to setup 😃
   },
   whileFadingOut: () => {
     let { lastFocusElement } = OutsideModal;
     if (lastFocusElement) {
-      let clearFadeOut = () => lastFocusElement.classList.remove('highlight');
-      setTimeout(clearFadeOut, HIGHLIGHT_DURATION);
+      bounce(lastFocusElement, {
+        scale: 3.0,
+        duration: 300,
+      });
     }
   },
 };
 
+function pauseTransition(element) {
+  element.classList.add('disable-transition');
+  requestAnimationFrame(() => {
+    element.classList.remove('disable-transition');
+    reset(element);
+  });
+}
+
 export default function setupLightBoxModal() {
   let modal = $('.modal');
 
-  function displayModal(imageSource, image) {
+  function displayModal(imageSource, largeImage, image) {
     let modalContent = $('#modal-content');
 
     let showContent = () => {
       modalContent.style.backgroundImage = `url(${imageSource})`;
       modal.classList.remove('transparent', 'invisible');
+      modal.addEventListener('transitionend', () => pauseTransition(image));
     };
-    image.onload = showContent;
+    largeImage.onload = showContent;
   }
 
   function hideModal() {
@@ -55,11 +63,10 @@ export default function setupLightBoxModal() {
     return largeImage;
   }
 
-  function popupModal(event) {
-    let image = event.target;
+  function popupModal(image) {
     let largeImageSrc = image.src.replace('/th', '');
     let largeImage = createLargeImage(largeImageSrc);
-    displayModal(largeImageSrc, largeImage);
+    displayModal(largeImageSrc, largeImage, image);
 
     OutsideModal.lastFocusElement = image;
   }
