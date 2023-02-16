@@ -14,7 +14,7 @@ let OutsideModal = {
   setupHighlight() {
     // I guess nothing here to setup 😃
   },
-  whileFadingOut() {
+  whileModalIsFadingOut() {
     let { lastFocusElement } = OutsideModal;
     if (lastFocusElement) {
       bounce(lastFocusElement, {
@@ -54,7 +54,7 @@ export default function setupLightBoxModal() {
     let setInvisible = () => modal.classList.add('invisible');
     setTimeout(setInvisible, MODAL_HIDE_TRANSPARENCY_DURATION);
 
-    OutsideModal.whileFadingOut();
+    OutsideModal.whileModalIsFadingOut();
   }
 
   function createLargeImage(src) {
