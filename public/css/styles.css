@@ -18,6 +18,14 @@
   /* background: rgb(0 100 0 / 0.05) !important; */
 }
 
+.disable-transition {
+  -webkit-animation: none !important;
+  -moz-animation: none !important;
+  -o-animation: none !important;
+  -ms-animation: none !important;
+  animation: none !important;
+}
+
 button {
   appearance: none;
   color: white;
@@ -243,23 +251,11 @@ span.close:active {
   transition: 0.3s;
   border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
 }
-
-.main img:hover {
-  filter: contrast(200%);
-  border-color: orange;
-  transform: scale(1.4);
-}
-
+/* 
 .main img:active {
   border-color: #bada55;
   transform: scale(1.2);
-}
-
-.main img.highlight {
-  border-color: #bada55;
-  transform: scale(3);
-  transition: 0.1s;
-}
+} */
 
 /*----------------------------*/
 /* Backgrounds */

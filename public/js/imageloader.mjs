@@ -1,7 +1,7 @@
 // @ts-check
 // ---------------- Image Loader
 
-import CounterWait from "./counterwait.mjs";
+import CounterWait from './counterwait.mjs';
 
 let createThumbnail = (img) => {
   let image = new Image();
@@ -80,8 +80,7 @@ function createImageLoader() {
 
     if (isDesktop() && isFastSpeed) {
       loadAllImages(myImages, clickHandler);
-    }
-    else {
+    } else {
       let batches = splitIntoBatches(myImages, batchSize);
       for (let i = 0; i < batches.length; i++) {
         let batch = batches[i];
@@ -100,7 +99,7 @@ function createImageLoader() {
 // ----------------------------- Device detection
 
 function isDesktop() {
-  let isTouch = ('ontouchstart' in window); // exception: surface, some Android/chrome laptops?
+  let isTouch = 'ontouchstart' in window; // exception: surface, some Android/chrome laptops?
   return !isTouch;
 }
 
