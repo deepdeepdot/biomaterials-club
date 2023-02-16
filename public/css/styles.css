@@ -175,7 +175,8 @@ span.close:active {
 
 .banner .logo {
   --rotation: 180deg;
-  filter: hue-rotate(var(--rotation, '0deg'));
+  -webkit-filter: hue-rotate(var(--rotation));
+  filter: hue-rotate(var(--rotation));
 }
 
 .poem {
@@ -258,10 +259,6 @@ span.close:active {
   border-color: #bada55;
   transform: scale(3);
   transition: 0.1s;
-}
-
-.main img {
-  filter: none;
 }
 
 /*----------------------------*/

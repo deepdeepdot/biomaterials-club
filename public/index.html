@@ -383,3 +383,23 @@
 
   setupDashboard(startTime);
 </script>
+
+<script>
+  let $ = (selector) => document.querySelector(selector);
+
+  function doLogoAnimation() {
+    let logo = $('.logo');
+    let rotation = 0;
+
+    function rotate() {
+      rotation = (rotation + 10) % 360;
+      let value = `hue-rotate(${rotation}deg)`;
+
+      logo.style.webkitFilter = value;
+      logo.style.filter = value;
+    }
+    setInterval(rotate, 250);
+  }
+
+  doLogoAnimation();
+</script>
