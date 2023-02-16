@@ -7,19 +7,6 @@ import CounterWait from './counterwait.mjs';
 
 let $ = (selector) => document.querySelector(selector);
 
-// ---------------- Logo Animation
-
-function doLogoAnimation() {
-  let logo = $('.logo');
-  let rotation = 0;
-
-  function rotate() {
-    rotation = (rotation + 10) % 360;
-    logo.style.setProperty('--rotation', `${rotation}deg`);
-  }
-  setInterval(rotate, 500);
-}
-
 // ---------------- Column Size + Background
 
 export function setColumnSize(size) {
@@ -96,5 +83,4 @@ export function setupDashboard(startTime) {
   setupImages(popupModal, startTime);
 
   setupDashboardButtons();
-  doLogoAnimation();
 }
