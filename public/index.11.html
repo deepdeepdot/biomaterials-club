@@ -34,13 +34,16 @@
   
       function rotate() {
         rotation = (rotation + 10) % 360;
-        logo.style.setProperty('--rotation', `${rotation}deg`);
+        let value = `hue-rotate(${rotation}deg)`;
+
+        logo.style.webkitFilter = value;
+        logo.style.filter = value;
+        // logo.style.setProperty('--rotation', value);
+        // let p = logo.style.getPropertyValue('--rotation');
+        // let output = `${rotation}: ${p}`;
   
-        let p = logo.style.getPropertyValue('--rotation');
-        let output = `${rotation}: ${p}`;
-  
-        document.querySelector('.debug').innerText = output;
-        console.log(output);
+        document.querySelector('.debug').innerText = value;
+        console.log(value);
       }
       setInterval(rotate, 500);
     }
