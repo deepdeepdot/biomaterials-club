@@ -384,8 +384,6 @@
   setupDashboard(startTime);
 </script>
 
-  
-  
 <script>
   let $ = (selector) => document.querySelector(selector);
 
@@ -395,18 +393,15 @@
 
     function rotate() {
       rotation = (rotation + 10) % 360;
-      /*
       let value = `hue-rotate(${rotation}deg)`;
+
       logo.style.webkitFilter = value;
       logo.style.filter = value;
+
+      document.querySelector('.debug').innerText = value;
       console.log(value);
-      */
-      let value = `${rotation}deg`;
-      logo.style.setProperty('--rotation', value);
-      console.log(value);
-      // document.querySelector('.debug').innerText = value;
     }
-    setInterval(rotate, 250);
+    setInterval(rotate, 500);
   }
 
   doLogoAnimation();
