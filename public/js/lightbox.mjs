@@ -1,5 +1,5 @@
 // @ts-check
-import { bounce } from './anim.mjs';
+import { bounce, reset } from './anim.mjs';
 
 // ---------------- LightBox Modal
 
@@ -8,7 +8,6 @@ let $ = (selector) => document.querySelector(selector);
 // Transparency starts: opacity animation until INVISIBLE state
 // Set invisible (so content can be clickable)
 const MODAL_HIDE_TRANSPARENCY_DURATION = 650;
-const HIGHLIGHT_DURATION = 300;
 
 let OutsideModal = {
   lastFocusElement: null,
@@ -30,6 +29,7 @@ function pauseTransition(element) {
   element.classList.add('disable-transition');
   requestAnimationFrame(() => {
     element.classList.remove('disable-transition');
+    reset(element);
   });
 }
 

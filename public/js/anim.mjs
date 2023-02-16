@@ -3,6 +3,13 @@
 // Thanks!
 // https://stackoverflow.com/questions/23747172/css-transform-scale-overlaps-on-left-but-not-right
 
+export function reset(img, borderColor) {
+  img.style['z-index'] = 0;
+  img.style.transform = 'scale(1)';
+  img.style.borderColor = borderColor || 'rgba(0, 0, 0, 0)';
+  img.style.filter = 'none';
+}
+
 export let bounce = (
   img,
   options = {
@@ -12,10 +19,7 @@ export let bounce = (
 ) => {
   let initialBorder = img.style.borderColor;
   img.addEventListener('transitionend', () => {
-    img.style['z-index'] = 0;
-    img.style.transform = 'scale(1)';
-    img.style.borderColor = initialBorder;
-    img.style.filter = 'none';
+    reset(img, initialBorder);
   });
   img.style.position = 'relative';
   img.style['z-index'] = 2;
