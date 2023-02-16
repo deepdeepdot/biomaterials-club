@@ -395,7 +395,9 @@
 
     function rotate() {
       rotation = (rotation + 10) % 360;
+
       let value = `hue-rotate(${rotation}deg)`;
+      logo.style.webkitFilter = value;
       logo.style.filter = value;
 
       // document.querySelector('.debug').innerText = value;
