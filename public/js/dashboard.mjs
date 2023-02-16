@@ -76,16 +76,26 @@ function measureImageLoadingTime(imgs, startTime) {
   });
 }
 
+const SECOND = 1000;
+
 function setupImages(popupModal, startTime) {
+  let bounceOptions = {
+    duration: 1000,
+    scale: 1.4
+  };
   let clickHandler = (event) => {
     let { target } = event;
-    bounce(target);
+    bounce(target, bounceOptions);
     popupModal(target);
   };
   let imgs = document.querySelectorAll('.main img');
 
   measureImageLoadingTime(imgs, startTime).then((timeDiff) => {
     console.log(`timeDiff: ${timeDiff}`);
+    let superFast = (timeDiff < 3 * SECOND);
+    if (superFast) {
+      bounceOptions.duration = 200;
+    }
     ImageLoader.setup({ batchSize: 50, interval: 3000 });
     ImageLoader.loadImages(images, clickHandler, timeDiff);
   });

@@ -11,10 +11,10 @@ const MODAL_HIDE_TRANSPARENCY_DURATION = 650;
 
 let OutsideModal = {
   lastFocusElement: null,
-  setupHighlight: function () {
+  setupHighlight() {
     // I guess nothing here to setup 😃
   },
-  whileFadingOut: () => {
+  whileFadingOut() {
     let { lastFocusElement } = OutsideModal;
     if (lastFocusElement) {
       bounce(lastFocusElement, {
@@ -22,7 +22,7 @@ let OutsideModal = {
         duration: 300,
       });
     }
-  },
+  }
 };
 
 function pauseTransition(element) {

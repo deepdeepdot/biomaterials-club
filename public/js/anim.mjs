@@ -14,7 +14,7 @@ export let bounce = (
   img,
   options = {
     scale: 1.4,
-    duration: 1000,
+    duration: 1000, // superfast: 200, mobile: 1000
   }
 ) => {
   let initialBorder = img.style.borderColor;
