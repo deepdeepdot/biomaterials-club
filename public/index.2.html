@@ -394,10 +394,7 @@
     function rotate() {
       rotation = (rotation + 10) % 360;
       let value = `hue-rotate(${rotation}deg)`;
-
-      logo.style.setProperty('--rotation', value);
-      let p = logo.style.getPropertyValue('--rotation');
-      let output = `${rotation}: ${p}`;
+      logo.style.filter = value;
 
       // document.querySelector('.debug').innerText = value;
       console.log(value);
