@@ -11,6 +11,10 @@
     --grid-gap: 3px;
   }
 
+  .main {
+    padding: var(--grid-gap);
+  }
+
   .main img,
   .main video {
     width: calc(100vw / var(--grid-columns) - 10px);
@@ -66,6 +70,7 @@
 @media only screen and (min-width: 1080px) {
   :root {
     --grid-columns: 8;
+    --grid-gap: 10px;
   }
 }
 

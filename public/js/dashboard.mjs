@@ -19,27 +19,8 @@ export function setBackground(name) {
   document.body.classList.value = `${name}-bg`;
 }
 
-// ---------------- Poem
-
-let bananaVisible = false;
-
-export function togglePoem(button) {
-  let poem = $('.poem.anim');
-  poem.classList.toggle('fadeIn');
-
-  function updateButtonMessage() {
-    let showing = button.innerText.startsWith('Show');
-    if (showing) {
-      if (bananaVisible) toggleBananas();
-      button.innerText = 'Hide Poem';
-    } else {
-      button.innerText = 'Show Poem';
-    }
-  }
-  setTimeout(updateButtonMessage, 150);
-}
-
 // ---------------- Dashboard Button
+let bananaVisible = false;
 
 function toggleBananas() {
   let dashboard = $('.dashboard');
@@ -53,7 +34,27 @@ function toggleBananas() {
   bananaVisible = !bananaVisible;
 }
 
-// ---------------- Setup Images (and meassure timing)
+// ---------------- Poem
+
+export function togglePoem(button) {
+  let poem = $('.poem.anim');
+  poem.classList.toggle('fadeIn');
+
+  function updateButtonMessage() {
+    let showing = button.innerText.startsWith('Show');
+    if (showing) {
+      button.innerText = 'Hide Poem';
+    } else {
+      button.innerText = 'Show Poem';
+    }
+    if (showing && bananaVisible) {
+      toggleBananas();
+    }
+  }
+  setTimeout(updateButtonMessage, 150);
+}
+
+// ---------------- Measure image loading performance
 
 function measureImageLoadingTime(imgs, startTime) {
   return new Promise((resolve) => {
@@ -75,33 +76,41 @@ function measureImageLoadingTime(imgs, startTime) {
   });
 }
 
+// ---------------- Setup Images
+
 const SECOND = 1000;
 
 function setupImages(popupModal, startTime) {
-  let bounceOptions = {
-    duration: 1000,
-    scale: 1.4,
-  };
-  let clickHandler = (event) => {
-    let { target } = event;
-    bounce(target, bounceOptions);
-    popupModal(target);
-  };
   let imgs = document.querySelectorAll('.main img');
 
-  measureImageLoadingTime(imgs, startTime).then((timeDiff) => {
-    console.log(`timeDiff: ${timeDiff}`);
-    let superFast = timeDiff < 3 * SECOND;
-    if (superFast) {
-      bounceOptions.duration = 200;
-    }
-    ImageLoader.setup({ batchSize: 50, interval: 3000 });
-    ImageLoader.loadImages(images, clickHandler, timeDiff);
-  });
-
-  imgs.forEach((img) => {
-    img.addEventListener('click', clickHandler, false);
-  });
+  return measureImageLoadingTime(imgs, startTime)
+    .then((timeDiff) => {
+      let bounceOptions = {
+        duration: 1000,
+        scale: 1.4,
+      };
+      console.log(`timeDiff: ${timeDiff}`);
+      let superFast = timeDiff < 3 * SECOND;
+      if (superFast) {
+        bounceOptions.duration = 200;
+      }
+      return {
+        bounceOptions,
+        timeDiff,
+      };
+    })
+    .then(({ bounceOptions, timeDiff }) => {
+      let clickHandler = (event) => {
+        let { target } = event;
+        bounce(target, bounceOptions);
+        popupModal(target);
+      };
+      imgs.forEach((img) => {
+        img.addEventListener('click', clickHandler, false);
+      });
+      ImageLoader.setup({ batchSize: 50, interval: 3000 });
+      ImageLoader.loadImages(images, clickHandler, timeDiff);
+    });
 }
 
 export function setupDashboard(startTime) {

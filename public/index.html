@@ -105,7 +105,7 @@
  A world of clean air and water and land,
  A world of hope and new possibilities.
 
- By GPT3 ChatAI. v1.0.43
+ By GPT3 ChatAI. v1.0.45
 
           </pre>
         </div>
@@ -162,9 +162,10 @@
         <img loading="lazy" src="images/th/20230123_12.jpg" />
         <img loading="lazy" src="images/th/20230123_11.jpg" />
         <img loading="lazy" src="images/th/20230123_10.jpg" />
-        <script>
+        <script type="module">
+          import { setupDashboard } from './js/dashboard.mjs';
           var startTime = window.performance.now();
-          var images = [
+          window.images = [
             '20230123_09.jpg',
             '20230123_08.jpg',
             '20230123_07.jpg',
@@ -368,6 +369,7 @@
             '20220704.jpg',
             '20220703.png',
           ];
+          setupDashboard(startTime);
         </script>
       </main>
     </div>
@@ -375,16 +377,9 @@
 </html>
 
 <script type="module">
-  import {
-    setupDashboard,
-    setColumnSize,
-    togglePoem,
-    setBackground,
-  } from './js/dashboard.mjs';
+  import { setColumnSize, togglePoem, setBackground } from './js/dashboard.mjs';
 
   window.setColumnSize = setColumnSize;
   window.setBackground = setBackground;
   window.togglePoem = togglePoem;
-
-  setupDashboard(startTime);
 </script>

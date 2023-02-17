@@ -1,9 +1,11 @@
+// @ts-check
+
 // Duration: 1000 to give us enough time to load a large image
 
 // Thanks!
 // https://stackoverflow.com/questions/23747172/css-transform-scale-overlaps-on-left-but-not-right
 
-export function reset(img, borderColor) {
+export function reset(img) {
   img.removeAttribute('style');
   img.removeAttribute('class');
 }
@@ -15,9 +17,8 @@ export let bounce = (
     duration: 1000, // superfast: 200, mobile: 1000
   }
 ) => {
-  let initialBorder = img.style.borderColor;
   img.addEventListener('transitionend', () => {
-    reset(img, initialBorder);
+    reset(img);
   });
   img.style.position = 'relative';
   img.style['z-index'] = 2;

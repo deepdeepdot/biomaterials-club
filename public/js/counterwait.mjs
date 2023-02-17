@@ -1,21 +1,24 @@
-const MAX_NUM_CYCLES = 1000; // Maybe it should be with some timeout period, not # of cycles?
+// @ts-check
+const DEFAULT_MAX_NUM_CYCLES = 1000;
+const DEFAULT_WAIT_CYCLE_DURATION = 500;
 
 function createCounterWait() {
   let count = 0;
   let cycles = 0;
 
-  // Acting as singleton, this could be dangerous when called multiple times?
-
-  function waitFor(condition, waitCycleDuration = 500) {
-    count = 0; // Reset every time we call it
+  function waitFor(
+    condition,
+    waitCycleDuration = DEFAULT_WAIT_CYCLE_DURATION,
+    maxNumCycles = DEFAULT_MAX_NUM_CYCLES
+  ) {
     return new Promise((resolve, reject) => {
       let interval = setInterval(() => {
         if (condition(count)) {
           clearInterval(interval);
-          resolve();
+          resolve({});
         }
         cycles++;
-        if (cycles === MAX_NUM_CYCLES) {
+        if (cycles === maxNumCycles) {
           clearInterval(interval);
           reject('Condition never happened. Timeout');
         }
@@ -24,7 +27,7 @@ function createCounterWait() {
   }
 
   function incrementCount() {
-    // Atomic operation, avoid race conditions
+    // Atomic operation, queue up updates and avoid race conditions
     requestAnimationFrame(() => {
       count++;
     });

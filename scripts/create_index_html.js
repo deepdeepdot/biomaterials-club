@@ -22,11 +22,13 @@ function getImageTags(images) {
 function getJSForImagesAndTime(images) {
   let blanks = ' '.repeat(12);
   let array = images.map((img) => `${blanks}'${img}',`);
-  let code = `        <script>
+  let code = `        <script type="module">
+          import { setupDashboard } from './js/dashboard.mjs';
           var startTime = window.performance.now();
-          var images = [
+          window.images = [
 ${array.join('\n')}
           ];
+          setupDashboard(startTime);
         </script>`;
   return code;
 }
