@@ -35,7 +35,6 @@ export let bounce = (
     // reset(img, initialBorder);
 
     // stronger reset() to default styles
-    img.removeAttribute('style');
     img.removeAttribute('class');
   });
 
