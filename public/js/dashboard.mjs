@@ -3,7 +3,7 @@
 
 import ImageLoader from './imageloader.mjs';
 import setupLightBoxModal from './lightbox.mjs';
-import CounterWait from './counterwait.mjs';
+import createCounterWait from './counterwait.mjs';
 import { bounce } from './anim.mjs';
 
 let $ = (selector) => document.querySelector(selector);
@@ -21,6 +21,8 @@ export function setBackground(name) {
 
 // ---------------- Poem
 
+let bananaVisible = false;
+
 export function togglePoem(button) {
   let poem = $('.poem.anim');
   poem.classList.toggle('fadeIn');
@@ -28,6 +30,7 @@ export function togglePoem(button) {
   function updateButtonMessage() {
     let showing = button.innerText.startsWith('Show');
     if (showing) {
+      if (bananaVisible) toggleBananas();
       button.innerText = 'Hide Poem';
     } else {
       button.innerText = 'Show Poem';
@@ -38,27 +41,24 @@ export function togglePoem(button) {
 
 // ---------------- Dashboard Button
 
-function setupDashboardButtons() {
+function toggleBananas() {
+  let dashboard = $('.dashboard');
+  dashboard.classList.toggle('visible');
+
+  let visible = dashboard.classList.contains('visible');
+
   let bananas = $('#bananas');
+  bananas.innerText = visible ? 'Go Less Bananas!' : 'Go Bananas!';
 
-  function toggleBananas() {
-    let dashboard = $('.dashboard');
-    dashboard.classList.toggle('visible');
-
-    let visible = dashboard.classList.contains('visible');
-    bananas.innerText = visible ? 'Go Less Bananas!' : 'Go Bananas!';
-  }
-
-  bananas.addEventListener('click', toggleBananas, false);
+  bananaVisible = !bananaVisible;
 }
 
 // ---------------- Setup Images (and meassure timing)
 
 function measureImageLoadingTime(imgs, startTime) {
   return new Promise((resolve) => {
-    CounterWait.resetCounter();
-    CounterWait.waitFor(
-      () => {
+    createCounterWait()
+      .waitFor(() => {
         let completed = 0;
         imgs.forEach((img) => {
           if (img.complete) {
@@ -66,13 +66,12 @@ function measureImageLoadingTime(imgs, startTime) {
           }
         });
         return completed === imgs.length;
-      },
-      () => {
+      })
+      .then(() => {
         let endTime = window.performance.now();
         let timeDiff = endTime - startTime;
         resolve(timeDiff);
-      }
-    );
+      });
   });
 }
 
@@ -81,7 +80,7 @@ const SECOND = 1000;
 function setupImages(popupModal, startTime) {
   let bounceOptions = {
     duration: 1000,
-    scale: 1.4
+    scale: 1.4,
   };
   let clickHandler = (event) => {
     let { target } = event;
@@ -92,7 +91,7 @@ function setupImages(popupModal, startTime) {
 
   measureImageLoadingTime(imgs, startTime).then((timeDiff) => {
     console.log(`timeDiff: ${timeDiff}`);
-    let superFast = (timeDiff < 3 * SECOND);
+    let superFast = timeDiff < 3 * SECOND;
     if (superFast) {
       bounceOptions.duration = 200;
     }
@@ -108,5 +107,7 @@ function setupImages(popupModal, startTime) {
 export function setupDashboard(startTime) {
   let popupModal = setupLightBoxModal();
   setupImages(popupModal, startTime);
-  setupDashboardButtons();
+
+  let bananas = $('#bananas');
+  bananas.addEventListener('click', toggleBananas, false);
 }

@@ -132,4 +132,3 @@ ${images}
 
   setupDashboard(startTime);
 </script>
-

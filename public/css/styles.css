@@ -183,15 +183,15 @@ span.close:active {
 
 @keyframes hue-rotation {
   0% {
-      filter:hue-rotate(0);
+    filter: hue-rotate(0);
   }
 
   50% {
-      filter:hue-rotate(180deg);
+    filter: hue-rotate(180deg);
   }
 
   100% {
-      filter: hue-rotate(360deg);
+    filter: hue-rotate(360deg);
   }
 }
 
@@ -263,11 +263,6 @@ span.close:active {
   transition: 0.3s;
   border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
 }
-/* 
-.main img:active {
-  border-color: #bada55;
-  transform: scale(1.2);
-} */
 
 /*----------------------------*/
 /* Backgrounds */

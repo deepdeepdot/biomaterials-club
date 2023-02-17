@@ -1,6 +1,7 @@
 // @ts-check
 // ---------------- Image Loader
 
+import createCounterWait from './counterwait.mjs';
 import CounterWait from './counterwait.mjs';
 
 let createThumbnail = (img) => {
@@ -34,27 +35,25 @@ function createImageLoader() {
   }
 
   function loadImagesForBatch(images, clickHandler) {
+    let counterWait = createCounterWait();
     let thumbnails = [];
 
     images.forEach((image) => {
       let thumbnail = createThumbnail(image);
       thumbnail.onclick = clickHandler;
-      thumbnail.onload = CounterWait.incrementCount;
+      thumbnail.onload = counterWait.incrementCount;
       thumbnails.push(thumbnail);
     });
 
-    CounterWait.resetCounter();
-
-    CounterWait.waitFor(
-      function (count) {
+    counterWait
+      .waitFor(function (count) {
         return count >= images.length;
-      },
-      () => {
+      })
+      .then(() => {
         thumbnails.forEach((thumbnail) => {
           main.appendChild(thumbnail);
         });
-      }
-    );
+      });
   }
 
   function loadAllImages(images, clickHandler) {

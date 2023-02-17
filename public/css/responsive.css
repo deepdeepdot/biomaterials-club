@@ -43,6 +43,23 @@
   .banner img {
     width: 250px;
   }
+
+  .main img {
+    border-radius: 10px;
+  }
+
+  /* Ok to add some extra animation for desktop */
+  .main img:hover {
+    position: relative;
+    z-index: 2;
+    border: 4px solid orange;
+    transform: scale(1.15);
+  }
+
+  .main img:active {
+    border-color: #bada55;
+    transform: scale(0.9);
+  }
 }
 
 @media only screen and (min-width: 1080px) {

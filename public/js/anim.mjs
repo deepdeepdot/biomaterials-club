@@ -4,10 +4,8 @@
 // https://stackoverflow.com/questions/23747172/css-transform-scale-overlaps-on-left-but-not-right
 
 export function reset(img, borderColor) {
-  img.style['z-index'] = 0;
-  img.style.transform = 'scale(1)';
-  img.style.borderColor = borderColor || 'rgba(0, 0, 0, 0)';
-  img.style.filter = 'none';
+  img.removeAttribute('style');
+  img.removeAttribute('class');
 }
 
 export let bounce = (

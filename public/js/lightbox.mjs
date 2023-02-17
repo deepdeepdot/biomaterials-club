@@ -22,7 +22,7 @@ let OutsideModal = {
         duration: 300,
       });
     }
-  }
+  },
 };
 
 function pauseTransition(element) {
