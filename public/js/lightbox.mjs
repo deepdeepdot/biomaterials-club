@@ -13,14 +13,16 @@ let OutsideModal = {
   lastFocusElement: null,
   setupHighlight() {
     // I guess nothing here to setup 😃
+    // this.lastFocusElement.style.borderColor = 'orange';
   },
   whileModalIsFadingOut() {
     let { lastFocusElement } = OutsideModal;
     if (lastFocusElement) {
-      bounce(lastFocusElement, {
-        scale: 3.0,
-        duration: 300,
-      });
+      lastFocusElement.classList.add('zoomIn');
+      // bounce(lastFocusElement, {
+      //   scale: 3.0,
+      //   duration: 300,
+      // });
     }
   }
 };
@@ -29,7 +31,7 @@ function pauseTransition(element) {
   element.classList.add('disable-transition');
   requestAnimationFrame(() => {
     element.classList.remove('disable-transition');
-    reset(element);
+    // reset(element);
   });
 }
 
@@ -42,7 +44,7 @@ export default function setupLightBoxModal() {
     let showContent = () => {
       modalContent.style.backgroundImage = `url(${imageSource})`;
       modal.classList.remove('transparent', 'invisible');
-      modal.addEventListener('transitionend', () => pauseTransition(image));
+      modal.addEventListener('transitionend', () => pauseTransition(image));  
     };
     largeImage.onload = showContent;
   }

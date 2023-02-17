@@ -1,4 +1,4 @@
-@import 'https://unpkg.com/open-props';
+/* @import 'https://unpkg.com/open-props'; */
 
 /*----------------------------*/
 :root {
@@ -263,7 +263,39 @@ span.close:active {
   transition: 0.3s;
   border: 2px solid rgba(0, 0, 0, 0); /* placeholder */
 }
-/* 
+
+.bounce {
+  animation: bounce 1s both;
+  /* border-color: orange; */
+  border: 2px solid orange;
+}
+
+.zoomIn {
+  --scale-from: 3;
+  animation: zoomIn 0.7s both;
+  animation-timing-function: ease-in-out;
+}
+
+@keyframes bounce {
+  25% {
+      transform: scale(0.8);
+  }
+  70% {
+      transform: scale(2);
+  }
+}
+
+@keyframes zoomIn {
+  0% {
+      transform: scale(var(--scale-from));
+  }
+  100% {
+      transform: scale(var(--scale-to, 1));
+  }
+}
+
+/*
+// Consider moving this to desktop only
 .main img:active {
   border-color: #bada55;
   transform: scale(1.2);
