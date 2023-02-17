@@ -92,22 +92,24 @@ function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
 
 const SECOND = 1000;
 
+function getBounceOptions(timeDiff) {
+  console.log(`timeDiff: ${timeDiff}`);
+  let isSuperFast = timeDiff < 3 * SECOND;
+  let bounceOptions = {
+    duration: isSuperFast ? 200 : 1000, // desktop vs mobile
+    scale: 1.4,
+  };
+  return {
+    bounceOptions,
+    timeDiff,
+  };  
+}
+
 function setupImages(popupModal, startTime) {
   let imgs = document.querySelectorAll('.main img');
 
   return measureImageLoadingTime(imgs, startTime)
-    .then((timeDiff) => {
-      console.log(`timeDiff: ${timeDiff}`);
-      let isSuperFast = timeDiff < 3 * SECOND;
-      let bounceOptions = {
-        duration: isSuperFast ? 200 : 1000, // desktop vs mobile
-        scale: 1.4,
-      };
-      return {
-        bounceOptions,
-        timeDiff,
-      };
-    })
+    .then(getBounceOptions)
     .then(({ bounceOptions, timeDiff }) => {
       addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff });
     });
