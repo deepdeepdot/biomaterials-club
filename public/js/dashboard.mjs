@@ -94,7 +94,7 @@ function setupImages(popupModal, startTime) {
     console.log(`timeDiff: ${timeDiff}`);
     let superFast = (timeDiff < 3 * SECOND);
     if (superFast) {
-      bounceOptions.duration = 200;
+      bounceOptions.duration = 200; // this could be part of the
     }
     ImageLoader.setup({ batchSize: 50, interval: 3000 });
     ImageLoader.loadImages(images, clickHandler, timeDiff);

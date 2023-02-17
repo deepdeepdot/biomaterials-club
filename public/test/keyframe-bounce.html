@@ -1,0 +1,53 @@
+<style>
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+    }
+
+    .square {
+        width: 200px;
+        height: 200px;
+        background-color: purple;
+        border-radius: 10px;
+    }
+
+    .bounce {
+        animation: bounce 1s both;
+    }
+
+    .zoomIn {
+        --scale-from: 3;
+        animation: zoomIn 1s both;
+        animation-timing-function: ease-in-out;
+    }
+
+    @keyframes bounce {
+        25% {
+            transform: scale(0.8);
+        }
+        100% {
+            transform: scale(1.4);
+        }
+    }
+
+    @keyframes zoomIn {
+        0% {
+            transform: scale(var(--scale-from));
+        }
+        100% {
+            transform: scale(var(--scale-to, 1));
+        }
+    }
+
+
+</style>
+
+<body>
+    <div class="container">
+        <div class="square bounce">
+            <img src="https://bio.educreational.com/images/th/20230212_1.jpg" alt="" class="src">
+        </div>
+    </div>
+</body>

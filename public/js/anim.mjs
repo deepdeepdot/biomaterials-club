@@ -10,6 +10,7 @@ export function reset(img, borderColor) {
   img.style.filter = 'none';
 }
 
+// Chrome on iphone 13 did not like any of this, most others were ok
 export let bounce = (
   img,
   options = {
@@ -18,13 +19,24 @@ export let bounce = (
   }
 ) => {
   let initialBorder = img.style.borderColor;
-  img.addEventListener('transitionend', () => {
-    reset(img, initialBorder);
+  // img.addEventListener('transitionend', () => {
+  //   reset(img, initialBorder);
+  // });
+  // img.style.position = 'relative';
+  // img.style['z-index'] = 2;
+  // img.style.borderColor = 'orange';
+  // img.style.transform = `scale(${options.scale})`;
+  // img.style.filter = 'contrast(200%)';
+  // img.style.transitionDuration = `${options.duration}ms`;
+
+  img.classList.add('bounce');
+  img.addEventListener('animationend', () => {
+    // img.classList.remove('bounce'); // to re-enable animation?
+    // reset(img, initialBorder);
+
+    // stronger reset() to default styles
+    img.removeAttribute('style');
+    img.removeAttribute('class');
   });
-  img.style.position = 'relative';
-  img.style['z-index'] = 2;
-  img.style.borderColor = 'orange';
-  img.style.transform = `scale(${options.scale})`;
-  img.style.filter = 'contrast(200%)';
-  img.style.transitionDuration = `${options.duration}ms`;
+
 };
