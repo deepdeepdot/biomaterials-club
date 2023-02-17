@@ -5,20 +5,19 @@
   visibility: hidden;
 }
 
-@media only screen and (min-width: 400px) {
-  :root {
-    --grid-columns: 5;
-    --grid-gap: 3px;
-  }
+:root {
+  --grid-columns: 5;
+  --grid-gap: 3px;
+}
 
-  .main {
-    padding: var(--grid-gap);
-  }
+.main {
+  width: 100vw;
+  padding: var(--grid-gap);
+  overflow: hidden;
+}
 
-  .main img,
-  .main video {
-    width: calc(100vw / var(--grid-columns) - 10px);
-  }
+.main img {
+  width: calc(100vw / var(--grid-columns) - 2px);
 }
 
 @media only screen and (min-width: 768px) {

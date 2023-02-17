@@ -257,7 +257,6 @@ span.close:active {
 }
 
 .main img {
-  width: calc(100vw / var(--grid-columns) - 10px);
   border-radius: 4px;
   cursor: pointer;
   transition: 0.3s;
