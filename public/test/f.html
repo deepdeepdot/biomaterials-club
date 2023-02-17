@@ -1,0 +1,30 @@
+<img id="example-element" class="transition-all" src="firefox-logo.svg" width="200" 
+style="filter: hue-rotate(90deg);">
+
+<img
+class="logo"
+width="250"
+src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w"
+style="filter: hue-rotate(90deg);"
+/>
+
+<script>
+    let $ = (selector) => document.querySelector(selector);
+    let ff = $('#example-element');
+
+    let interval;
+  
+    function doLogoAnimation() {
+      let rotation = 0;
+  
+      function rotate() {
+        rotation = (rotation + 10) % 360;
+
+        let filter = `hue-rotate(${rotation}deg)`;
+        console.log(filter);
+      }
+      interval = setInterval(rotate, 240);
+    }
+  
+    doLogoAnimation();
+  </script>
