@@ -1,5 +1,4 @@
 // @ts-check
-/* global images */
 
 import ImageLoader from './imageloader.mjs';
 import setupLightBoxModal from './lightbox.mjs';
@@ -85,15 +84,12 @@ function setupImages(popupModal, startTime) {
 
   return measureImageLoadingTime(imgs, startTime)
     .then((timeDiff) => {
+      console.log(`timeDiff: ${timeDiff}`);
+      let isSuperFast = timeDiff < 3 * SECOND;
       let bounceOptions = {
-        duration: 1000,
+        duration: isSuperFast ? 200 : 1000, // desktop vs mobile
         scale: 1.4,
       };
-      console.log(`timeDiff: ${timeDiff}`);
-      let superFast = timeDiff < 3 * SECOND;
-      if (superFast) {
-        bounceOptions.duration = 200;
-      }
       return {
         bounceOptions,
         timeDiff,
@@ -109,7 +105,7 @@ function setupImages(popupModal, startTime) {
         img.addEventListener('click', clickHandler, false);
       });
       ImageLoader.setup({ batchSize: 50, interval: 3000 });
-      ImageLoader.loadImages(images, clickHandler, timeDiff);
+      ImageLoader.loadImages(window.images, clickHandler, timeDiff);
     });
 }
 

@@ -50,6 +50,7 @@
 
   .main img {
     border-radius: 10px;
+    transition: 0.3s;
   }
 
   /* Ok to add some extra animation for desktop */
@@ -57,7 +58,7 @@
     position: relative;
     z-index: 2;
     border: 4px solid orange;
-    transform: scale(1.15);
+    transform: scale(1.25);
     filter: sepia();
   }
 
