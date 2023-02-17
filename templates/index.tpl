@@ -72,7 +72,7 @@
           <h1>BioMaterials Studio</h1>
           <div>
             <img
-              class="hue-rotation"
+              class="animated-hue"
               width="250"
               src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w"
             />
