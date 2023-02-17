@@ -181,10 +181,22 @@ span.close:active {
   width: 150px;
 }
 
-.banner .logo {
-  --rotation: 180deg;
-  -webkit-filter: hue-rotate(var(--rotation));
-  filter: hue-rotate(var(--rotation));
+@keyframes hue-rotation {
+  0% {
+      filter:hue-rotate(0);
+  }
+
+  50% {
+      filter:hue-rotate(180deg);
+  }
+
+  100% {
+      filter: hue-rotate(360deg);
+  }
+}
+
+.animated-hue {
+  animation: hue-rotation 10s infinite both;
 }
 
 .poem {
