@@ -2,7 +2,6 @@
 // ---------------- Image Loader
 
 import createCounterWait from './counterwait.mjs';
-import CounterWait from './counterwait.mjs';
 
 let createThumbnail = (img) => {
   let image = new Image();

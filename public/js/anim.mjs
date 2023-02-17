@@ -15,7 +15,7 @@ export let bounce = (
   options = {
     scale: 1.4,
     duration: 1000, // superfast: 200, mobile: 1000
-  }
+  },
 ) => {
   img.addEventListener('transitionend', () => {
     reset(img);
