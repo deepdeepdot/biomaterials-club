@@ -72,7 +72,7 @@
           <h1>BioMaterials Studio</h1>
           <div>
             <img
-              class="logo"
+              class="animated-hue"
               width="250"
               src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w"
             />
@@ -382,26 +382,4 @@
   window.togglePoem = togglePoem;
 
   setupDashboard(startTime);
-</script>
-
-<script>
-  let $ = (selector) => document.querySelector(selector);
-
-  function doLogoAnimation() {
-    let logo = $('.logo');
-    let rotation = 0;
-
-    function rotate() {
-      rotation = (rotation + 10) % 360;
-      let value = `hue-rotate(${rotation}deg)`;
-
-      logo.style.webkitFilter = value;
-      logo.style.filter = value;
-
-      console.log(value);
-    }
-    setInterval(rotate, 250);
-  }
-
-  doLogoAnimation();
 </script>

@@ -169,8 +169,22 @@ span.close:active {
   width: 310px;
 }
 
-.banner img {
-  width: 150px;
+@keyframes hue-rotation {
+  0% {
+      filter:hue-rotate(0);
+  }
+
+  50% {
+      filter:hue-rotate(180deg);
+  }
+
+  100% {
+      filter: hue-rotate(360deg);
+  }
+}
+
+.animated-hue {
+  animation: hue-rotation 10s infinite both;
 }
 
 .poem {
