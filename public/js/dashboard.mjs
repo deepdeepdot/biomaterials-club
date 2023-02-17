@@ -77,6 +77,19 @@ function measureImageLoadingTime(imgs, startTime) {
 
 // ---------------- Setup Images
 
+function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
+  let clickHandler = (event) => {
+    let { target } = event;
+    bounce(target, bounceOptions);
+    popupModal(target);
+  };
+  imgs.forEach((img) => {
+    img.addEventListener('click', clickHandler, false);
+  });
+  ImageLoader.setup({ batchSize: 50, interval: 3000 });
+  ImageLoader.loadImages(window.images, clickHandler, timeDiff);
+}
+
 const SECOND = 1000;
 
 function setupImages(popupModal, startTime) {
@@ -96,16 +109,7 @@ function setupImages(popupModal, startTime) {
       };
     })
     .then(({ bounceOptions, timeDiff }) => {
-      let clickHandler = (event) => {
-        let { target } = event;
-        bounce(target, bounceOptions);
-        popupModal(target);
-      };
-      imgs.forEach((img) => {
-        img.addEventListener('click', clickHandler, false);
-      });
-      ImageLoader.setup({ batchSize: 50, interval: 3000 });
-      ImageLoader.loadImages(window.images, clickHandler, timeDiff);
+      addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff });
     });
 }
 
