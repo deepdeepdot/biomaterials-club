@@ -265,14 +265,14 @@ span.close:active {
 }
 
 .bounce {
-  animation: bounce 0.5s both;
+  animation: bounce 1s both;
   /* border-color: orange; */
   border: 2px solid orange;
 }
 
 .zoomIn {
   --scale-from: 3;
-  animation: zoomIn 0.3s both;
+  animation: zoomIn 0.7s both;
   animation-timing-function: ease-in-out;
 }
 
@@ -280,8 +280,8 @@ span.close:active {
   25% {
       transform: scale(0.8);
   }
-  100% {
-      transform: scale(1.4);
+  70% {
+      transform: scale(2);
   }
 }
 
