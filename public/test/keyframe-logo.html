@@ -1,0 +1,32 @@
+<style>
+
+
+    @keyframes hue-rotation {
+        0% {
+            filter:hue-rotate(0);
+        }
+
+        50% {
+            filter:hue-rotate(180deg);
+        }
+
+        100% {
+            filter: hue-rotate(360deg);
+        }
+    }
+
+    .animated {
+        animation: hue-rotation 2s infinite both;
+    }
+
+</style>
+
+<img id="example-element" class="animated" src="firefox-logo.svg" width="200">
+
+<img
+id="logo"
+class="animated"
+width="250"
+src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w"
+/>
+
