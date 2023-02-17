@@ -1,3 +1,4 @@
+<img id="cat" src="20s.jpg" />
 
 <img id="example-element" class="transition-all" src="firefox-logo.svg" width="200" 
 style="filter: hue-rotate(90deg);">
@@ -17,6 +18,7 @@ style="filter: hue-rotate(90deg);"
     function doLogoAnimation() {
       let logo = $('.logo');
       let ff = $('#example-element');
+      let cat = $('#cat');
 
       let rotation = 0;
   
@@ -26,6 +28,7 @@ style="filter: hue-rotate(90deg);"
         let filter = `hue-rotate(${rotation}deg)`;
         logo.style.filter = filter;
         ff.style.filter = filter;
+        cat.style.filter = filter;
 
         console.log(filter);
       }
