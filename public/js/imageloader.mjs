@@ -1,7 +1,7 @@
 // @ts-check
 import createCounterWait from './counterwait.mjs';
 
-const TEST_FOR_BATCHES = false; // default: false
+const TEST_FOR_BATCHES = true; // default: false
 
 // ----------------------------- Device detection
 
@@ -74,6 +74,7 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
       if (entry.isIntersecting) {
         let thumbnails = thumbnailBatches.getThumbnailBatch(currentBatch);
         if (thumbnails) {
+          alert("Adding a batch")
           thumbnails.forEach((thumbnail) => {
             thumbnail.onclick = clickHandler;
             main.appendChild(thumbnail);
@@ -82,6 +83,7 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
         }
         let isLast = currentBatch === totalBatches;
         if (isLast) {
+          alert("Unobserving")
           io.unobserve(bottom);
         }
       }
