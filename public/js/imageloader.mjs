@@ -1,6 +1,8 @@
 // @ts-check
 // ---------------- Image Loader
 
+const TEST_FOR_BATCHES = true;
+
 import createCounterWait from './counterwait.mjs';
 
 let createThumbnail = (img) => {
@@ -49,9 +51,11 @@ function createImageLoader() {
         return count >= images.length;
       })
       .then(() => {
+        let fragment = document.createDocumentFragment();
         thumbnails.forEach((thumbnail) => {
-          main.appendChild(thumbnail);
+          fragment.appendChild(thumbnail);
         });
+        main.appendChild(fragment);
       });
   }
 
@@ -76,7 +80,7 @@ function createImageLoader() {
     console.log(`isSuperSlow: ${isSuperSlow}`);
     console.log(`isFastSpeed: ${isFastSpeed}`);
 
-    if (isDesktop() && isFastSpeed) {
+    if (!TEST_FOR_BATCHES && isDesktop() && isFastSpeed) {
       loadAllImages(myImages, clickHandler);
     } else {
       let batches = splitIntoBatches(myImages, batchSize);
