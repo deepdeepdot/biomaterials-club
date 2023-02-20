@@ -72,10 +72,10 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
   let callback = (entries) => {
     let checkIntersection = (entry) => {
       if (entry.isIntersecting) {
-        alert('isIntersecting');
+        // alert('isIntersecting');
         let thumbnails = thumbnailBatches.getThumbnailBatch(currentBatch);
         if (thumbnails) {
-          alert("Adding a batch")
+          // alert("Adding a batch")
           thumbnails.forEach((thumbnail) => {
             thumbnail.onclick = clickHandler;
             main.appendChild(thumbnail);
@@ -84,7 +84,7 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
         }
         let isLast = currentBatch === totalBatches;
         if (isLast) {
-          alert("Unobserving")
+          // alert("Unobserving")
           io.unobserve(bottom);
         }
       }
