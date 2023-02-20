@@ -54,16 +54,14 @@ function createImageLoader() {
       thumbnails.push(thumbnail);
     });
 
-    counterWait
+    return counterWait
       .waitFor('loadImagesForBatch', (count) => {
         return count >= images.length;
       })
       .then(() => {
-        let fragment = document.createDocumentFragment();
         thumbnails.forEach((thumbnail) => {
-          fragment.appendChild(thumbnail);
+          main.appendChild(thumbnail);
         });
-        main.appendChild(fragment);
       });
   }
 
@@ -73,6 +71,23 @@ function createImageLoader() {
       thumbnail.onclick = clickHandler;
       thumbnail.onload = () => main.appendChild(thumbnail);
     });
+  }
+
+  function loadAllBatchess(batches, clickHandler) {
+    let spacedByTime = true;
+    let sequential = !spacedByTime;
+
+    if (spacedByTime) {
+      batches.forEach(async (batch, i) => {
+        let load = () => loadImagesForBatch(batch, clickHandler);
+        setTimeout(load, interval * i); // batch every interval
+      });
+    }
+    if (sequential) {
+      batches.forEach(async (batch, i) => {
+        await loadImagesForBatch(batch, clickHandler);
+      });
+    }
   }
 
   const SECOND = 1000;
@@ -92,10 +107,7 @@ function createImageLoader() {
       loadAllImages(myImages, clickHandler);
     } else {
       let batches = splitIntoBatches(myImages, batchSize);
-      batches.forEach((batch, i) => {
-        let load = () => loadImagesForBatch(batch, clickHandler);
-        setTimeout(load, interval * i); // batch every interval
-      });
+      loadAllBatchess(batches, clickHandler);
     }
   }
 
