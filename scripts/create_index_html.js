@@ -13,7 +13,8 @@ async function getImages() {
 }
 
 function getImageTags(images) {
-  let getImageTag = (file) => `        <img loading="lazy" src="images/th/${file}" />`;
+  let getImageTag = (file) =>
+    `        <img loading="lazy" src="images/th/${file}" />`;
   let lines = images.map(getImageTag);
   return lines.join('\n');
 }

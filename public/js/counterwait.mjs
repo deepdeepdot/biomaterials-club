@@ -10,7 +10,7 @@ function createCounterWait() {
     name,
     condition,
     waitCycleDuration = DEFAULT_WAIT_CYCLE_DURATION,
-    maxNumCycles = DEFAULT_MAX_NUM_CYCLES,
+    maxNumCycles = DEFAULT_MAX_NUM_CYCLES
   ) {
     return new Promise((resolve, reject) => {
       let interval = setInterval(() => {

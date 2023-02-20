@@ -114,7 +114,8 @@
       <main class="main">
 ${images}
       </main>
-    </div>
+      <div class="bottom"></div>
+    </div><!-- page -->
   </body>
 </html>
 

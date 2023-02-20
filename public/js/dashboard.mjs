@@ -77,9 +77,7 @@ function measureImageLoadingTime(imgs, startTime) {
 
 // ---------------- Setup Images
 
-function addImagePopupEvent({
-  imgs, popupModal, bounceOptions, timeDiff,
-}) {
+function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
   let clickHandler = (event) => {
     let { target } = event;
     bounce(target, bounceOptions);
@@ -114,7 +112,10 @@ function setupImages(popupModal, startTime) {
     .then(getBounceOptions)
     .then(({ bounceOptions, timeDiff }) => {
       addImagePopupEvent({
-        imgs, popupModal, bounceOptions, timeDiff,
+        imgs,
+        popupModal,
+        bounceOptions,
+        timeDiff,
       });
     });
 }
