@@ -58,7 +58,7 @@ export function togglePoem(button) {
 function measureImageLoadingTime(imgs, startTime) {
   return new Promise((resolve) => {
     createCounterWait()
-      .waitFor(() => {
+      .waitFor('measureImageLoadingTime', () => {
         let completed = 0;
         imgs.forEach((img) => {
           if (img.complete) {
@@ -77,7 +77,9 @@ function measureImageLoadingTime(imgs, startTime) {
 
 // ---------------- Setup Images
 
-function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
+function addImagePopupEvent({
+  imgs, popupModal, bounceOptions, timeDiff,
+}) {
   let clickHandler = (event) => {
     let { target } = event;
     bounce(target, bounceOptions);
@@ -102,7 +104,7 @@ function getBounceOptions(timeDiff) {
   return {
     bounceOptions,
     timeDiff,
-  };  
+  };
 }
 
 function setupImages(popupModal, startTime) {
@@ -111,7 +113,9 @@ function setupImages(popupModal, startTime) {
   return measureImageLoadingTime(imgs, startTime)
     .then(getBounceOptions)
     .then(({ bounceOptions, timeDiff }) => {
-      addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff });
+      addImagePopupEvent({
+        imgs, popupModal, bounceOptions, timeDiff,
+      });
     });
 }
 

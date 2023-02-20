@@ -1,9 +1,16 @@
 // @ts-check
-// ---------------- Image Loader
+import createCounterWait from './counterwait.mjs';
 
 const TEST_FOR_BATCHES = true;
 
-import createCounterWait from './counterwait.mjs';
+// ----------------------------- Device detection
+
+function isDesktop() {
+  let isTouch = 'ontouchstart' in window; // exception: surface, some Android/chrome laptops?
+  return !isTouch;
+}
+
+// ----------------------------- Image Loader
 
 let createThumbnail = (img) => {
   let image = new Image();
@@ -21,7 +28,7 @@ function splitIntoBatches(images, batchSize) {
     batches.push(newBatch);
     while (newBatch.length < batchSize && i < images.length) {
       newBatch.push(images[i]);
-      i++;
+      i += 1;
     }
   }
   return batches;
@@ -29,7 +36,8 @@ function splitIntoBatches(images, batchSize) {
 
 function createImageLoader() {
   let main = document.querySelector('.main');
-  let batchSize, interval;
+  let batchSize;
+  let interval;
 
   function setup(options) {
     ({ batchSize = 50, interval = 3000 } = options);
@@ -47,7 +55,7 @@ function createImageLoader() {
     });
 
     counterWait
-      .waitFor(function (count) {
+      .waitFor('loadImagesForBatch', (count) => {
         return count >= images.length;
       })
       .then(() => {
@@ -84,11 +92,10 @@ function createImageLoader() {
       loadAllImages(myImages, clickHandler);
     } else {
       let batches = splitIntoBatches(myImages, batchSize);
-      for (let i = 0; i < batches.length; i++) {
-        let batch = batches[i];
+      batches.forEach((batch, i) => {
         let load = () => loadImagesForBatch(batch, clickHandler);
         setTimeout(load, interval * i); // batch every interval
-      }
+      });
     }
   }
 
@@ -96,13 +103,6 @@ function createImageLoader() {
     setup,
     loadImages,
   };
-}
-
-// ----------------------------- Device detection
-
-function isDesktop() {
-  let isTouch = 'ontouchstart' in window; // exception: surface, some Android/chrome laptops?
-  return !isTouch;
 }
 
 let ImageLoader = createImageLoader();

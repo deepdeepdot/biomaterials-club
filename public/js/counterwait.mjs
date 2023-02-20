@@ -7,6 +7,7 @@ function createCounterWait() {
   let cycles = 0;
 
   function waitFor(
+    name,
     condition,
     waitCycleDuration = DEFAULT_WAIT_CYCLE_DURATION,
     maxNumCycles = DEFAULT_MAX_NUM_CYCLES,
@@ -17,10 +18,10 @@ function createCounterWait() {
           clearInterval(interval);
           resolve({});
         }
-        cycles++;
+        cycles += 1;
         if (cycles === maxNumCycles) {
           clearInterval(interval);
-          reject('Condition never happened. Timeout');
+          reject(new Error(`${name}: Timeout. Condition never happened.`));
         }
       }, waitCycleDuration);
     });
