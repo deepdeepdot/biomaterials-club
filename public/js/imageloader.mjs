@@ -64,17 +64,12 @@ function loadImagesForBatchAndInsertToDom(images, clickHandler, main) {
 }
 
 function setupIntersectionObserver(batches, clickHandler, main) {
-  let ioOptions = {
-    threshold: 0,
-    rootMargin: '400px',
-  };
+  let currentBatch = 0;
+  let io;
 
-  let io = new IntersectionObserver((entries) => {
-    let currentBatch = 0;
-
-    entries.forEach((entry) => {
+  let callback = (entries) => {
+    let checkIntersection = (entry) => {
       if (entry.isIntersecting) {
-        console.log('IS intersecting');
         if (currentBatch < batches.length) {
           loadImagesForBatchAndInsertToDom(
             batches[currentBatch],
@@ -88,11 +83,17 @@ function setupIntersectionObserver(batches, clickHandler, main) {
             io.unobserve(entry.target);
           }
         }
-      } else {
-        console.log('IS NOT intersecting');
       }
-    });
-  }, ioOptions);
+    };
+    entries.forEach(checkIntersection);
+  };
+
+  let ioOptions = {
+    threshold: 0,
+    rootMargin: '400px',
+  };
+
+  io = new IntersectionObserver(callback, ioOptions);
 
   let bottom = document.querySelector('.bottom');
   io.observe(bottom);
