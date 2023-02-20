@@ -48,6 +48,10 @@ button:active {
   transform: translateY(10%);
 }
 
+.bottom {
+  height: 10px;
+}
+
 /*----------------------------*/
 /* Toggle buttons */
 
