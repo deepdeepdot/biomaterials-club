@@ -77,14 +77,13 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
           thumbnails.forEach((thumbnail) => {
             thumbnail.onclick = clickHandler;
             main.appendChild(thumbnail);
-          })
+          });
           currentBatch += 1;
         }
         let isLast = currentBatch === totalBatches;
         if (isLast) {
           io.unobserve(bottom);
         }
-
       }
     };
     entries.forEach(checkIntersection);
@@ -142,7 +141,7 @@ function createImageLoader() {
 
   const SECOND = 1000;
 
-  async function loadImages(images, clickHandler, timeDiff) {
+  function loadImages(images, clickHandler, timeDiff) {
     let isSuperSlow = timeDiff > 5 * SECOND;
     if (isSuperSlow) return;
 
