@@ -72,6 +72,7 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
   let callback = (entries) => {
     let checkIntersection = (entry) => {
       if (entry.isIntersecting) {
+        alert('isIntersecting');
         let thumbnails = thumbnailBatches.getThumbnailBatch(currentBatch);
         if (thumbnails) {
           alert("Adding a batch")
@@ -93,7 +94,7 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
 
   let ioOptions = {
     threshold: 0,
-    rootMargin: '400px',
+    root: null // documemt.querySelector('body'),
   };
   io = new IntersectionObserver(callback, ioOptions);
   io.observe(bottom);
