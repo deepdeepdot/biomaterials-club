@@ -137,14 +137,13 @@ function downloadSlackImages(imageUrls, folder = './download_slack', headers = {
 // Read curl config
 // # curl --config slack-headers.config https://files.slack.com/files-tmb/T9NK8472R-F04Q4UX6NM6-270049c8b4/img_1227_720.jpg --output img_1227_720.jpg
 
-let curlConfig = fs.readFileSync('./scripts/slack/slack-headers.config', 'utf-8');
-let headers = getHeaders(curlConfig);
-downloadSlackImages(urls, './download_slack', headers);
+function downloadImages(urls) {
+  let curlConfig = fs.readFileSync('./scripts/slack/slack-headers.config', 'utf-8');
+  let headers = getHeaders(curlConfig);
+  downloadSlackImages(urls, './download_slack', headers);  
+}
 
-// One more thing... let's rename according to DATE (year, month, etc)
-
-// Slack image naming
-// Sometimes, use dates..., sometimes use group by some prefix of image
+downloadImages(urls);
 
 // Group by prefix: img_23X, sometimes two adjacent groups might be the same
 
@@ -194,29 +193,33 @@ let prefixMapping = {
   img_127: '20230220'
 };
 
-function renameFiles(filenames, prefixMapping) {
+function getNewName(file, counterMap) {
+  let prefix = getPrefix(file);
+  let date = prefixMapping[prefix];
+  let count = counterMap.get(date) + 1;
+  let suffix = getSuffix(file);
+
+  counterMap.set(date, count);
+
+  return `${date}_${count}.${suffix}`;
+}
+
+function getNewNames(filenames, prefixMapping) {
   let counterMap = new Map();
   for (let k in prefixMapping) {
     let v = prefixMapping[k];
     counterMap.set(v, 0);
   }
   let mapping = {};
-
-  filenames.forEach(file => {
-    let prefix = getPrefix(file);
-    let date = prefixMapping[prefix];
-    let count = counterMap.get(date) + 1;
-    let suffix = getSuffix(file);
-    let newName = `${date}_${count}.${suffix}`;
-    mapping[file] = newName;
-    counterMap.set(date, count);
-  });
+  filenames.forEach(file => mapping[file] = getNewName(file, counterMap));
   return mapping;
 }
 
+let fs = require('fs');
+
 function renameFiles(urls, folder='./download_slack') {
   let filenames = getFilenames(urls);
-  let nameMapping = renameFiles(filenames, prefixMapping);
+  let nameMapping = getNewNames(filenames, prefixMapping);
   // console.log(nameMapping);
 
   filenames.forEach(file => {
@@ -225,9 +228,9 @@ function renameFiles(urls, folder='./download_slack') {
     let destination = `${folder}/${newFilename}`;
 
     console.log(`Renaming ${source} to ${destination}`);
-    // fs.rename(source, destination, (err) => {
-    //   console.log(err);
-    // });
+    fs.rename(source, destination, (err) => {
+      console.log(err);
+    });
   });
 }
 
