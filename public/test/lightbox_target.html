@@ -1,9 +1,9 @@
 <style>
-/* Unopened lightbox */
-.lightbox {
+  /* Unopened lightbox */
+  .lightbox {
     display: none;
   }
-  
+
   /* Opened lightbox */
   .lightbox:target {
     position: absolute;
@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: center;
   }
-  
+
   /* Lightbox content */
   .lightbox figcaption {
     width: 25rem;
@@ -23,13 +23,13 @@
     padding: 1.5em;
     background-color: lightpink;
   }
-  
+
   /* Close button */
   .lightbox .close {
     position: relative;
     display: block;
   }
-  
+
   .lightbox .close::after {
     right: -1rem;
     top: -1rem;
@@ -43,10 +43,10 @@
     background-color: black;
     border-radius: 50%;
     color: white;
-    content: "×";
+    content: '×';
     cursor: pointer;
   }
-  
+
   /* Lightbox overlay */
   .lightbox .close::before {
     left: 0;
@@ -55,34 +55,32 @@
     height: 100%;
     position: fixed;
     background-color: rgba(0, 0, 0, 0.7);
-    content: "";
+    content: '';
     cursor: default;
   }
-  
 </style>
 
 <ul>
-    <li><a href="#example1">Open example #1</a></li>
-    <li><a href="#example2">Open example #2</a></li>
-  </ul>
-  
-  <div class="lightbox" id="example1">
-    <figure>
-      <a href="#" class="close"></a>
-      <figcaption>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec felis enim,
-        placerat id eleifend eu, semper vel sem.
-      </figcaption>
-    </figure>
-  </div>
-  
-  <div class="lightbox" id="example2">
-    <figure>
-      <a href="#" class="close"></a>
-      <figcaption>
-        Cras risus odio, pharetra nec ultricies et, mollis ac augue. Nunc et diam
-        quis sapien dignissim auctor. Quisque quis neque arcu, nec gravida magna.
-      </figcaption>
-    </figure>
-  </div>
+  <li><a href="#example1">Open example #1</a></li>
+  <li><a href="#example2">Open example #2</a></li>
+</ul>
 
+<div class="lightbox" id="example1">
+  <figure>
+    <a href="#" class="close"></a>
+    <figcaption>
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec felis enim,
+      placerat id eleifend eu, semper vel sem.
+    </figcaption>
+  </figure>
+</div>
+
+<div class="lightbox" id="example2">
+  <figure>
+    <a href="#" class="close"></a>
+    <figcaption>
+      Cras risus odio, pharetra nec ultricies et, mollis ac augue. Nunc et diam
+      quis sapien dignissim auctor. Quisque quis neque arcu, nec gravida magna.
+    </figcaption>
+  </figure>
+</div>
