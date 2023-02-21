@@ -115,14 +115,19 @@ let urls = ['https://files.slack.com/files-tmb/T9NK8472R-F04PLJENX89-8b98f6b195/
 //     'https://files.slack.com/files-tmb/T9NK8472R-F04QGEFDZQT-b4cdaccfa5/img_1266_720.jpg'
 //   ];
 
+let getFilenameFromUrl = (url) => {
+  let idx = url.lastIndexOf('/');
+  let filename = url.substring(idx + 1);
+  return filename;
+}
+
 function downloadSlackImages(imageUrls, folder = './download_slack', headers = {}) {
   if (!fs.existsSync(folder)) {
     fs.mkdirSync(folder);
   }
   // Bunch of promises! We can do something here
   imageUrls.forEach(url => {
-    let idx = url.lastIndexOf('/');
-    let filename = url.substring(idx + 1);
+    let filename = getFilenameFromUrl(url);
     download(url, folder + "/" + filename, headers)
       .then(() => console.log(`Downloaded: ${filename}`))
       .catch((e) => console.log(`FAILED ${filename}: ${e}`))
@@ -143,9 +148,87 @@ downloadSlackImages(urls, './download_slack', headers);
 
 // Group by prefix: img_23X, sometimes two adjacent groups might be the same
 
-img_122
-img_123
+let getFilenames = (urls) => urls.map(getFilenameFromUrl);
 
-Identify adjacent groups and merge into the same
+let getPrefix = (file) => file.substring(0, 7);
 
+let getSuffix = (file) => {
+  let idx = file.lastIndexOf('.');
+  let suffix = file.substr(idx + 1);
+  return suffix;
+}
 
+function getPrefixes(urls) {
+  let filenames = getFilenames(urls);
+  let prefixes = filenames.map(getPrefix);
+
+  let set = new Set();
+  prefixes.forEach(prefix => set.add(prefix));
+  return set;
+}
+
+function getPrefixMapping(urls) {
+  let today = new Date().toISOString().substr(0, 10).replaceAll('-', '');
+
+  let mapping = {};
+  let prefixes = getPrefixes(urls);
+  prefixes.forEach(prefix => mapping[prefix] = today);
+
+  return mapping;
+}
+
+let map = getPrefixMapping(urls);
+
+// Manually mapping each category :)
+
+let prefixMapping = {
+  '2023021': '20230219',
+  img_907: '20230212',
+  img_122: '20230213',
+  img_123: '20230213',
+  img_930: '20230213',
+  img_929: '20230213',
+  img_932: '20230213',
+  img_216: '20230220',
+  img_126: '20230220',
+  img_127: '20230220'
+};
+
+function renameFiles(filenames, prefixMapping) {
+  let counterMap = new Map();
+  for (let k in prefixMapping) {
+    let v = prefixMapping[k];
+    counterMap.set(v, 0);
+  }
+  let mapping = {};
+
+  filenames.forEach(file => {
+    let prefix = getPrefix(file);
+    let date = prefixMapping[prefix];
+    let count = counterMap.get(date) + 1;
+    let suffix = getSuffix(file);
+    let newName = `${date}_${count}.${suffix}`;
+    mapping[file] = newName;
+    counterMap.set(date, count);
+  });
+  return mapping;
+}
+
+function renameFiles(urls, folder='./download_slack') {
+  let filenames = getFilenames(urls);
+  let nameMapping = renameFiles(filenames, prefixMapping);
+  // console.log(nameMapping);
+
+  filenames.forEach(file => {
+    let newFilename = nameMapping[file];
+    let source = `${folder}/${file}`;
+    let destination = `${folder}/${newFilename}`;
+
+    console.log(`Renaming ${source} to ${destination}`);
+    // fs.rename(source, destination, (err) => {
+    //   console.log(err);
+    // });
+  });
+}
+
+renameFiles(urls);
