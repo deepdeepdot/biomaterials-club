@@ -1,6 +1,7 @@
 {
   "type": "module",
   "scripts": {
+    "test": "jest",
     "e2e": "DISPLAY=squirrel:0.0 cypress open",
     "web": "npx vite --port 8000 public",
     "html": "node scripts/create_index_html",
@@ -20,6 +21,7 @@
   "devDependencies": {
     "eslint": "^8.31.0",
     "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.26.0"
+    "eslint-plugin-import": "^2.26.0",
+    "jest": "^29.4.3"
   }
 }
