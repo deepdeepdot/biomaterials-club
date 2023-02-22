@@ -2,12 +2,16 @@
 
 let axios = require('axios');
 let fs = require('fs');
+let getImageUrlsFromSlack = require('./slack_1_get_urls');
 
 // Get headers from the curl config file
 function getHeaders(curlConfig) {
     let lineToTuple = (line) => {
-        let len = line.length;
-        let tuple = line.substring(10, len - 1); // Skip: "header = "
+        if (!line) return null;
+
+        let trimmedLine = line.trim();
+        let len = trimmedLine.length;
+        let tuple = trimmedLine.substring(10, len - 1); // Skip: "header = "
         let pair = tuple.split(':');
         return [pair[0].trim(), pair[1].trim()];
     };
@@ -24,16 +28,24 @@ function getHeaders(curlConfig) {
     return values;
 }
 
-async function download(url, path, headers) {
-    // From: https://futurestud.io/tutorials/download-files-images-with-axios-in-node-js
-    let writer = fs.createWriteStream(path);
-    let response = await axios({
+function download(url, headers) {
+    return axios({
         url,
         method: 'GET',
         headers,
         responseType: 'stream',
     });
+}
+
+async function downloadAndPipe(url, headers, writer) {
+    let response = await download(url, headers);
     response.data.pipe(writer);
+    return response;
+}
+
+async function downloadAndWrite(url, headers, path) {
+    let writer = fs.createWriteStream(path);
+    downloadAndPipe(url, headers, writer);
 
     return new Promise((resolve, reject) => {
         writer.on('finish', resolve);
@@ -49,46 +61,61 @@ let getFilenameFromUrl = (url) => {
 
 function downloadImagesFromUrls(
     imageUrls,
-    folder = './download_slack',
-    headers = {}
+    folder,
+    headers
 ) {
     if (!fs.existsSync(folder)) {
         fs.mkdirSync(folder);
     }
-    // Bunch of promises! We can do something here
-    imageUrls.forEach((url) => {
+    let downloadUrl = (url) => {
         let filename = getFilenameFromUrl(url);
-        download(url, folder + '/' + filename, headers)
+        let path = `${folder}/${filename}`;
+ 
+        return downloadAndWrite(url, headers, path)
             .then(() => console.log(`Downloaded: ${filename}`))
             .catch((e) => console.log(`FAILED ${filename}: ${e}`));
-    });
+    }
+    return imageUrls.map(downloadUrl);
 }
-
 
 // Read curl config
 // # curl --config slack-headers.config https://files.slack.com/files-tmb/T9NK8472R-F04Q4UX6NM6-270049c8b4/img_1227_720.jpg --output img_1227_720.jpg
 
-function downloadSlackImages(urls) {
+function downloadSlackImages(urls, folder = './download_slack') {
     let curlConfig = fs.readFileSync(
         './scripts/slack/slack-headers.config',
         'utf-8'
     );
     let headers = getHeaders(curlConfig);
-    downloadImagesFromUrls(urls, './download_slack', headers);
+    let downloadUrls = downloadImagesFromUrls(urls, folder, headers);
+    let allDownloads = Promise.all(downloadUrls);
+    return allDownloads;
 }
 
-/*
+function executeImageDownload() {
+    // let imageUrls = getImageUrlsFromSlack();
+    // imageUrls = imageUrls.slice(46); //  May need to slice and skip repetitions
 
-let imageUrls = getImageUrlsFromSlack();
-// imageUrls = imageUrls.slice(46); //  May need to slice and skip repetitions
-downloadSlackImages(imageUrls);
-
-*/
+    let imageUrls = [
+        'https://files.slack.com/files-tmb/T9NK8472R-F04PLJENX89-8b98f6b195/img_9076_720.jpg',
+        'https://files.slack.com/files-tmb/T9NK8472R-F04P8LD150W-724fdb5762/img_1224_720.jpg',
+        'https://files.slack.com/files-tmb/T9NK8472R-F04Q4UX693J-cb163f9a01/img_1225_720.jpg'
+    ];
+    
+    downloadSlackImages(imageUrls).then(() => {
+        console.log('All downloads succeeded! :)')
+    }).catch((e) => {
+        console.log('Not all downloads worked :(')
+    });    
+}
 
 module.exports = {
     getHeaders,
     download,
+    downloadAndPipe,
+    downloadAndWrite,
     getFilenameFromUrl,
     downloadImagesFromUrls,
-    downloadSlackImages
+    downloadSlackImages,
+    executeImageDownload
 };

@@ -13,7 +13,6 @@ const {
     renameFiles
 } = require('./slack_3_rename_files');
 
-// jest.spyOn(fs, 'rename');
 jest.mock('fs');
 
 jest.useFakeTimers()
@@ -125,6 +124,9 @@ describe('slack_3_rename_files', () => {
         file = 'img_1229_720.jpg';
         dateName = getDateName(file, counterMap, prefixMapping);
         expect(dateName).toBe('20230113_02.jpg');
+
+        dateName = getDateName(file, counterMap, prefixMapping);
+        expect(dateName).toBe('20230113_02.jpg'); // no changes due to cache
     });
 
     test('getDateNames', () => {

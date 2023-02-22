@@ -34,17 +34,23 @@ function getPrefixMapping(filenames) {
     return mapping;
 }
 
+let mappedNames = new Map();
+
 function getDateName(file, counterMap, prefixMapping) {
+    if (mappedNames.has(file)) {
+        return mappedNames.get(file);
+    }
     let prefix = getPrefix(file);
     let date = prefixMapping[prefix];
-    let count = counterMap.get(date) + 1;
+    let count = 1 + counterMap.get(date);
     let suffix = getSuffix(file);
 
     counterMap.set(date, count);
 
     count = count < 10 ? `0${count}` : count; // Pad 2 digits
-
-    return `${date}_${count}.${suffix}`;
+    let dateName = `${date}_${count}.${suffix}`;
+    mappedNames.set(file, dateName);
+    return dateName;
 }
 
 function getDateCounterMap(prefixMapping) {
@@ -75,7 +81,7 @@ function renameFiles(urls, prefixMapping, folder = './download_slack') {
         let source = folder ? `${folder}/${file}` : file;
         let destination = folder ? `${folder}/${newFilename}` : newFilename;
 
-        console.log(`Renaming ${source} to ${destination}`);
+        // console.log(`Renaming ${source} to ${destination}`);
         fs.rename(source, destination, (err) => {
             console.log(err);
         });

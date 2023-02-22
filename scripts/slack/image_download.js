@@ -20,7 +20,7 @@ async function download(url, path, headers = {}) {
 
 function test() {
   const url = 'https://unsplash.com/photos/AaEQmoufHLk/download?force=true';
-  await download(url, 'code.jpg';
+  return download(url, 'code.jpg');
 }
 
-// test();
+await test();
