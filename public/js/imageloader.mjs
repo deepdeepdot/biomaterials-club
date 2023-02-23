@@ -63,7 +63,12 @@ function loadImagesForBatchAndInsertToDom(images, clickHandler, main) {
   });
 }
 
-function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, clickHandler, main) {
+function setupIntersectionObserverForThumbnails(
+  thumbnailBatches,
+  totalBatches,
+  clickHandler,
+  main
+) {
   let currentBatch = 0;
   let io;
 
@@ -94,7 +99,7 @@ function setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, 
 
   let ioOptions = {
     threshold: 0,
-    root: null // documemt.querySelector('body'),
+    root: null, // documemt.querySelector('body'),
   };
   io = new IntersectionObserver(callback, ioOptions);
   io.observe(bottom);
@@ -124,7 +129,7 @@ function createImageLoader() {
 
     if (spacedByTime) {
       batches.forEach(async (batch, i) => {
-        let load = async() => {
+        let load = async () => {
           let thumbnails = await loadImagesForBatch(batch, clickHandler);
           thumbnailBatches.push(thumbnails);
         };
@@ -138,7 +143,7 @@ function createImageLoader() {
       });
     }
     return {
-      getThumbnailBatch: (i) => thumbnailBatches[i]
+      getThumbnailBatch: (i) => thumbnailBatches[i],
     };
   }
 
@@ -160,7 +165,12 @@ function createImageLoader() {
       let batches = splitIntoBatches(images, batchSize);
       let totalBatches = Math.ceil(images.length / batchSize);
       let thumbnailBatches = loadAllBatchess(batches, clickHandler);
-      setupIntersectionObserverForThumbnails(thumbnailBatches, totalBatches, clickHandler, main);
+      setupIntersectionObserverForThumbnails(
+        thumbnailBatches,
+        totalBatches,
+        clickHandler,
+        main
+      );
     }
   }
 

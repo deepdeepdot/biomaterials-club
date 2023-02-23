@@ -4,6 +4,9 @@ import fs from 'fs';
 export const isImage = (file) => file.endsWith('.jpg') || file.endsWith('.png');
 export const isVideo = (file) => file.endsWith('.mp4') || file.endsWith('.MOV');
 
+// Not trivial to test, but I find it readable :)
+// Testable means "breaking" into smaller testable chunks
+
 function imageTraverser(folder, callback, filter = isImage) {
   return new Promise((resolve, reject) => {
     let lines = [];
