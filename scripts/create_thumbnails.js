@@ -10,7 +10,7 @@ const { thumbnailWidth, imageSourceFolder, thumbnailsFolder } =
 
 function resize(file, width) {
   let source = `${imageSourceFolder}/${file}`;
-  let resizing = sharp(source).resize(width)
+  let resizing = sharp(source).resize(width);
   return resizing;
 }
 
@@ -28,7 +28,7 @@ function processFile(file) {
         resolve(info);
       }
     });
-  })
+  });
 }
 
 function createThumbnails() {

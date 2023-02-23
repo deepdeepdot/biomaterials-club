@@ -48,7 +48,7 @@ function getImageCode(images, splitNum) {
   let rest = images.slice(splitNum);
   return {
     imageTags: getImageTags(first),
-    imagesAsJS: getImagesAsJS(rest)
+    imagesAsJS: getImagesAsJS(rest),
   };
 }
 
