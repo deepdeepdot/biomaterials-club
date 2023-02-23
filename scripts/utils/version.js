@@ -13,13 +13,16 @@ function getNewVersion(version) {
   return newVersion;
 }
 
-function incrementVersion() {
-  let { version } = project['create_index_html'];
-  let newVersion = getNewVersion(version);
+function updateVersion(version, newVersion) {
   let text = fs.readFileSync(VERSION_FILE, { encoding: 'utf8', flag: 'r' });
   let replaced = text.replace(version, newVersion);
   fs.writeFileSync(VERSION_FILE, replaced);
+}
 
+function incrementVersion() {
+  let { version } = project['create_index_html'];
+  let newVersion = getNewVersion(version);
+  updateVersion(version, newVersion);
   return newVersion;
 }
 

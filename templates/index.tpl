@@ -112,10 +112,17 @@
       </div>
 
       <main class="main">
-${images}
+${imageTags}
+        <script type="module">
+          import { setupDashboard } from './js/dashboard.mjs';
+          var startTime = window.performance.now();
+${imagesAsJS}
+          setupDashboard(startTime);
+        </script>
       </main>
       <div class="bottom"></div>
-    </div><!-- page -->
+    </div>
+    <!-- page -->
   </body>
 </html>
 

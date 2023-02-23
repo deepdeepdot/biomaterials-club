@@ -19,45 +19,45 @@ function getImageTags(images) {
   return lines.join('\n');
 }
 
-function getJSForImagesAndTime(images) {
+function getImagesAsJS(images) {
   let blanks = ' '.repeat(12);
-  let array = images.map((img) => `${blanks}'${img}',`);
-  let code = `        <script type="module">
-          import { setupDashboard } from './js/dashboard.mjs';
-          var startTime = window.performance.now();
-          window.images = [
-${array.join('\n')}
-          ];
-          setupDashboard(startTime);
-        </script>`;
-  return code;
+  let imageNames = images.map((img) => `${blanks}'${img}',`);
+
+  blanks = ' '.repeat(10);
+  let imagesAsJS = `${blanks}window.images = [
+${imageNames.join('\n')}
+${blanks}];`;
+  return imagesAsJS;
 }
 
 let readTextFile = (file) =>
   fs.readFileSync(file, { encoding: 'utf8', flag: 'r' });
 
-function getHtml(imageTags) {
+function getHtml(imageTags, imagesAsJS) {
   let version = incrementVersion();
   let template = readTextFile('./templates/index.tpl');
   let html = template
-    .replace('${images}', imageTags)
+    .replace('${imageTags}', imageTags)
+    .replace('${imagesAsJS}', imagesAsJS)
     .replace('${version}', version);
   return html;
 }
 
-async function createIndexHtml(threshold = 50) {
+function getImageCode(images, splitNum) {
+  let first = images.slice(0, splitNum);
+  let rest = images.slice(splitNum);
+  return {
+    imageTags: getImageTags(first),
+    imagesAsJS: getImagesAsJS(rest)
+  };
+}
+
+async function createIndexHtml(splitNum) {
   let images = await getImages();
-
-  let first = images.slice(0, threshold);
-  let rest = images.slice(threshold);
-
-  let imageTags = getImageTags(first);
-  let imagesAsJS = getJSForImagesAndTime(rest);
-
-  let code = `${imageTags}\n${imagesAsJS}`;
-  let html = getHtml(code);
-
+  let { imageTags, imagesAsJS } = getImageCode(images, splitNum);
+  let html = getHtml(imageTags, imagesAsJS);
   fs.writeFileSync(HTML_FILE, html);
 }
 
-createIndexHtml();
+let splitNum = 50;
+createIndexHtml(splitNum);
