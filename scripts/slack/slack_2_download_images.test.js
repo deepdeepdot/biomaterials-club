@@ -104,7 +104,6 @@ describe('slack_2_download_images', () => {
         let url = 'https://images.unsplash.com/photo-1504164996022-09080787b6b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
         let headers = {};
         let writer = {};
-
         let response = await downloadAndPipe(url, headers, writer);
 
         expect(response.data.pipe).toHaveBeenCalledWith(writer);
@@ -114,8 +113,9 @@ describe('slack_2_download_images', () => {
         let url = 'https://images.unsplash.com/photo-1504164996022-09080787b6b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
         let headers = {};
         let path = 'some-file-ok.jpg';
-
         let spy = jest.spyOn(fs, 'createWriteStream');
+        spy.mockClear();
+
         downloadAndWrite(url, headers, path);
 
         expect(spy).toHaveBeenCalledWith(path);
@@ -143,7 +143,6 @@ describe('slack_2_download_images', () => {
         ];
         let folder = './output';
         let headers = {};
-
         let spy = jest.spyOn(fs, 'createWriteStream');
         spy.mockClear();
 

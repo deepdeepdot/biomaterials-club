@@ -190,6 +190,5 @@ describe('slack_3_rename_files', () => {
             expect(fs.rename).toHaveBeenNthCalledWith(3, 'img_1225_720.jpg', '20230113_02.jpg', expect.anything());
         });
     });
-
 });
 
