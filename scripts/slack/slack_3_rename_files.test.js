@@ -153,9 +153,6 @@ describe('slack_3_rename_files', () => {
         });
 
         test('Normal use case. folder = "./my-folder"', () => {
-            // let mock = jest.fn();
-            // mock(2222);
-            // expect(mock).toHaveBeenCalledWith(2222);
             let urls = [
                 'https://files.slack.com/files-tmb/T9NK8472R-F04PLJENX89-8b98f6b195/img_9076_720.jpg',
                 'https://files.slack.com/files-tmb/T9NK8472R-F04P8LD150W-724fdb5762/img_1224_720.jpg',
@@ -165,17 +162,14 @@ describe('slack_3_rename_files', () => {
                 "img_122": "20230113",
                 "img_907": "20230101"
             };
-            // let callback = () => { };
-            // fs.rename('some', 'next', callback);
-            // expect(fs.rename).toHaveBeenCalledWith('some', 'next', expect.anything());
-    
             let folder = './my-folder';
+
             renameFiles(urls, prefixMapping, folder);
-    
+
             expect(fs.rename).toHaveBeenNthCalledWith(1, './my-folder/img_9076_720.jpg', './my-folder/20230101_01.jpg', expect.anything());
             expect(fs.rename).toHaveBeenNthCalledWith(2, './my-folder/img_1224_720.jpg', './my-folder/20230113_01.jpg', expect.anything());
             expect(fs.rename).toHaveBeenNthCalledWith(3, './my-folder/img_1225_720.jpg', './my-folder/20230113_02.jpg', expect.anything());
-        });    
+        });
 
         test('Normal use case. folder = ""', () => {
             let urls = [
@@ -187,14 +181,14 @@ describe('slack_3_rename_files', () => {
                 "img_122": "20230113",
                 "img_907": "20230101"
             };
-    
             let folder = '';
+
             renameFiles(urls, prefixMapping, folder);
-    
+
             expect(fs.rename).toHaveBeenNthCalledWith(1, 'img_9076_720.jpg', '20230101_01.jpg', expect.anything());
             expect(fs.rename).toHaveBeenNthCalledWith(2, 'img_1224_720.jpg', '20230113_01.jpg', expect.anything());
             expect(fs.rename).toHaveBeenNthCalledWith(3, 'img_1225_720.jpg', '20230113_02.jpg', expect.anything());
-        });    
+        });
     });
 
 });

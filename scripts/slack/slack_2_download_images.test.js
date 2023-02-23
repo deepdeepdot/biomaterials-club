@@ -7,6 +7,7 @@ const {
     downloadAndPipe,
     downloadAndWrite,
     getFilenameFromUrl,
+    downloadAndHandleWrite,
     downloadImagesFromUrls,
     downloadSlackImages
 } = require('./slack_2_download_images');
@@ -14,23 +15,18 @@ const {
 let newTimeout = 5 * 1000; // 5 seconds
 jest.setTimeout(newTimeout);
 
-// Note: for now I can disable one of them via xtest
-// I can only set either of these mocks:
-// But I need the first one for the constructor
-// And the second for the methods inside such constructor
+jest.mock('fs', () => {
+    return {
+        existsSync: jest.fn(),
+        mkdirSync: jest.fn(),
+        createWriteStream: function () {
+            return {
+                on: jest.fn()
+            }
+        }
+    }
+});
 
-
-// jest.mock('fs', () => {
-//     return {
-//         createWriteStream: function () {
-//             return {
-//                 on: jest.fn()
-//             }
-//         }
-//     }
-// });
-
-// jest.mock('axios');
 jest.mock('axios', () => {
     return function () {
         return {
@@ -114,34 +110,50 @@ describe('slack_2_download_images', () => {
         expect(response.data.pipe).toHaveBeenCalledWith(writer);
     });
 
-    test('downloadAndWrite', async () => {
+    test('downloadAndWrite', () => {
         let url = 'https://images.unsplash.com/photo-1504164996022-09080787b6b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
         let headers = {};
         let path = 'some-file-ok.jpg';
-    
-        let promise = await downloadAndWrite(url, headers, path);
-    
-        // expect(fs.createWriteStream).toHaveBeenCalledWith(path);
-    
-        // Check fs.createWritStream() has been called with `path`
-    
-        // Check that when response.
-    
-        // How to check the promise conditions: success / failure
-    
-        // return new Promise((resolve, reject) => {
-        //     writer.on('finish', resolve);
-        //     writer.on('error', reject);
-        // });  
-        // download(url, path, headers).then(() => {
-        // })
-        // expect(download()).toBe(null);
+
+        let spy = jest.spyOn(fs, 'createWriteStream');
+        downloadAndWrite(url, headers, path);
+
+        expect(spy).toHaveBeenCalledWith(path);
     });
-    
-    /*
+
+    test('downloadAndHandleWrite', () => {
+        let url = 'https://images.unsplash.com/photo-1504164996022-09080787b6b3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=870&q=80';
+        let headers = {};
+        let path = 'some-file.jpg';
+
+        let result = downloadAndHandleWrite(url, headers, path);
+        // Note: it would be cool to handle a "bad" write and reject one
+        result.then(() => {
+            expect(1).toBe(1);
+        }).catch(e => {
+            expect(2).toBe(2);
+        });
+    });
+
     test('downloadImagesFromUrls', () => {
-        expect(downloadImagesFromUrls).toBe(null);
+        let imageUrls = [
+            'https://files.slack.com/files-tmb/T9NK8472R-F04PLJENX89-8b98f6b195/img_9076_720.jpg',
+            'https://files.slack.com/files-tmb/T9NK8472R-F04P8LD150W-724fdb5762/img_1224_720.jpg',
+            'https://files.slack.com/files-tmb/T9NK8472R-F04Q4UX693J-cb163f9a01/img_1225_720.jpg'
+        ];
+        let folder = './output';
+        let headers = {};
+
+        let spy = jest.spyOn(fs, 'createWriteStream');
+        spy.mockClear();
+
+        downloadImagesFromUrls(imageUrls, headers, folder);
+        
+        expect(fs.existsSync).toHaveBeenCalled();
+        expect(fs.mkdirSync).toHaveBeenCalled();
+
+        expect(spy).toHaveBeenNthCalledWith(1, './output/img_9076_720.jpg');
+        expect(spy).toHaveBeenNthCalledWith(2, './output/img_1224_720.jpg');
+        expect(spy).toHaveBeenNthCalledWith(3, './output/img_1225_720.jpg');
     });
-    
-    */
 });
