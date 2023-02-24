@@ -1,20 +1,16 @@
 // @ts-check
 import createCounterWait from './counterwait.mjs';
 
-const TEST_FOR_BATCHES = true; // default: false
+const PRELOAD_BATCHES = 1;
+const USE_CACHE_BUSTER = true;
 
-// ----------------------------- Device detection
-
-function isDesktop() {
-  let isTouch = 'ontouchstart' in window; // exception: surface, some Android/chrome laptops?
-  return !isTouch;
-}
+let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
 
 // ----------------------------- Image Loader
 
 let createThumbnail = (img) => {
   let image = new Image();
-  image.src = `images/th/${img}`;
+  image.src = `images/th/${img}${cacheBuster}`;
   return image;
 };
 
@@ -54,43 +50,37 @@ function loadImagesForBatch(images, clickHandler) {
     });
 }
 
-function loadImagesForBatchAndInsertToDom(images, clickHandler, main) {
-  return loadImagesForBatch(images, clickHandler).then((thumbnails) => {
-    thumbnails.forEach((thumbnail) => {
-      main.appendChild(thumbnail);
-    });
-    return thumbnails;
-  });
-}
-
 function setupIntersectionObserverForThumbnails(
   thumbnailBatches,
   totalBatches,
   clickHandler,
   main
 ) {
-  let currentBatch = 0;
   let io;
-
+  let done = false; // we want to stop listening after we reach currentBatch == totalBatches-1
   let bottom = document.querySelector('.bottom');
+  let currentBatch = 0;
 
-  let callback = (entries) => {
+  let appendThumbnails = (thumbnails) => {
+    thumbnails.forEach((thumbnail) => {
+      thumbnail.onclick = clickHandler;
+      main.appendChild(thumbnail);
+    });
+  };
+
+  let ioCallback = (entries) => {
     let checkIntersection = (entry) => {
-      if (entry.isIntersecting) {
-        // alert('isIntersecting');
-        let thumbnails = thumbnailBatches.getThumbnailBatch(currentBatch);
-        if (thumbnails) {
-          // alert("Adding a batch")
-          thumbnails.forEach((thumbnail) => {
-            thumbnail.onclick = clickHandler;
-            main.appendChild(thumbnail);
+      if (!done && entry.isIntersecting) {
+        thumbnailBatches
+          .getThumbnailBatch(currentBatch)
+          .then(appendThumbnails)
+          .then(() => {
+            currentBatch += 1;
           });
-          currentBatch += 1;
-        }
-        let isLast = currentBatch === totalBatches;
+        let isLast = currentBatch >= totalBatches - 1;
         if (isLast) {
-          // alert("Unobserving")
           io.unobserve(bottom);
+          done = true;
         }
       }
     };
@@ -99,81 +89,78 @@ function setupIntersectionObserverForThumbnails(
 
   let ioOptions = {
     threshold: 0,
+    rootMargin: '300px',
     root: null, // documemt.querySelector('body'),
   };
-  io = new IntersectionObserver(callback, ioOptions);
+  io = new IntersectionObserver(ioCallback, ioOptions);
   io.observe(bottom);
 }
 
 function createImageLoader() {
   let main = document.querySelector('.main');
   let batchSize;
-  let interval;
+  let clickHandler;
 
   function setup(options) {
-    ({ batchSize = 50, interval = 3000 } = options);
+    ({ batchSize = 50, clickHandler } = options);
   }
 
-  function loadAllImages(images, clickHandler) {
-    images.forEach((image) => {
-      let thumbnail = createThumbnail(image);
-      thumbnail.onclick = clickHandler;
-      thumbnail.onload = () => main.appendChild(thumbnail);
-    });
-  }
+  function loadThumbnailBatches(batches) {
+    let preloadedBatches = [];
+    let batchCount = 0;
 
-  function loadAllBatchess(batches, clickHandler) {
-    let spacedByTime = false;
-    let sequential = !spacedByTime;
-    let thumbnailBatches = [];
+    function loadBatch(index, batch) {
+      if (!(index < batchCount + 1)) {
+        return Promise.reject(
+          new Error(`Batch loading in progress for: ${index}`)
+        );
+      }
+      batchCount += 1;
+      return loadImagesForBatch(batch, clickHandler).then((batch) => {
+        preloadedBatches.push(batch);
+        return batch;
+      });
+    }
 
-    if (spacedByTime) {
-      batches.forEach(async (batch, i) => {
-        let load = async () => {
-          let thumbnails = await loadImagesForBatch(batch, clickHandler);
-          thumbnailBatches.push(thumbnails);
+    function getThumbnailBatch(i) {
+      // We always return the next batch and end of this function
+      let isPreloadReady = PRELOAD_BATCHES && preloadedBatches[i];
+
+      let batch = isPreloadReady
+        ? Promise.resolve(preloadedBatches[i])
+        : loadBatch(i, batches[i]);
+      if (PRELOAD_BATCHES && i + 1 < batches.length) {
+        let loadNextBatch = () => {
+          if (i + 1 < batches.length) {
+            // double-check size again. things can change
+            loadBatch(i + 1, batches[i + 1]);
+          }
         };
-        setTimeout(load, interval * i); // batch every interval
-      });
+        setTimeout(loadNextBatch, 200);
+      }
+
+      return batch;
     }
-    if (sequential) {
-      batches.forEach(async (batch) => {
-        let thumbnails = await loadImagesForBatch(batch, clickHandler);
-        thumbnailBatches.push(thumbnails);
-      });
-    }
+
     return {
-      getThumbnailBatch: (i) => thumbnailBatches[i],
+      getThumbnailBatch,
     };
   }
 
   const SECOND = 1000;
 
-  function loadImages(images, clickHandler, timeDiff) {
-    let isSuperSlow = timeDiff > 5 * SECOND;
-    if (isSuperSlow) return;
-
-    let isFastSpeed = timeDiff < 3 * SECOND;
-
-    console.log(`isSuperSlow: ${isSuperSlow}`);
-    console.log(`isFastSpeed: ${isFastSpeed}`);
-
-    if (!TEST_FOR_BATCHES && isDesktop() && isFastSpeed) {
-      loadAllImages(images, clickHandler);
-    } else {
-      // Intersection observer
-      let batches = splitIntoBatches(images, batchSize);
-      let totalBatches = Math.ceil(images.length / batchSize);
-      let thumbnailBatches = loadAllBatchess(batches, clickHandler);
-      setupIntersectionObserverForThumbnails(
-        thumbnailBatches,
-        totalBatches,
-        clickHandler,
-        main
-      );
-    }
+  function loadImages(images, timeDiff) {
+    // Intersection observer
+    let batches = splitIntoBatches(images, batchSize);
+    let totalBatches = Math.ceil(images.length / batchSize);
+    let thumbnailBatches = loadThumbnailBatches(batches);
+    setupIntersectionObserverForThumbnails(
+      thumbnailBatches,
+      totalBatches,
+      clickHandler,
+      main
+    );
   }
-
   return {
     setup,
     loadImages,

@@ -86,8 +86,8 @@ function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
   imgs.forEach((img) => {
     img.addEventListener('click', clickHandler, false);
   });
-  ImageLoader.setup({ batchSize: 50, interval: 3000 });
-  ImageLoader.loadImages(window.images, clickHandler, timeDiff);
+  ImageLoader.setup({ batchSize: 50, clickHandler });
+  ImageLoader.loadImages(window.images, timeDiff);
 }
 
 const SECOND = 1000;

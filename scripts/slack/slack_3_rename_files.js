@@ -32,7 +32,7 @@ function getSuffix(file) {
 }
 
 function getPrefixMapping(filenames) {
-  let today = new Date().toISOString().substr(0, 10).replaceAll('-', '');
+  let today = new Date().toISOString().substring(0, 10).replaceAll('-', '');
 
   let mapping = {};
   let prefixes = getPrefixes(filenames);
