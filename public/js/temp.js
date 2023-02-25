@@ -2,7 +2,7 @@
 import createCounterWait from './counterwait.mjs';
 
 const PRELOAD_BATCHES = 1;
-const USE_CACHE_BUSTER = false;
+const USE_CACHE_BUSTER = true;
 
 let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
 
@@ -70,17 +70,18 @@ function setupIntersectionObserverForThumbnails(
 
   let ioCallback = (entries) => {
     let checkIntersection = (entry) => {
-      if (!done && currentBatch < totalBatches && entry.isIntersecting) {
+      if (!done && entry.isIntersecting) {
         thumbnailBatches
           .getThumbnailBatch(currentBatch)
           .then(appendThumbnails)
           .then(() => {
             currentBatch += 1;
-            done = !(currentBatch < totalBatches);
-            if (done) {
-              io.unobserve(bottom);
-            }
           });
+        let isLast = currentBatch >= totalBatches - 1;
+        if (isLast) {
+          io.unobserve(bottom);
+          done = true;
+        }
       }
     };
     entries.forEach(checkIntersection);
@@ -106,8 +107,15 @@ function createImageLoader() {
 
   function loadThumbnailBatches(batches) {
     let preloadedBatches = [];
+    let batchCount = 0;
 
-    function loadBatch(batch) {
+    function loadBatch(index, batch) {
+      if (!(index < batchCount + 1)) {
+        return Promise.reject(
+          new Error(`Batch loading in progress for: ${index}`)
+        );
+      }
+      batchCount += 1;
       return loadImagesForBatch(batch, clickHandler).then((batch) => {
         preloadedBatches.push(batch);
         return batch;
@@ -120,12 +128,17 @@ function createImageLoader() {
 
       let batch = isPreloadReady
         ? Promise.resolve(preloadedBatches[i])
-        : loadBatch(batches[i]);
-
+        : loadBatch(i, batches[i]);
       if (PRELOAD_BATCHES && i + 1 < batches.length) {
-        let loadNextBatch = () => loadBatch(batches[i + 1]);
+        let loadNextBatch = () => {
+          if (i + 1 < batches.length) {
+            // double-check size again. things can change
+            loadBatch(i + 1, batches[i + 1]);
+          }
+        };
         setTimeout(loadNextBatch, 200);
       }
+
       return batch;
     }
 
@@ -136,12 +149,11 @@ function createImageLoader() {
 
   const SECOND = 1000;
 
-  function loadImages(images) {
+  function loadImages(images, timeDiff) {
     // Intersection observer
     let batches = splitIntoBatches(images, batchSize);
     let totalBatches = Math.ceil(images.length / batchSize);
     let thumbnailBatches = loadThumbnailBatches(batches);
-
     setupIntersectionObserverForThumbnails(
       thumbnailBatches,
       totalBatches,
