@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WebWorker image preloading</title>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"
+    />
+  </head>
+  <body>
+    <div id="output"></div>
+    <script id="imgloader" type="javascript/worker">
+      // Not race proof or robust. Proof of concept.
+      self.onmessage = function (e) {
+          var urls = e.data,
+              done = urls.length,
+              onload = function () {
+                  if (--done === 0) {
+                      self.postMessage('Done!');
+                      self.close();
+                  }
+              };
+
+          urls.forEach(function (url) {
+              var xhr = new XMLHttpRequest();
+              xhr.responseType = 'blob';
+              xhr.onload = xhr.onerror = onload;
+              xhr.open('GET', url, true);
+              xhr.send();
+          });
+      };
+    </script>
+    <script>
+      // Server must expose CORS headers for XHR preload.
+      var imgs = [
+          'http://i.imgur.com/JmvCQXd.jpg',
+          'http://i.imgur.com/L4ipvCE.jpg',
+          'http://i.imgur.com/fKDIYIP.jpg',
+          'http://i.imgur.com/4ad4bo5.jpg',
+          'http://i.imgur.com/VukIBgD.jpg',
+        ],
+        URL = window.URL || window.webkitURL,
+        url = URL.createObjectURL(
+          new Blob([document.getElementById('imgloader').textContent], {
+            type: 'text/javascript',
+          })
+        ),
+        worker = new Worker(url);
+
+      worker.onmessage = function (e) {
+        var frag = document.createDocumentFragment(),
+          count = imgs.length,
+          onload = function () {
+            delete this.onload;
+            frag.appendChild(this);
+            if (--count === 0) {
+              console.log('done');
+              document.getElementById('output').appendChild(frag);
+            }
+          };
+
+        // These will come immediately from cache.
+        // Ensure cache is not disabled by dev tools.
+        imgs.forEach(function (img) {
+          var el = document.createElement('img');
+          // Avoid early reflows as images load without sizes. Wait for onload.
+          el.onload = onload;
+          el.src = img;
+        });
+
+        URL.revokeObjectURL(url);
+      };
+
+      // Mix in a cache-bust on every run.
+      imgs = imgs.map(function (img) {
+        return img + '?ts=' + Date.now();
+      });
+
+      worker.postMessage(imgs);
+    </script>
+  </body>
+</html>
