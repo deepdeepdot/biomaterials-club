@@ -1,0 +1,137 @@
+<html>
+
+<script src="https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js"></script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        background-color: #bada55;        
+        height: 100%;
+    }
+
+    .main {
+        background-color: peru;
+        min-height: 800px;
+    }
+
+    .bottom {
+        background-color: purple;
+        height: 100px;
+        width: 100%;
+    }
+</style>
+
+<div class="container">
+    <h1>Container</h1>
+
+    <main class="main">
+        <h1>Main</h1>
+    </main>
+    <div class="bottom">
+        <h1>Bottom</h1>
+    </div>
+</div>
+
+</html>
+
+<script src="photos.js"></script>
+
+<script>
+
+    let { Subject, Observable, ReplaySubject } = rxjs;
+    let {
+        withLatestFrom, scan, distinctUntilChanged, count, toArray,
+        from, switchMap, concatMap, of, takeUntil, timer, interval,
+        map, mapTo, mergeMap, reduce, tap
+    } = rxjs;
+
+    let $ = (s) => document.querySelector(s);
+
+    let imageFolder = "../images/";
+
+    let loadPhoto = (url) => {
+        console.log(`loading... ${url}`);
+        let img = new Image();
+        img.src =  imageFolder + url;
+
+        return new Promise((resolve, reject) => {
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+        });
+    }
+    
+    function createIntersectionObserver(target, ioOptions = { threshold: 0, root: null }) {
+        let io, subscriber;
+        let counter = 0;
+
+        let checkIntersection = (entry) => {
+            if (subscriber) {
+                let state = {
+                    counter,
+                    intersecting: entry.isIntersecting,
+                    y: window.scrollY
+                }
+                subscriber.next(state); // Think of generator instead ??? yield state
+                counter += 1;
+            }
+        };
+        let ioCallback = (entries) => {
+            entries.forEach(checkIntersection);
+        };
+        io = new IntersectionObserver(ioCallback, ioOptions);
+        io.observe(target);
+    
+        return new Observable(
+            function subscribe(theSubscriber) {
+                subscriber = theSubscriber;
+            }
+        );
+    }
+
+    let bottom = $('.bottom');
+    let ioOptions = {
+        threshold: 0,
+        // rootMargin: '200px',
+        root: null, // documemt.querySelector('body'),
+    };
+    let io = createIntersectionObserver(bottom, ioOptions);
+    /*
+    let tapIO = ({intersecting, y}) =>  {
+        console.log(`Intersecting: ${intersecting} @${y}`);
+    };
+    let subscriber = {
+        next: tapIO
+    };
+    io.subscribe(subscriber);
+    */
+    let main = $('.main');
+
+    let photoObservable = of(...photos)
+        .pipe(
+            concatMap(url => loadPhoto(url)), // Load and wait for all to be loaded
+            toArray(), // This works. But I want to stream one value at time!
+            mergeMap(images => io.pipe(
+                map(({ counter }) => images[counter]))
+            ),
+        );
+
+    photoObservable
+        .pipe(
+            // tap(image => console.log("some ios is happening"))
+        )
+        .subscribe({
+            next: (image) => {
+                if (image) {
+                    console.log('Appending...' + image.src);
+                    main.appendChild(image)    
+                } else {
+                    console.log('Null image')
+                }
+            }
+        });
+
+</script>

@@ -1,0 +1,168 @@
+<html>
+
+<script src="https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js"></script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        background-color: #bada55;        
+        height: 100%;
+    }
+
+    .main {
+        background-color: peru;
+        min-height: 800px;
+    }
+
+    .bottom {
+        background-color: purple;
+        height: 100px;
+        width: 100%;
+    }
+
+    img {
+        width: 400px;
+    }
+</style>
+
+<div class="container">
+    <h1>Container</h1>
+
+    <main class="main">
+        <h1>Main</h1>
+    </main>
+    <div class="bottom">
+        <h1>Bottom</h1>
+    </div>
+</div>
+
+</html>
+
+<script src="photos.js"></script>
+
+<script>
+
+    photos = photos.slice(0, 18);
+
+    let { Subject, Observable, ReplaySubject } = rxjs;
+    let {
+        withLatestFrom, scan, distinctUntilChanged, count, toArray,
+        from, switchMap, concatMap, of, takeUntil, timer, interval,
+        map, mapTo, mergeMap, reduce, tap
+    } = rxjs;
+
+    let $ = (s) => document.querySelector(s);
+
+    let imageFolder = "../images/";
+
+    let loadPhoto = (url) => {
+        // console.log(`loading... ${url}`);
+
+        let img = new Image();
+        img.src =  imageFolder + url;
+
+        return new Promise((resolve, reject) => {
+            img.onload = () => resolve(img);
+            img.onerror = reject;
+        });
+    }
+
+    function createFragment(images) {
+        let fragment = document.createDocumentFragment();
+        images.forEach(image => {
+            // console.log('Appending...' + image.src);
+            fragment.appendChild(image);
+        });
+        return fragment;
+    }
+
+    function appendToMain(main, images) {
+        let fragment = createFragment(images);
+        main.appendChild(fragment);
+    }
+    
+    function createIntersectionObserver(target, ioOptions = { threshold: 0, root: null }) {
+        let io, subscriber;
+        let counter = 0;
+
+        let checkIntersection = (entry) => {
+            if (subscriber) {
+                let state = {
+                    counter,
+                    intersecting: entry.isIntersecting,
+                    y: window.scrollY
+                }
+                if (state.intersecting) { // Should we emit only when intersecting?
+                    subscriber.next(state);
+                    counter += 1;    
+                }
+            }
+        };
+        let ioCallback = (entries) => {
+            entries.forEach(checkIntersection);
+        };
+        io = new IntersectionObserver(ioCallback, ioOptions);
+        io.observe(target);
+    
+        return new Observable(
+            function subscribe(theSubscriber) {
+                subscriber = theSubscriber;
+
+                return function unsubscribe() {
+                    io.unobserve(target);
+                };
+            }
+        );
+    }
+
+    let bottom = $('.bottom');
+    let ioOptions = {
+        threshold: 0,
+        ootMargin: '200px',
+        root: null, // documemt.querySelector('body'),
+    };
+    let io = createIntersectionObserver(bottom, ioOptions);
+
+    let main = $('.main');
+
+    function loadImageBatch(imageUrls) {
+        let loadImageBatchWorkflow = of(...imageUrls)
+        .pipe(
+            concatMap(url => loadPhoto(url)), // Load and wait for all to be loaded
+            toArray()
+        )
+        return loadImageBatchWorkflow;
+    }
+
+    let photoObservables = [];
+    let batchSize = 5;
+    let perfectBatchSize = photos.length % batchSize === 0;
+    let last = perfectBatchSize ? 0 : 1;
+    let batchNum = Math.floor(photos.length / batchSize) + last;
+
+    for (let i = 0; i < batchNum; i++) {
+        let observable = loadImageBatch(photos.slice(i*batchSize, (i+1)*batchSize));
+        photoObservables.push(observable);
+    }
+
+    io.pipe(
+        mergeMap(
+            ({ counter }) => {
+                console.log('IO visible ' + counter);
+                if (counter < batchNum) {
+                    return photoObservables[counter].pipe(
+                        (images) => images
+                    )
+                }
+            }
+        )
+    )
+    .subscribe({
+        next: (images) => appendToMain(main, images)
+    });
+
+</script>

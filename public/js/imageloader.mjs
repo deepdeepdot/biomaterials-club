@@ -6,6 +6,7 @@ const USE_CACHE_BUSTER = false;
 
 let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
 
+
 // ----------------------------- Image Loader
 
 let createThumbnail = (img) => {
@@ -30,11 +31,11 @@ function splitIntoBatches(images, batchSize) {
   return batches;
 }
 
-function loadImagesForBatch(images, clickHandler) {
+function loadImagesForBatch(imageUrls, clickHandler) {
   let counterWait = createCounterWait();
   let thumbnails = [];
 
-  images.forEach((image) => {
+  imageUrls.forEach((image) => {
     let thumbnail = createThumbnail(image);
     thumbnail.onclick = clickHandler;
     thumbnail.onload = counterWait.incrementCount;
@@ -43,7 +44,7 @@ function loadImagesForBatch(images, clickHandler) {
 
   return counterWait
     .waitFor('loadImagesForBatch', (count) => {
-      return count >= images.length;
+      return count >= imageUrls.length;
     })
     .then(() => {
       return thumbnails;

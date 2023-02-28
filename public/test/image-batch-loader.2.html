@@ -1,0 +1,73 @@
+<html>
+
+<script src="https://unpkg.com/rxjs@%5E7/dist/bundles/rxjs.umd.min.js"></script>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        background-color: #bada55;
+        height: 100%;
+    }
+
+    .main {
+        background-color: peru;
+        min-height: 800px;
+    }
+
+    .bottom {
+        background-color: purple;
+        height: 100px;
+        width: 100%;
+    }
+
+    img {
+        width: 200px;
+    }
+</style>
+
+<div class="container">
+    <h1>Container</h1>
+
+    <main class="main">
+        <h1>Main</h1>
+    </main>
+    <div class="bottom">
+        <h1>Bottom</h1>
+    </div>
+</div>
+
+</html>
+
+<script src="photos.js"></script>
+<script>
+    window.imageUrls = photos; //.slice(0, 18);
+</script>
+
+<!-- <script src="../js/imageloader.2.js"></script> -->
+<!-- // let ImageLoader = createImageLoader(); -->
+
+<script type="module">
+    import ImageLoader from '../js/imageloader.2.mjs';
+
+    let getFilenameFromUrl = (url) => {
+        let idx = url.lastIndexOf('/');
+        let filename = url.substring(idx + 1);
+        return filename;
+    };
+
+    let clickHandler = function (event) {
+        let image = event.target;
+        let filename = getFilenameFromUrl(image.src);
+        let newUrl = '../images/' + filename;
+        // alert(newUrl);
+        window.open(newUrl, "target=_blank");
+    };
+
+    let batchSize = 4;
+    ImageLoader.setup({ batchSize, clickHandler });
+    ImageLoader.loadImages(window.imageUrls);
+</script>
