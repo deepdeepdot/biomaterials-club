@@ -33,8 +33,14 @@ function createFragment(images) {
 }
 
 function appendToMain(main, images) {
-    let fragment = createFragment(images);
-    main.appendChild(fragment);
+    // let fragment = createFragment(images);
+    // main.appendChild(fragment);
+
+    // Performance is not visible the same
+    // Also we see duplicate DOM (?)
+    images.forEach(image => {
+        main.appendChild(fragment);
+    });
 }
 
 function createIntersectionObserver(checkIntersection, target, ioOptions = { threshold: 0, root: null }) {
@@ -92,23 +98,12 @@ function loadImageBatch(imageUrls, clickHandler) {
 }
 
 function createImageLoader() {
-
-    let bottom = $('.bottom');
-    let ioOptions = {
-        threshold: 0,
-        ootMargin: '200px',
-        root: null, // documemt.querySelector('body'),
-    };
-    let io = createIntersectionObservable(bottom, ioOptions);
-    let main = $('.main');
-
     let clickHandler;
     let batchSize;
-    let batchNum;
     let imageBatchObservable;
 
     let currentBatch = 0;
-    let loadNextPhotos = (photos) => {
+    let loadNextPhotos = (photos, batchNum) => {
         if (currentBatch < batchNum) {
             let start = currentBatch * batchSize;
             let batch = photos.slice(start, start + batchSize);
@@ -117,20 +112,31 @@ function createImageLoader() {
         } else {
             imageBatchObservable = null; // cleanup
         }
-        return imageBatchObservable;
     };
 
     function setup(options) {
         ({ batchSize = 20, clickHandler } = options);
     }
 
+    function createIntersection() {
+        let bottom = $('.bottom');
+        let ioOptions = {
+            threshold: 0,
+            ootMargin: '200px',
+            root: null, // documemt.querySelector('body'),
+        };
+        let io = createIntersectionObservable(bottom, ioOptions);
+        return io;
+    }
+
     function loadImages(photos) {
         let perfectBatchSize = photos.length % batchSize === 0;
         let lastBatch = perfectBatchSize ? 0 : 1;
-        batchNum = Math.floor(photos.length / batchSize) + lastBatch;
+        let batchNum = Math.floor(photos.length / batchSize) + lastBatch;
 
-        loadNextPhotos(photos);
+        loadNextPhotos(photos, batchNum);
 
+        let io = createIntersection();
         let subscription = io.pipe(
             mergeMap(({ counter }) => {
                 if (counter < batchNum) {
@@ -142,8 +148,9 @@ function createImageLoader() {
         )
         .subscribe({
             next: (images) => {
+                let main = $('.main');
                 appendToMain(main, images);
-                loadNextPhotos(photos);
+                loadNextPhotos(photos, batchNum);
                 if (imageBatchObservable === null) {
                     subscription.unsubscribe();
                 }
