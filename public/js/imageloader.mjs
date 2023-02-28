@@ -33,14 +33,8 @@ function createFragment(images) {
 }
 
 function appendToMain(main, images) {
-    // let fragment = createFragment(images);
-    // main.appendChild(fragment);
-
-    // Performance is not visible the same
-    // Also we see duplicate DOM (?)
-    images.forEach(image => {
-        main.appendChild(image);
-    });
+    let fragment = createFragment(images);
+    main.appendChild(fragment);
 }
 
 function createIntersectionObserver(checkIntersection, target, ioOptions = { threshold: 0, root: null }) {
