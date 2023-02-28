@@ -1,6 +1,6 @@
 // @ts-check
 
-import ImageLoader from './imageloader.2.mjs';
+import ImageLoader from './imageloader.1.mjs';
 import setupLightBoxModal from './lightbox.mjs';
 import createCounterWait from './counterwait.mjs';
 import { bounce } from './anim.mjs';
