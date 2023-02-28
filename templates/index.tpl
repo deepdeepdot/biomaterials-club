@@ -113,7 +113,7 @@
 
       <main class="main">
 ${imageTags}
-        <script src="./js/rxjs.umd.js"></script>
+        <script src="./js/rxjs.umd.min.js"></script>
         <script type="module">
           import { setupDashboard } from './js/dashboard.mjs';
           var startTime = window.performance.now();
