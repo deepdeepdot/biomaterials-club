@@ -127,9 +127,11 @@ function createImageLoader() {
         let perfectBatchSize = photos.length % batchSize === 0;
         let lastBatch = perfectBatchSize ? 0 : 1;
         let batchNum = Math.floor(photos.length / batchSize) + lastBatch;
+        let processedBatch = new Set();
 
         loadNextPhotos(photos, batchNum);
 
+        // Could the IO send multiple requests to reload????
         let io = createIntersection();
         let subscription = io.pipe(
             mergeMap(({ counter }) => {
@@ -142,11 +144,18 @@ function createImageLoader() {
         )
         .subscribe({
             next: (images) => {
-                let main = $('.main');
-                appendToMain(main, images);
-                loadNextPhotos(photos, batchNum);
-                if (imageBatchObservable === null) {
-                    subscription.unsubscribe();
+                let key = images[0].src;
+                if (!processedBatch.has(key)) {
+                    processedBatch.add(key);
+
+                    let main = $('.main');
+                    appendToMain(main, images);
+                    loadNextPhotos(photos, batchNum);
+                    if (imageBatchObservable === null) {
+                        subscription.unsubscribe();
+                    }
+                } else {
+                    console.log("Avoiding duplicate image insertion.")
                 }
             }
         });
