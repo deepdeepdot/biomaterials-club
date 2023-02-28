@@ -39,7 +39,7 @@ function appendToMain(main, images) {
     // Performance is not visible the same
     // Also we see duplicate DOM (?)
     images.forEach(image => {
-        main.appendChild(fragment);
+        main.appendChild(image);
     });
 }
 
