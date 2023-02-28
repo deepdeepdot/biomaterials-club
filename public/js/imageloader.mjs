@@ -131,7 +131,7 @@ function createImageLoader() {
 
         loadNextPhotos(photos);
 
-        io.pipe(
+        let subscription = io.pipe(
             mergeMap(({ counter }) => {
                 if (counter < batchNum) {
                     return imageBatchObservable.pipe(
@@ -144,6 +144,9 @@ function createImageLoader() {
             next: (images) => {
                 appendToMain(main, images);
                 loadNextPhotos(photos);
+                if (imageBatchObservable === null) {
+                    subscription.unsubscribe();
+                }
             }
         });
     }
