@@ -95,29 +95,29 @@ function renameFiles(urls, prefixMapping, folder = './download_slack') {
 
 /*
   let imageUrls = [
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QU5JQVK4-2aebb8ef46/img_9566_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R6QABEGH-eee1382a04/img_9572_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04RHRSUQE4-ca22e7370f/img_9575_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QWKA4TJQ-5f897f0169/img_9578_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R6QAH3MX-8565c738a6/img_9579_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QMHCTD9U-ebd601f859/img_9582_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QDS49K5M-defea5e1a8/img_0708_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QDS49KB9-8f3a2cdce2/img_0702_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QWS4RJH2-cf935bac4e/img_0688_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QUCDKNJW-866cd37d51/img_0679_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QMQ7FNKG-cac31c1ed6/img_0675_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QPFXB362-baf58e6377/img_0766_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R5N8N10U-99a5773d9a/img_1279_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R5N8N0UC-adea07f369/img_1280_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R34WP4MR-1cd6673e6a/img_1281_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04RFT9109X-df4e9ce70d/img_1282_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QNN83RLP-ccd5a3c46f/img_1283_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R38HDXPU-749314ba0c/img_1284_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QNNA8TCP-98c9eebf9e/img_1285_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R0AFK50D-70e0e19b62/img_1286_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04QNNA99RD-1df862ce5b/img_1287_720.jpg',
-    'https://files.slack.com/files-tmb/T9NK8472R-F04R38KKCF4-3333fec178/img_1288_720.jpg',
-  ];
+    "https://files.slack.com/files-tmb/T9NK8472R-F04R2H21UNS-c966afd7ce/img_0909_720.jpg",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RYRKHV9N-a5a5660af0/img_0919_720.jpg",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RPB67C5B-dce23a90e5/img_5437_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RPB6QMB7-9c28046cdc/img_5438_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RS9B3XL2-1423e329ff/img_5439_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04SG033ZDW-641c7aae88/img_5440_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RKLZM8NA-8cf73caeb4/img_5441_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4U3QQ8H-cce1aa586c/img_5442_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4U45001-107f45e729/img_5443_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4U4J46M-bded3e8149/img_5445_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RKM14WK0-a49d5cf5c4/img_5446_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RBP46VUP-8c989a3e48/img_5448_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4UC39S5-1a6fdcfd9c/img_5338_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RS9LT7CJ-098b8f5c47/img_5339_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RKM9243G-16ff1f3fba/img_5341_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4UD4BUZ-7f1257ba68/img_5343_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4UDCQRF-71e6196c7e/img_5344_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RUPDKN68-5529a69e38/img_5346_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RS9NBM0A-bd70e4b1e2/img_5350_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RPBJPL13-ee52b8afbc/img_5355_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04RPBK1W2H-e8c54bebcd/img_5358_2_720.png",
+    "https://files.slack.com/files-tmb/T9NK8472R-F04S4UES3SM-70100e83dd/img_5360_2_720.png"
+  ]
 
 let filenames = getFilenames(imageUrls);
 let prefixMapping = getPrefixMapping(filenames);
@@ -149,6 +149,18 @@ let prefixMapping =
   img_076: '20230222',
   img_127: '20230223',
   img_128: '20230223'
+}
+
+let prefixMapping =
+{
+  img_090: '20230228',
+  img_091: '20230228',
+  img_543: '20230228',
+  img_544: '20230228',
+  img_533: '20230228',
+  img_534: '20230228',
+  img_535: '20230228',
+  img_536: '20230228'
 }
 
 renameFiles(imageUrls, prefixMapping);
