@@ -65,7 +65,7 @@ function createIntersectionObserver(checkIntersection, target, ioOptions) {
 }
 
 function getCheckIntersectionCallback(observable) {
-    let checkIntersection = (entry) => {
+    let checkIntersection = function(entry) {
         let state = {
             intersecting: entry.isIntersecting,
             y: window.scrollY
@@ -142,24 +142,25 @@ function createImageLoader() {
         let theImages = [];
         let done = false;
 
-        // We want to "start" the image batch download eagerly, as opposed to directly attach to the dom
+        // We want to "start" the image batch download eagerly,
+        // as opposed to directly attach to the dom in one single stream
 
         let imageBatchObservable = loadNextPhotos(photos, batchCounter, batchNum);
-        if (imageBatchObservable) {
-            imageBatchObservable.subscribe({
-                next: (images) => {
-                    TRACE('We got the images!!!', 'strong');
-                    theImages = images;
-                    done = true;
-                }
-            });
-            return new Promise(async (resolve) => {
-                let counterWait = createCounterWait();
-                await counterWait.waitFor('loadNextPhotosWait', () => done);
-                resolve(of(theImages));
-            });
+        if (!imageBatchObservable) {
+            return Promise.resolve(null);
         }
-        return Promise.resolve(null);
+        imageBatchObservable.subscribe({
+            next: (images) => {
+                TRACE('We got the images!!!', 'strong');
+                theImages = images;
+                done = true;
+            }
+        });
+        return new Promise(async (resolve) => {
+            let counterWait = createCounterWait();
+            await counterWait.waitFor('loadNextPhotosWait', () => done);
+            resolve(of(theImages));
+        });
     }
 
     async function loadImages(photos, options) {
