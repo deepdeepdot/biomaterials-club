@@ -1,11 +1,28 @@
+// @ts-check
+import createCounterWait from './counterwait.mjs';
+
 let {
     Observable,
-    toArray,
     concatMap,
-    of,
     map,
     mergeMap,
+    exhaustMap,
+    of,
+    tap,
+    toArray,
 } = window.rxjs;
+
+function TRACE(message, type) {
+    let css = 'background-color: #ddd; color: black; padding: 10px; border-radius: 10px;';
+    if (type == 'strong') {
+        css = 'background-color: red; color: yellow; padding: 10px; border-radius: 10px;';
+    } else if (type == 'medium') {
+        css = 'background-color: yellow; color: black; padding: 10px; border-radius: 10px;';
+    } else if (type == 's') {
+        css = 'background-color: purple; color: white; padding: 10px; border-radius: 10px;';
+    }
+    console.log('%c %s', css, message);
+}
 
 const USE_CACHE_BUSTER = false;
 
@@ -32,12 +49,13 @@ function createFragment(images) {
     return fragment;
 }
 
-function appendToMain(main, images) {
+function appendToMain(main, images, batchCounter) {
+    TRACE(`Appending to DOM main ${batchCounter}`, 'strong');
     let fragment = createFragment(images);
     main.appendChild(fragment);
 }
 
-function createIntersectionObserver(checkIntersection, target, ioOptions = { threshold: 0, root: null }) {
+function createIntersectionObserver(checkIntersection, target, ioOptions) {
     let ioCallback = (entries) => {
         entries.forEach(checkIntersection);
     };
@@ -47,17 +65,15 @@ function createIntersectionObserver(checkIntersection, target, ioOptions = { thr
 }
 
 function getCheckIntersectionCallback(observable) {
-    let counter = 0;
     let checkIntersection = (entry) => {
         let state = {
-            counter,
             intersecting: entry.isIntersecting,
             y: window.scrollY
         }
+        TRACE('IO: ' + JSON.stringify(state), 'medium')
         if (observable.subscriber) {
             if (state.intersecting) { // Should we emit only when intersecting?
                 observable.subscriber.next(state);
-                counter += 1;
             }
         }
     };
@@ -74,43 +90,47 @@ function createIntersectionObservable(target, ioOptions) {
             observable.subscriber = theSubscriber;
 
             return function unsubscribe() {
+                TRACE('unsubscribe', 's')
                 io.unobserve(target);
             };
         }
     );
 }
 
-function loadImageBatch(imageUrls, clickHandler) {
-    let thumbnailFolder = "../images/th/";
+function loadImageBatch(imageUrls, clickHandler, batchCounter) {
+    TRACE(`loadImageBatch: ${batchCounter}`);
+
+    let thumbnailFolder = '../images/th/';
     let loadImageBatchWorkflow = of(...imageUrls)
         .pipe(
+            tap(() => TRACE(`loadImageBatch: ${batchCounter}......about to load`)),
             map(url => thumbnailFolder + url),
             concatMap(url => loadPhoto(url, clickHandler)), // Load and wait for all to be loaded
+            tap(() => TRACE(`loadImageBatch: ${batchCounter}......loaded image`)),
             toArray()
-        )
+        );
+
     return loadImageBatchWorkflow;
 }
 
 function createImageLoader() {
     let clickHandler;
     let batchSize;
-    let imageBatchObservable;
-
-    let currentBatch = 0;
-    let loadNextPhotos = (photos, batchNum) => {
-        if (currentBatch < batchNum) {
-            let start = currentBatch * batchSize;
-            let batch = photos.slice(start, start + batchSize);
-            imageBatchObservable = loadImageBatch(batch, clickHandler);
-            currentBatch += 1;
-        } else {
-            imageBatchObservable = null; // cleanup
-        }
-    };
 
     function setup(options) {
         ({ batchSize = 20, clickHandler } = options);
     }
+
+    let loadNextPhotos = (photos, batchCounter, batchNum) => {
+        TRACE(`Current batch: ${batchCounter}`)
+
+        if (batchCounter < batchNum) {
+            let start = batchCounter * batchSize;
+            let batch = photos.slice(start, start + batchSize);
+            return loadImageBatch(batch, clickHandler, batchCounter);
+        }
+        return null; // cleanup
+    };
 
     function createIntersection() {
         let bottom = $('.bottom');
@@ -123,39 +143,71 @@ function createImageLoader() {
         return io;
     }
 
-    function loadImages(photos) {
+    function loadNextPhotosWait(photos, batchCounter, batchNum) {
+        let theImages = [];
+        let done = false;
+        let imageBatchObservable = loadNextPhotos(photos, batchCounter, batchNum);
+
+        if (imageBatchObservable) {
+            imageBatchObservable.subscribe({
+                next: (images) => {
+                    TRACE('We got the images!!!', 'strong');
+                    theImages = images;
+                    done = true;
+                }
+            });
+            return new Promise(async (resolve, reject) => {
+                let counterWait = createCounterWait();
+                await counterWait.waitFor('loadImages', () => done);
+                resolve(of(theImages));
+            });
+        }
+        return Promise.resolve(null);
+    }
+
+    async function loadImages(photos) {
         let perfectBatchSize = photos.length % batchSize === 0;
         let lastBatch = perfectBatchSize ? 0 : 1;
         let batchNum = Math.floor(photos.length / batchSize) + lastBatch;
         let processedBatch = new Set();
+        let batchCounter = 0;
+        let subscription;
 
-        loadNextPhotos(photos, batchNum);
-
-        // Could the IO send multiple requests to reload????
         let io = createIntersection();
-        let subscription = io.pipe(
+
+        let imageBatchObservable = await loadNextPhotosWait(photos, batchCounter, batchNum);
+        batchCounter += 1;
+
+        let appendImagesToDom = async (images) => {
+            let main = $('.main');
+            appendToMain(main, images, batchCounter);
+            batchCounter += 1;
+
+            TRACE('pre-loading images for next step', 'strong');
+            imageBatchObservable = await loadNextPhotosWait(photos, batchCounter, batchNum);
+            if (imageBatchObservable === null) {
+                subscription.unsubscribe();
+            }
+        };
+
+        subscription = io.pipe(
             mergeMap(({ counter }) => {
-                if (counter < batchNum) {
-                    return imageBatchObservable.pipe(
-                        (images) => images
-                    )
+                if (batchCounter < batchNum && imageBatchObservable) {
+                    return imageBatchObservable.pipe((images) => images)
                 }
+                return []; // Do not break the expected stream for rxjs
             })
         )
         .subscribe({
-            next: (images) => {
+            next: async (images) => {
+                if (!images || images.length === 0) return;
+                // appendImagesToDom(images);
                 let key = images[0].src;
-                if (!processedBatch.has(key)) {
+                if (!processedBatch.has(key)) { // It seems io is sending me the same images to append (!)
                     processedBatch.add(key);
-
-                    let main = $('.main');
-                    appendToMain(main, images);
-                    loadNextPhotos(photos, batchNum);
-                    if (imageBatchObservable === null) {
-                        subscription.unsubscribe();
-                    }
+                    appendImagesToDom(images);
                 } else {
-                    console.log("Avoiding duplicate image insertion.")
+                    TRACE('Avoiding duplicate image insertion.', 's')
                 }
             }
         });
@@ -167,7 +219,6 @@ function createImageLoader() {
     };
 }
 
-// Only for ES6 import/export modules
 let ImageLoader = createImageLoader();
 
-export default ImageLoader;
+export default ImageLoader; // Only for ES6 import/export modules
