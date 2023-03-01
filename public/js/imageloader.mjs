@@ -12,14 +12,16 @@ let {
 } = window.rxjs;
 
 function TRACE(message, type) {
-    let css = 'background-color: #ddd; color: black; padding: 10px; border-radius: 10px;';
+    let css = 'background-color: #ddd; color: black';
     if (type == 'strong') {
-        css = 'background-color: red; color: yellow; padding: 10px; border-radius: 10px;';
+        css = 'background-color: red; color: yellow';
     } else if (type == 'medium') {
-        css = 'background-color: yellow; color: black; padding: 10px; border-radius: 10px;';
+        css = 'background-color: yellow; color: black';
     } else if (type == 's') {
-        css = 'background-color: purple; color: white; padding: 10px; border-radius: 10px;';
+        css = 'background-color: purple; color: white';
     }
+    css += '; padding: 10px; border-radius: 10px;';
+
     console.log('%c %s', css, message);
 }
 
@@ -123,7 +125,6 @@ function loadImageBatch(imageUrls, clickHandler, batchCounter) {
         counter += 1;
         proportion = Math.floor(100 * counter / imageUrls.length);
         bottom.style.width = proportion + '%';
-        // At 100%, how can we append the DOM?
     }
 
     let loadImageBatchWorkflow = of(...imageUrls)
