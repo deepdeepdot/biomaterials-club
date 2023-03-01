@@ -100,10 +100,6 @@ function createImageLoader() {
   let batchSize;
   let clickHandler;
 
-  function setup(options) {
-    ({ batchSize = 50, clickHandler } = options);
-  }
-
   function loadThumbnailBatches(batches) {
     let preloadedBatches = [];
 
@@ -134,9 +130,9 @@ function createImageLoader() {
     };
   }
 
-  const SECOND = 1000;
+  function loadImages(images, options) {
+    ({ batchSize = 50, clickHandler } = options);
 
-  function loadImages(images) {
     // Intersection observer
     let batches = splitIntoBatches(images, batchSize);
     let totalBatches = Math.ceil(images.length / batchSize);
@@ -150,7 +146,6 @@ function createImageLoader() {
     );
   }
   return {
-    setup,
     loadImages,
   };
 }
