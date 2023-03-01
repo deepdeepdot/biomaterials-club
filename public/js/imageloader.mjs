@@ -30,13 +30,16 @@ let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
 
 let $ = (s) => document.querySelector(s);
 
-let loadPhoto = (url, clickHandler) => {
+let loadPhoto = (url, clickHandler, onload) => {
     let img = new Image();
     img.src = `${url}${cacheBuster}`;
     img.addEventListener('click', clickHandler, false);
 
     return new Promise((resolve, reject) => {
-        img.onload = () => resolve(img);
+        img.onload = () => {
+            onload();
+            resolve(img);
+        }
         img.onerror = reject;
     });
 }
@@ -80,14 +83,19 @@ function getCheckIntersectionCallback(observable) {
     return checkIntersection;
 }
 
-function createIntersectionObservable(target, ioOptions) {
+function createIntersectionObservable(target, ioOptions, triggerer) {
     let observable = {};
     let checkIntersection = getCheckIntersectionCallback(observable);
     let io = createIntersectionObserver(checkIntersection, target, ioOptions);
 
+    // Just to pass the subscriber to emit next() from IO
     return new Observable(
         function subscribe(theSubscriber) {
             observable.subscriber = theSubscriber;
+
+            triggerer.retriggerAppendImagesToDom = function(...args) {
+                theSubscriber.next(...args);
+            }
 
             return function unsubscribe() {
                 TRACE('unsubscribe', 's')
@@ -100,12 +108,33 @@ function createIntersectionObservable(target, ioOptions) {
 function loadImageBatch(imageUrls, clickHandler, batchCounter) {
     TRACE(`loadImageBatch: ${batchCounter}`);
 
+    // Progress bar loader
+    let bottom = document.querySelector('.bottom');
+    let counter = 0;
+    let proportion = 0;
+
+    let progressBarStarted = false;
+
+    function increment() {
+        if (!progressBarStarted) {
+            counter = 0; // reset counter
+            progressBarStarted = true;
+        }
+        counter += 1;
+        proportion = Math.floor(100 * counter / imageUrls.length);
+        bottom.style.width = proportion + '%';
+        // At 100%, how can we append the DOM?
+    }
+
     let loadImageBatchWorkflow = of(...imageUrls)
         .pipe(
-            tap(() => TRACE(`loadImageBatch: ${batchCounter}......about to load`)),
+            tap(() => {
+                counter += 1;
+            }),
+            tap(() => TRACE(`loadImageBatch: ${batchCounter}: ${counter}.....about to load`)),
             map(url => THUMBNAIL_FOLDER + url),
-            concatMap(url => loadPhoto(url, clickHandler)), // Load and wait for all to be loaded
-            tap(() => TRACE(`loadImageBatch: ${batchCounter}......loaded image`)),
+            concatMap(url => loadPhoto(url, clickHandler, increment)), // Load and wait for all to be loaded
+            tap(() => TRACE(`loadImageBatch: ${batchCounter}: ${counter}......loaded`)),
             toArray()
         );
 
@@ -113,6 +142,7 @@ function loadImageBatch(imageUrls, clickHandler, batchCounter) {
 }
 
 function createImageLoader() {
+    let triggerer = {};
     let clickHandler;
     let batchSize;
 
@@ -134,7 +164,7 @@ function createImageLoader() {
             ootMargin: '200px',
             root: null, // documemt.querySelector('body'),
         };
-        let io = createIntersectionObservable(bottom, ioOptions);
+        let io = createIntersectionObservable(bottom, ioOptions, triggerer);
         return io;
     }
 
@@ -198,10 +228,12 @@ function createImageLoader() {
                 processedBatch.add(key);
                 appendImagesToDom(images);
             } else {
-                TRACE('Avoiding duplicate image insertion.', 's')
-                // Nice to have:
-                // We would like to add a future request (since IO failed because batch loading was in progress)
-                // Like activating some timer?
+                TRACE('Avoiding duplicate image insertion.', 's');
+                // Have some sort of loop to try to "pickup" once the image batch is loaded
+                // Retrigger request, after some timeout wait, keep looping until satisfied
+                // Avoid some infinite loop => retry for a specific batch request?
+
+                setTimeout(triggerer.retriggerAppendImagesToDom, 200);
             }
         }
 

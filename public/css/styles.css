@@ -48,8 +48,17 @@ button:active {
   transform: translateY(10%);
 }
 
+.page {
+  position: relative;
+}
+
 .bottom {
+  transition: 0.3s width;
+  position: absolute;
+  bottom: 0;
   height: 10px;
+  background: linear-gradient(to bottom right,#ffe259,#ffa751);
+  width: 1px;
 }
 
 /*----------------------------*/
