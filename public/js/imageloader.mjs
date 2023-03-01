@@ -6,7 +6,6 @@ let {
     concatMap,
     map,
     mergeMap,
-    exhaustMap,
     of,
     tap,
     toArray,
@@ -117,10 +116,6 @@ function createImageLoader() {
     let clickHandler;
     let batchSize;
 
-    function setup(options) {
-        ({ batchSize = 20, clickHandler } = options);
-    }
-
     let loadNextPhotos = (photos, batchCounter, batchNum) => {
         TRACE(`Current batch: ${batchCounter}`)
 
@@ -165,7 +160,9 @@ function createImageLoader() {
         return Promise.resolve(null);
     }
 
-    async function loadImages(photos) {
+    async function loadImages(photos, options) {
+        ({ batchSize = 20, clickHandler } = options);
+
         let perfectBatchSize = photos.length % batchSize === 0;
         let lastBatch = perfectBatchSize ? 0 : 1;
         let batchNum = Math.floor(photos.length / batchSize) + lastBatch;
@@ -201,20 +198,21 @@ function createImageLoader() {
         .subscribe({
             next: async (images) => {
                 if (!images || images.length === 0) return;
-                // appendImagesToDom(images);
+
                 let key = images[0].src;
                 if (!processedBatch.has(key)) { // It seems io is sending me the same images to append (!)
                     processedBatch.add(key);
                     appendImagesToDom(images);
                 } else {
                     TRACE('Avoiding duplicate image insertion.', 's')
+                    // Nice to have:
+                    // We would like to add a future request (since IO failed because batch loading was in progress)
+                    // Like activating some timer?
                 }
             }
         });
     }
-
     return {
-        setup,
         loadImages,
     };
 }
