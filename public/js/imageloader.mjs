@@ -23,6 +23,7 @@ function TRACE(message, type) {
     console.log('%c %s', css, message);
 }
 
+const THUMBNAIL_FOLDER = '../images/th/';
 const USE_CACHE_BUSTER = false;
 
 let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
@@ -71,7 +72,7 @@ function getCheckIntersectionCallback(observable) {
         }
         TRACE('IO: ' + JSON.stringify(state), 'medium')
         if (observable.subscriber) {
-            if (state.intersecting) { // Should we emit only when intersecting?
+            if (state.intersecting) {
                 observable.subscriber.next(state);
             }
         }
@@ -99,11 +100,10 @@ function createIntersectionObservable(target, ioOptions) {
 function loadImageBatch(imageUrls, clickHandler, batchCounter) {
     TRACE(`loadImageBatch: ${batchCounter}`);
 
-    let thumbnailFolder = '../images/th/';
     let loadImageBatchWorkflow = of(...imageUrls)
         .pipe(
             tap(() => TRACE(`loadImageBatch: ${batchCounter}......about to load`)),
-            map(url => thumbnailFolder + url),
+            map(url => THUMBNAIL_FOLDER + url),
             concatMap(url => loadPhoto(url, clickHandler)), // Load and wait for all to be loaded
             tap(() => TRACE(`loadImageBatch: ${batchCounter}......loaded image`)),
             toArray()
@@ -141,8 +141,10 @@ function createImageLoader() {
     function loadNextPhotosWait(photos, batchCounter, batchNum) {
         let theImages = [];
         let done = false;
-        let imageBatchObservable = loadNextPhotos(photos, batchCounter, batchNum);
 
+        // We want to "start" the image batch download eagerly, as opposed to directly attach to the dom
+
+        let imageBatchObservable = loadNextPhotos(photos, batchCounter, batchNum);
         if (imageBatchObservable) {
             imageBatchObservable.subscribe({
                 next: (images) => {
@@ -151,9 +153,9 @@ function createImageLoader() {
                     done = true;
                 }
             });
-            return new Promise(async (resolve, reject) => {
+            return new Promise(async (resolve) => {
                 let counterWait = createCounterWait();
-                await counterWait.waitFor('loadImages', () => done);
+                await counterWait.waitFor('loadNextPhotosWait', () => done);
                 resolve(of(theImages));
             });
         }
@@ -175,20 +177,35 @@ function createImageLoader() {
         let imageBatchObservable = await loadNextPhotosWait(photos, batchCounter, batchNum);
         batchCounter += 1;
 
-        let appendImagesToDom = async (images) => {
+        async function appendImagesToDom(images) {
             let main = $('.main');
             appendToMain(main, images, batchCounter);
-            batchCounter += 1;
+            batchCounter += 1; // Increment only after appending to DOM
 
             TRACE('pre-loading images for next step', 'strong');
             imageBatchObservable = await loadNextPhotosWait(photos, batchCounter, batchNum);
             if (imageBatchObservable === null) {
                 subscription.unsubscribe();
             }
-        };
+        }
+
+        async function appendImagesToDomWithCheck(images) {
+            if (!images || images.length === 0) return;
+
+            let key = images[0].src;
+            if (!processedBatch.has(key)) { // It seems io is sending me the same images to append (!)
+                processedBatch.add(key);
+                appendImagesToDom(images);
+            } else {
+                TRACE('Avoiding duplicate image insertion.', 's')
+                // Nice to have:
+                // We would like to add a future request (since IO failed because batch loading was in progress)
+                // Like activating some timer?
+            }
+        }
 
         subscription = io.pipe(
-            mergeMap(({ counter }) => {
+            mergeMap(() => {
                 if (batchCounter < batchNum && imageBatchObservable) {
                     return imageBatchObservable.pipe((images) => images)
                 }
@@ -196,20 +213,7 @@ function createImageLoader() {
             })
         )
         .subscribe({
-            next: async (images) => {
-                if (!images || images.length === 0) return;
-
-                let key = images[0].src;
-                if (!processedBatch.has(key)) { // It seems io is sending me the same images to append (!)
-                    processedBatch.add(key);
-                    appendImagesToDom(images);
-                } else {
-                    TRACE('Avoiding duplicate image insertion.', 's')
-                    // Nice to have:
-                    // We would like to add a future request (since IO failed because batch loading was in progress)
-                    // Like activating some timer?
-                }
-            }
+            next: appendImagesToDomWithCheck
         });
     }
     return {
