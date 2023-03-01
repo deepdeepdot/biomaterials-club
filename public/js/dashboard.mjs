@@ -77,7 +77,7 @@ function measureImageLoadingTime(imgs, startTime) {
 
 // ---------------- Setup Images
 
-function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
+function addImagePopupEvent({ imgs, popupModal, bounceOptions, batchSize, timeDiff }) {
   let clickHandler = (event) => {
     let { target } = event;
     bounce(target, bounceOptions);
@@ -86,7 +86,7 @@ function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
   imgs.forEach((img) => {
     img.addEventListener('click', clickHandler, false);
   });
-  ImageLoader.setup({ batchSize: 50, clickHandler });
+  ImageLoader.setup({ batchSize, clickHandler });
   ImageLoader.loadImages(window.images);
 }
 
@@ -105,7 +105,7 @@ function getBounceOptions(timeDiff) {
   };
 }
 
-function setupImages(popupModal, startTime) {
+function setupImages(popupModal, batchSize, startTime) {
   let imgs = document.querySelectorAll('.main img');
 
   return measureImageLoadingTime(imgs, startTime)
@@ -115,6 +115,7 @@ function setupImages(popupModal, startTime) {
         imgs,
         popupModal,
         bounceOptions,
+        batchSize,
         timeDiff,
       });
     });
@@ -122,7 +123,9 @@ function setupImages(popupModal, startTime) {
 
 export function setupDashboard(startTime) {
   let popupModal = setupLightBoxModal();
-  setupImages(popupModal, startTime);
+  let batchSize = 35;
+
+  setupImages(popupModal, batchSize, startTime);
 
   let bananas = $('#bananas');
   bananas.addEventListener('click', toggleBananas, false);
