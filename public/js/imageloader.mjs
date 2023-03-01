@@ -107,7 +107,7 @@ function createIntersectionObservable(target, ioOptions, triggerer) {
     );
 }
 
-function loadImageBatch(imageUrls, clickHandler, batchCounter) {
+function loadImageBatch(imageUrls, clickHandler, batchCounter, showProgressBar) {
     TRACE(`loadImageBatch: ${batchCounter}`);
 
     // Progress bar loader
@@ -118,6 +118,8 @@ function loadImageBatch(imageUrls, clickHandler, batchCounter) {
     let progressBarStarted = false;
 
     function increment() {
+        if (!showProgressBar) return;
+
         if (!progressBarStarted) {
             counter = 0; // reset counter
             progressBarStarted = true;
@@ -129,9 +131,7 @@ function loadImageBatch(imageUrls, clickHandler, batchCounter) {
 
     let loadImageBatchWorkflow = of(...imageUrls)
         .pipe(
-            tap(() => {
-                counter += 1;
-            }),
+            tap(() => { counter += 1; }),
             tap(() => TRACE(`loadImageBatch: ${batchCounter}: ${counter}.....about to load`)),
             map(url => THUMBNAIL_FOLDER + url),
             concatMap(url => loadPhoto(url, clickHandler, increment)), // Load and wait for all to be loaded
@@ -147,13 +147,13 @@ function createImageLoader() {
     let clickHandler;
     let batchSize;
 
-    let loadNextPhotos = (photos, batchCounter, batchNum) => {
+    let loadNextPhotos = (photos, batchCounter, batchNum, showProgressBar) => {
         TRACE(`Current batch: ${batchCounter}`)
 
         if (batchCounter < batchNum) {
             let start = batchCounter * batchSize;
             let batch = photos.slice(start, start + batchSize);
-            return loadImageBatch(batch, clickHandler, batchCounter);
+            return loadImageBatch(batch, clickHandler, batchCounter, showProgressBar);
         }
         return null; // cleanup
     };
@@ -169,14 +169,14 @@ function createImageLoader() {
         return io;
     }
 
-    function loadNextPhotosWait(photos, batchCounter, batchNum) {
+    function loadNextPhotosWait(photos, batchCounter, batchNum, showProgressBar = true) {
         let theImages = [];
         let done = false;
 
         // We want to "start" the image batch download eagerly,
         // as opposed to directly attach to the dom in one single stream
 
-        let imageBatchObservable = loadNextPhotos(photos, batchCounter, batchNum);
+        let imageBatchObservable = loadNextPhotos(photos, batchCounter, batchNum, showProgressBar);
         if (!imageBatchObservable) {
             return Promise.resolve(null);
         }
@@ -206,7 +206,7 @@ function createImageLoader() {
 
         let io = createIntersection();
 
-        let imageBatchObservable = await loadNextPhotosWait(photos, batchCounter, batchNum);
+        let imageBatchObservable = await loadNextPhotosWait(photos, batchCounter, batchNum, false);
         batchCounter += 1;
 
         async function appendImagesToDom(images) {

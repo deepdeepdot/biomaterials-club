@@ -123,7 +123,7 @@ function setupImages(popupModal, batchSize, startTime) {
 
 export function setupDashboard(startTime) {
   let popupModal = setupLightBoxModal();
-  let batchSize = 50;
+  let batchSize = 40;
 
   setupImages(popupModal, batchSize, startTime);
 
