@@ -2,6 +2,7 @@
 import createCounterWait from './counterwait.mjs';
 import TRACE from './trace.mjs';
 
+const PRELOAD_BATCHES = 0;
 const USE_CACHE_BUSTER = false;
 
 let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
@@ -78,19 +79,17 @@ function setupIntersectionObserverForThumbnails(
   let done = false;
   let io;
 
-  let isItOver = (currentBatch) => {
-    done = currentBatch == totalBatches;
-    if (done) {
-      TRACE('done io!', 's')
-      io.unobserve(bottom);
-    }
-  };
-
   function checkIntersection(entry) {
     if (!done && entry.isIntersecting) {
       thumbnailBatches
         .loadThumbnailsAndAppend(main)
-        .then(isItOver);
+        .then((currentBatch) => {
+          done = currentBatch == totalBatches;
+          if (done) {
+            TRACE('done io!', 's')
+            io.unobserve(bottom);
+          }
+        });
     }
   };
 
@@ -129,18 +128,55 @@ function createImageLoader() {
   };
 
   function loadThumbnailBatches(imageUrlBatches) {
+    let preloadImagesForBatch = []; // To allow eager preload batch, very messy!
+
+    function loadBatch(imageUrls) {
+      return loadImagesForBatch(imageUrls, clickHandler).then((images) => {
+        preloadImagesForBatch.push(images);
+        return images;
+      });
+    }
+
+    function preloadNextBatchImages(i) {
+      if (i + 1 < imageUrlBatches.length) {
+        let loadNextBatch = () => {
+          loadBatch(imageUrlBatches[i + 1]).then(() => {
+            TRACE(`>>> LoadBatch().then()...${i + 1}`);
+            setTimeout(() => {
+              TRACE(`>>> appendThumbnails()...${i + 1}`);
+              appendThumbnails(preloadImagesForBatch[i + 1], main, i + 1);
+            }, 1000);
+          })
+        }
+        setTimeout(loadNextBatch, 200);
+      }
+    }
+
     let currentBatch = 0;
 
     function loadThumbnailsAndAppend(main) {
-      let batch = loadImagesForBatch(
-        imageUrlBatches[currentBatch], clickHandler
-      );
+      // TODO: should we add a check on requests past the batchNum?
+
+      let isPreloadReady = PRELOAD_BATCHES && preloadImagesForBatch[currentBatch];
+      // Notes:
+      // What if preload is in progress? are we going to "lose" it?
+      // We'll have 2 concurrent loadBatch() happening, potentially compounded by a third request!
+      let batch = isPreloadReady
+        ? Promise.resolve(preloadImagesForBatch[currentBatch])
+        : loadBatch(imageUrlBatches[currentBatch]);
+
+      if (PRELOAD_BATCHES) {
+        // Without the PRELOAD_BATCHES, this works perfectly
+        // With the PRELOAD_BATCHES, chances are that the last batch may be loaded but not appended for slow connections
+        preloadNextBatchImages(currentBatch);
+      }
       return batch.then((thumbnails) => {
         appendThumbnails(thumbnails, main, currentBatch);
         currentBatch += 1;
         return currentBatch;
       });
     }
+
     return {
       loadThumbnailsAndAppend,
     };
