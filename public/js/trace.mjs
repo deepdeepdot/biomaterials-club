@@ -9,7 +9,7 @@ function TRACE(message, type) {
     case 'medium':
       css = 'background-color: yellow; color: black';
       break;
-    case 's':
+    case 'stronger':
       css = 'background-color: purple; color: white';
       break;
     default:

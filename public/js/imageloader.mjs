@@ -76,10 +76,10 @@ function setupIntersectionObserverForThumbnails(
   let done = false;
   let io;
 
-  let isItOver = (currentBatch) => {
+  function isItOver(currentBatch) {
     done = currentBatch === totalBatches;
     if (done) {
-      TRACE('done io!', 's');
+      TRACE('done io!', 'stronger');
       io.unobserve(bottom);
     }
   };
@@ -90,7 +90,7 @@ function setupIntersectionObserverForThumbnails(
     }
   }
 
-  let ioCallback = (entries) => {
+  function ioCallback(entries) {
     entries.forEach(checkIntersection);
   };
 
