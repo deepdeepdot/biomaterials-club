@@ -76,10 +76,8 @@ function getCheckIntersectionCallback(observable) {
             y: window.scrollY
         }
         TRACE('IO: ' + JSON.stringify(state), 'medium')
-        if (observable.subscriber) {
-            if (state.intersecting) {
-                observable.subscriber.next(state);
-            }
+        if (state.intersecting && observable.subscriber) {
+            observable.subscriber.next(state);
         }
     };
     return checkIntersection;
@@ -142,7 +140,10 @@ function loadImageBatch(imageUrls, clickHandler, batchCounter, showProgressBar) 
 }
 
 function createImageLoader() {
-    let triggerer = {};
+    let triggerer = {
+        count: 0,
+        max: 20
+    };
     let clickHandler;
     let batchSize;
 
@@ -227,13 +228,17 @@ function createImageLoader() {
             if (!processedBatch.has(key)) { // It seems io is sending me the same images to append (!)
                 processedBatch.add(key);
                 appendImagesToDom(images);
+                triggerer.count = 0;
             } else {
                 TRACE('Avoiding duplicate image insertion.', 's');
                 // Have some sort of loop to try to "pickup" once the image batch is loaded
                 // Retrigger request, after some timeout wait, keep looping until satisfied
-                // Avoid some infinite loop => retry for a specific batch request?
+                // Avoid some infinite loop, up to triggerer.max times
 
-                setTimeout(triggerer.retriggerAppendImagesToDom, 200);
+                if (triggerer.count < triggerer.max) {
+                    setTimeout(triggerer.retriggerAppendImagesToDom, 200);
+                    triggerer.count += 1;
+                }
             }
         }
 
