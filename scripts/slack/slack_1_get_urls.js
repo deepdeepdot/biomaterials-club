@@ -56,7 +56,6 @@ var imageUrls =
 
 */
 
-
 module.exports = {
   getImageUrlsFromThumbnails,
   getImageUrlsFromSlack,
