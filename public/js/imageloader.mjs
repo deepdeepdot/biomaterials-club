@@ -34,7 +34,7 @@ let $ = (s) => document.querySelector(s);
 
 let loadPhoto = (url, clickHandler, onload) => {
     let img = new Image();
-    img.src = `${url}${cacheBuster}`;
+    img.src = `${THUMBNAIL_FOLDER}${url}${cacheBuster}`;
     img.addEventListener('click', clickHandler, false);
 
     return new Promise((resolve, reject) => {
@@ -133,7 +133,6 @@ function loadImageBatch(imageUrls, clickHandler, batchCounter, showProgressBar) 
         .pipe(
             tap(() => { counter += 1; }),
             tap(() => TRACE(`loadImageBatch: ${batchCounter}: ${counter}.....about to load`)),
-            map(url => THUMBNAIL_FOLDER + url),
             concatMap(url => loadPhoto(url, clickHandler, increment)), // Load and wait for all to be loaded
             tap(() => TRACE(`loadImageBatch: ${batchCounter}: ${counter}......loaded`)),
             toArray()
