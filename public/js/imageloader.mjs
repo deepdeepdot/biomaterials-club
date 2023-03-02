@@ -1,5 +1,6 @@
 // @ts-check
 import createCounterWait from './counterwait.mjs';
+import TRACE from './trace.mjs';
 
 const PRELOAD_BATCHES = 1;
 const USE_CACHE_BUSTER = false;
@@ -34,10 +35,30 @@ function loadImagesForBatch(images, clickHandler) {
   let counterWait = createCounterWait();
   let thumbnails = [];
 
+  let bottom = document.querySelector('.bottom');
+  let progressBarStarted = false;
+  let proportion = 0;
+  let counter = 0;
+
+  // Flaky progress bar due to parallel ImageLoaders for 2 batches at the same time!
+  // That might be the extra performance boost compared with rxjs
+  function incrementProgressBar() {
+      if (!progressBarStarted) {
+          counter = 0; // reset counter
+          progressBarStarted = true;
+      }
+      counter += 1;
+      proportion = Math.floor(100 * counter / images.length);
+      bottom.style.width = proportion + '%';
+  }
+
   images.forEach((image) => {
     let thumbnail = createThumbnail(image);
     thumbnail.onclick = clickHandler;
-    thumbnail.onload = counterWait.incrementCount;
+    thumbnail.onload = () => {
+      incrementProgressBar();
+      counterWait.incrementCount();
+    };
     thumbnails.push(thumbnail);
   });
 
@@ -46,6 +67,7 @@ function loadImagesForBatch(images, clickHandler) {
       return count >= images.length;
     })
     .then(() => {
+      bottom.style.width = '1%'; // reset width
       return thumbnails;
     });
 }
@@ -53,7 +75,6 @@ function loadImagesForBatch(images, clickHandler) {
 function setupIntersectionObserverForThumbnails(
   thumbnailBatches,
   totalBatches,
-  clickHandler,
   main
 ) {
   let io;
@@ -61,23 +82,17 @@ function setupIntersectionObserverForThumbnails(
   let bottom = document.querySelector('.bottom');
   let currentBatch = 0;
 
-  let appendThumbnails = (thumbnails) => {
-    thumbnails.forEach((thumbnail) => {
-      thumbnail.onclick = clickHandler;
-      main.appendChild(thumbnail);
-    });
-  };
-
   let ioCallback = (entries) => {
     let checkIntersection = (entry) => {
       if (!done && currentBatch < totalBatches && entry.isIntersecting) {
         thumbnailBatches
-          .getThumbnailBatch(currentBatch)
-          .then(appendThumbnails)
+          .loadThumbnailsAndAppend(currentBatch, main)
           .then(() => {
             currentBatch += 1;
             done = !(currentBatch < totalBatches);
             if (done) {
+              // Check for last batch to append to dom if needed
+              alert('done io!')
               io.unobserve(bottom);
             }
           });
@@ -101,32 +116,55 @@ function createImageLoader() {
   let clickHandler;
 
   function loadThumbnailBatches(batches) {
-    let preloadedBatches = [];
+    let imagesForBatch = [];
+    let imagesForBatchAppended = [];
 
     function loadBatch(batch) {
       return loadImagesForBatch(batch, clickHandler).then((batch) => {
-        preloadedBatches.push(batch);
+        imagesForBatch.push(batch);
         return batch;
       });
     }
 
-    function getThumbnailBatch(i) {
-      // We always return the next batch and end of this function
-      let isPreloadReady = PRELOAD_BATCHES && preloadedBatches[i];
+    function appendThumbnails(thumbnails, main, i) {
+      TRACE(`Appended ${i} batch`)
+      thumbnails.forEach((thumbnail) => {
+        thumbnail.onclick = clickHandler;
+        main.appendChild(thumbnail);
+        imagesForBatchAppended[i] = true;
+      });
+    };
+
+    function loadThumbnailsAndAppend(i, main) {
+      let isPreloadReady = PRELOAD_BATCHES && imagesForBatch[i];
 
       let batch = isPreloadReady
-        ? Promise.resolve(preloadedBatches[i])
+        ? Promise.resolve(imagesForBatch[i])
         : loadBatch(batches[i]);
 
+      // Without the PRELOAD_BATCHES, this works perfectly
+      // With the PRELOAD_BATCHES, chances are that the last batch may be loaded but not appended
+      // -> Need some trigger for future "appendToDom" request
+
       if (PRELOAD_BATCHES && i + 1 < batches.length) {
-        let loadNextBatch = () => loadBatch(batches[i + 1]);
+        let loadNextBatch = () => {
+          loadBatch(batches[i + 1]).then(() => {
+            setTimeout(() => {
+              // check if it was inserted into the dom
+              if (!imagesForBatchAppended[i + 1]) {
+                // alert("Appending pending request");
+                appendThumbnails(imagesForBatch[i + 1], main, i+1);
+              }
+            }, 500);
+          })
+        }
         setTimeout(loadNextBatch, 200);
       }
-      return batch;
+      return batch.then((thumbnails) => appendThumbnails(thumbnails, main, i));
     }
 
     return {
-      getThumbnailBatch,
+      loadThumbnailsAndAppend,
     };
   }
 
@@ -141,7 +179,6 @@ function createImageLoader() {
     setupIntersectionObserverForThumbnails(
       thumbnailBatches,
       totalBatches,
-      clickHandler,
       main
     );
   }
