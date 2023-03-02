@@ -156,11 +156,8 @@ function createImageLoader() {
             TRACE(`>>> LoadBatch().then()...${i + 1}`);
             setTimeout(() => {
               // check if it was inserted into the dom
-              if (!imagesForBatchAppended[i + 1]) {
-                TRACE(`>>> appendThumbnails()...${i + 1}`);
-                // alert("Appending pending request");
-                appendThumbnails(imagesForBatch[i + 1], main, i+1);
-              }
+              TRACE(`>>> appendThumbnails()...${i + 1}`);
+              appendThumbnails(imagesForBatch[i + 1], main, i+1);
             }, 1000);
           })
         }
