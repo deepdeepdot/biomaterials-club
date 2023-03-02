@@ -31,40 +31,32 @@ function splitIntoBatches(images, batchSize) {
   return batches;
 }
 
-function loadImagesForBatch(images, clickHandler) {
+function loadImagesForBatch(imageUrls, clickHandler) {
   let counterWait = createCounterWait();
   let thumbnails = [];
 
   let bottom = document.querySelector('.bottom');
-  let progressBarStarted = false;
-  let proportion = 0;
-  let counter = 0;
 
-  // Flaky progress bar due to parallel ImageLoaders for 2 batches at the same time!
-  // That might be the extra performance boost compared with rxjs
-  function incrementProgressBar() {
-      if (!progressBarStarted) {
-          counter = 0; // reset counter
-          progressBarStarted = true;
-      }
-      counter += 1;
-      proportion = Math.floor(100 * counter / images.length);
+  function incrementProgressBar(count, total) {
+      let proportion = Math.floor(100 * count / total);
       bottom.style.width = proportion + '%';
   }
 
-  images.forEach((image) => {
+  let counter = 0;
+  imageUrls.forEach((image) => {
     let thumbnail = createThumbnail(image);
     thumbnail.onclick = clickHandler;
     thumbnail.onload = () => {
-      incrementProgressBar();
       counterWait.incrementCount();
+      counter += 1;
+      incrementProgressBar(counter, imageUrls.length);
     };
     thumbnails.push(thumbnail);
   });
 
   return counterWait
     .waitFor('loadImagesForBatch', (count) => {
-      return count >= images.length;
+      return count >= imageUrls.length;
     })
     .then(() => {
       setTimeout(() => {
@@ -176,7 +168,6 @@ function createImageLoader() {
   function loadImages(imageUrls, options) {
     ({ batchSize = 50, clickHandler } = options);
 
-    // Intersection observer
     let imageUrlBatches = splitIntoBatches(imageUrls, batchSize);
     let totalBatches = Math.ceil(imageUrls.length / batchSize);
     let thumbnailBatches = loadThumbnailBatches(imageUrlBatches);

@@ -111,12 +111,6 @@ function setupImages(popupModal, batchSize, startTime) {
   return measureImageLoadingTime(imgs, startTime)
     .then(getBounceOptions)
     .then(({ bounceOptions, timeDiff }) => {
-
-      // TODO
-      // Adjust batch size according to the speed
-      // If it's too slow => towards smaller number => 10
-      // If it's too fast => 50
-
       let isSuperFast = timeDiff < 2 * SECOND;
       let isFast3G = timeDiff < 12 * SECOND;
 
