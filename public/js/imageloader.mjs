@@ -67,7 +67,9 @@ function loadImagesForBatch(images, clickHandler) {
       return count >= images.length;
     })
     .then(() => {
-      bottom.style.width = '1%'; // reset width
+      setTimeout(() => {
+        bottom.style.width = '1%'; // reset width
+      }, 1000);
       return thumbnails;
     });
 }
@@ -92,7 +94,7 @@ function setupIntersectionObserverForThumbnails(
             done = !(currentBatch < totalBatches);
             if (done) {
               // Check for last batch to append to dom if needed
-              alert('done io!')
+              TRACE('done io!', 's')
               io.unobserve(bottom);
             }
           });
@@ -115,7 +117,7 @@ function createImageLoader() {
   let batchSize;
   let clickHandler;
 
-  function loadThumbnailBatches(batches) {
+  function loadThumbnailBatches(imageUrlBatches) {
     let imagesForBatch = [];
     let imagesForBatchAppended = [];
 
@@ -144,20 +146,20 @@ function createImageLoader() {
 
       let batch = isPreloadReady
         ? Promise.resolve(imagesForBatch[i])
-        : loadBatch(batches[i]);
+        : loadBatch(imageUrlBatches[i]);
 
       // Without the PRELOAD_BATCHES, this works perfectly
       // With the PRELOAD_BATCHES, chances are that the last batch may be loaded but not appended
       // -> Need some trigger for future "appendToDom" request
 
-      if (PRELOAD_BATCHES && i + 1 < batches.length) {
+      if (PRELOAD_BATCHES && i + 1 < imageUrlBatches.length) {
         let loadNextBatch = () => {
-          loadBatch(batches[i + 1]).then(() => {
+          loadBatch(imageUrlBatches[i + 1]).then(() => {
             TRACE(`>>> LoadBatch().then()...${i + 1}`);
             setTimeout(() => {
               // check if it was inserted into the dom
               TRACE(`>>> appendThumbnails()...${i + 1}`);
-              appendThumbnails(imagesForBatch[i + 1], main, i+1);
+              appendThumbnails(imagesForBatch[i + 1], main, i+1 );
             }, 1000);
           })
         }
@@ -171,13 +173,13 @@ function createImageLoader() {
     };
   }
 
-  function loadImages(images, options) {
+  function loadImages(imageUrls, options) {
     ({ batchSize = 50, clickHandler } = options);
 
     // Intersection observer
-    let batches = splitIntoBatches(images, batchSize);
-    let totalBatches = Math.ceil(images.length / batchSize);
-    let thumbnailBatches = loadThumbnailBatches(batches);
+    let imageUrlBatches = splitIntoBatches(imageUrls, batchSize);
+    let totalBatches = Math.ceil(imageUrls.length / batchSize);
+    let thumbnailBatches = loadThumbnailBatches(imageUrlBatches);
 
     setupIntersectionObserverForThumbnails(
       thumbnailBatches,
