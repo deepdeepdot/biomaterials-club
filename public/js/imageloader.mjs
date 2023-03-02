@@ -127,6 +127,10 @@ function createImageLoader() {
     }
 
     function appendThumbnails(thumbnails, main, i) {
+      if (imagesForBatchAppended[i]) {
+        TRACE(`Appended ${i} batch... already appended. Skipping`);
+        return;
+      }
       TRACE(`Appended ${i} batch`)
       thumbnails.forEach((thumbnail) => {
         thumbnail.onclick = clickHandler;
@@ -149,13 +153,15 @@ function createImageLoader() {
       if (PRELOAD_BATCHES && i + 1 < batches.length) {
         let loadNextBatch = () => {
           loadBatch(batches[i + 1]).then(() => {
+            TRACE(`>>> LoadBatch().then()...${i + 1}`);
             setTimeout(() => {
               // check if it was inserted into the dom
               if (!imagesForBatchAppended[i + 1]) {
+                TRACE(`>>> appendThumbnails()...${i + 1}`);
                 // alert("Appending pending request");
                 appendThumbnails(imagesForBatch[i + 1], main, i+1);
               }
-            }, 500);
+            }, 1000);
           })
         }
         setTimeout(loadNextBatch, 200);
