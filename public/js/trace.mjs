@@ -1,3 +1,5 @@
+// @ts-check
+
 function TRACE(message, type) {
   let css = 'background-color: #ddd; color: black';
   switch (type) {
