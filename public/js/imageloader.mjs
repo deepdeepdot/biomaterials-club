@@ -2,7 +2,7 @@
 import createCounterWait from './counterwait.mjs';
 import TRACE from './trace.mjs';
 
-const PRELOAD_BATCHES = 1;
+const PRELOAD_BATCHES = 0;
 const USE_CACHE_BUSTER = false;
 
 let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
@@ -38,8 +38,8 @@ function loadImagesForBatch(imageUrls, clickHandler) {
   let bottom = document.querySelector('.bottom');
 
   function incrementProgressBar(count, total) {
-      let proportion = Math.floor(100 * count / total);
-      bottom.style.width = proportion + '%';
+    let proportion = Math.floor(100 * count / total);
+    bottom.style.width = proportion + '%';
   }
 
   let counter = 0;
@@ -60,7 +60,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
     })
     .then(() => {
       setTimeout(() => {
-        bottom.style.width = '1%'; // reset width
+        bottom.style.width = '0%'; // reset width
       }, 1000);
       return thumbnails;
     });
@@ -109,9 +109,23 @@ function createImageLoader() {
   let batchSize;
   let clickHandler;
 
+  let imagesForBatchAppended = [];
+
+  function appendThumbnails(thumbnails, main, idx) {
+    if (imagesForBatchAppended[idx]) {
+      TRACE(`Appended ${idx} batch... already appended. Skipping`);
+      return;
+    }
+    TRACE(`Appended ${idx} batch`)
+    thumbnails.forEach((thumbnail) => {
+      thumbnail.onclick = clickHandler;
+      main.appendChild(thumbnail);
+      imagesForBatchAppended[idx] = true;
+    });
+  };
+
   function loadThumbnailBatches(imageUrlBatches) {
     let imagesForBatch = [];
-    let imagesForBatchAppended = [];
 
     function loadBatch(batch) {
       return loadImagesForBatch(batch, clickHandler).then((batch) => {
@@ -120,18 +134,21 @@ function createImageLoader() {
       });
     }
 
-    function appendThumbnails(thumbnails, main, i) {
-      if (imagesForBatchAppended[i]) {
-        TRACE(`Appended ${i} batch... already appended. Skipping`);
-        return;
+    function preloadNextBatchImages(i) {
+      if (i + 1 < imageUrlBatches.length) {
+        let loadNextBatch = () => {
+          loadBatch(imageUrlBatches[i + 1]).then(() => {
+            TRACE(`>>> LoadBatch().then()...${i + 1}`);
+            setTimeout(() => {
+              // check if it was inserted into the dom
+              TRACE(`>>> appendThumbnails()...${i + 1}`);
+              appendThumbnails(imagesForBatch[i + 1], main, i + 1);
+            }, 1000);
+          })
+        }
+        setTimeout(loadNextBatch, 200);
       }
-      TRACE(`Appended ${i} batch`)
-      thumbnails.forEach((thumbnail) => {
-        thumbnail.onclick = clickHandler;
-        main.appendChild(thumbnail);
-        imagesForBatchAppended[i] = true;
-      });
-    };
+    }
 
     function loadThumbnailsAndAppend(i, main) {
       let isPreloadReady = PRELOAD_BATCHES && imagesForBatch[i];
@@ -143,20 +160,10 @@ function createImageLoader() {
       // Without the PRELOAD_BATCHES, this works perfectly
       // With the PRELOAD_BATCHES, chances are that the last batch may be loaded but not appended
       // -> Need some trigger for future "appendToDom" request
-
-      if (PRELOAD_BATCHES && i + 1 < imageUrlBatches.length) {
-        let loadNextBatch = () => {
-          loadBatch(imageUrlBatches[i + 1]).then(() => {
-            TRACE(`>>> LoadBatch().then()...${i + 1}`);
-            setTimeout(() => {
-              // check if it was inserted into the dom
-              TRACE(`>>> appendThumbnails()...${i + 1}`);
-              appendThumbnails(imagesForBatch[i + 1], main, i+1 );
-            }, 1000);
-          })
-        }
-        setTimeout(loadNextBatch, 200);
+      if (PRELOAD_BATCHES) {
+        preloadNextBatchImages(i);
       }
+
       return batch.then((thumbnails) => appendThumbnails(thumbnails, main, i));
     }
 
