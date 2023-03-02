@@ -11,7 +11,7 @@
 }
 
 .main {
-  width: 100vw;
+  width: 100%;
   padding: var(--grid-gap);
   overflow: hidden;
 }
@@ -23,12 +23,12 @@
 @media only screen and (min-width: 768px) {
   :root {
     --grid-columns: 6;
-    --grid-gap: 10px;
+    --grid-gap: 5px;
   }
 
   .main img,
   .main video {
-    width: calc(100vw / var(--grid-columns) - var(--grid-gap) / 2);
+    width: calc(100vw / var(--grid-columns) - var(--grid-gap) );
   }
 
   .desktop {
@@ -71,7 +71,6 @@
 @media only screen and (min-width: 1080px) {
   :root {
     --grid-columns: 8;
-    --grid-gap: 10px;
   }
 }
 

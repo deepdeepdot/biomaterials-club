@@ -77,7 +77,7 @@ function measureImageLoadingTime(imgs, startTime) {
 
 // ---------------- Setup Images
 
-function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
+function setupImageListeners({ imgs, popupModal, bounceOptions, batchSize }) {
   let clickHandler = (event) => {
     let { target } = event;
     bounce(target, bounceOptions);
@@ -86,7 +86,8 @@ function addImagePopupEvent({ imgs, popupModal, bounceOptions, timeDiff }) {
   imgs.forEach((img) => {
     img.addEventListener('click', clickHandler, false);
   });
-  ImageLoader.loadImages(window.images, { batchSize: 50, clickHandler });
+    // Get them from `window`, since we are using ES6 modules
+  ImageLoader.loadImages(window.images, { batchSize, clickHandler });
 }
 
 const SECOND = 1000;
@@ -104,24 +105,38 @@ function getBounceOptions(timeDiff) {
   };
 }
 
-function setupImages(popupModal, startTime) {
-  let imgs = document.querySelectorAll('.main img');
+function setupImages(popupModal, batchSize, startTime) {
+  let imgs = document.querySelectorAll('.main img'); // Measure loading time for these images on page
 
   return measureImageLoadingTime(imgs, startTime)
     .then(getBounceOptions)
     .then(({ bounceOptions, timeDiff }) => {
-      addImagePopupEvent({
+      let isSuperFast = timeDiff < 2 * SECOND;
+      let isFast3G = timeDiff < 12 * SECOND;
+
+      if (isSuperFast) {
+        batchSize = 50;
+      } else if (isFast3G) {
+        batchSize = 20;
+      } else {
+        batchSize = 10; // super slow speed
+      }
+      console.log(`Batch size: ${batchSize}`);
+
+      setupImageListeners({
         imgs,
         popupModal,
         bounceOptions,
-        timeDiff,
+        batchSize
       });
     });
 }
 
 export function setupDashboard(startTime) {
   let popupModal = setupLightBoxModal();
-  setupImages(popupModal, startTime);
+  let batchSize = 50;
+
+  setupImages(popupModal, batchSize, startTime);
 
   let bananas = $('#bananas');
   bananas.addEventListener('click', toggleBananas, false);
