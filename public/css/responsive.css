@@ -28,7 +28,7 @@
 
   .main img,
   .main video {
-    width: calc(100vw / var(--grid-columns) - var(--grid-gap) );
+    width: calc(100vw / var(--grid-columns) - var(--grid-gap));
   }
 
   .desktop {

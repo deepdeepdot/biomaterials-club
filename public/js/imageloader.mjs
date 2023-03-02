@@ -4,7 +4,7 @@ import TRACE from './trace.mjs';
 
 const USE_CACHE_BUSTER = false;
 
-let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
+let cacheBuster = USE_CACHE_BUSTER ? `?ts=${Date.now()}` : '';
 
 // ----------------------------- Image Loader
 
@@ -36,8 +36,8 @@ function loadImagesForBatch(imageUrls, clickHandler) {
   let thumbnails = [];
 
   function incrementProgressBar(count, total) {
-    let proportion = Math.floor(100 * count / total);
-    bottom.style.width = proportion + '%';
+    let proportion = Math.floor((100 * count) / total);
+    bottom.style.width = `${proportion}%`;
   }
 
   function loadImages(urls) {
@@ -58,9 +58,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
   loadImages(imageUrls);
 
   return counterWait
-    .waitFor('loadImagesForBatch', (count) => {
-      return count >= imageUrls.length;
-    })
+    .waitFor('loadImagesForBatch', (count) => count >= imageUrls.length)
     .then(() => {
       setTimeout(() => {
         bottom.style.width = '0%'; // reset width
@@ -79,20 +77,18 @@ function setupIntersectionObserverForThumbnails(
   let io;
 
   let isItOver = (currentBatch) => {
-    done = currentBatch == totalBatches;
+    done = currentBatch === totalBatches;
     if (done) {
-      TRACE('done io!', 's')
+      TRACE('done io!', 's');
       io.unobserve(bottom);
     }
   };
 
   function checkIntersection(entry) {
     if (!done && entry.isIntersecting) {
-      thumbnailBatches
-        .loadThumbnailsAndAppend(main)
-        .then(isItOver);
+      thumbnailBatches.loadThumbnailsAndAppend(main).then(isItOver);
     }
-  };
+  }
 
   let ioCallback = (entries) => {
     entries.forEach(checkIntersection);
@@ -115,25 +111,26 @@ function createImageLoader() {
 
   let imagesForBatchAppended = [];
 
-  function appendThumbnails(thumbnails, main, idx) {
+  function appendThumbnails(thumbnails, domTarget, idx) {
     if (imagesForBatchAppended[idx]) {
       TRACE(`Appended ${idx} batch... already appended. Skipping`);
       return;
     }
-    TRACE(`Appended ${idx} batch`)
+    TRACE(`Appended ${idx} batch`);
     thumbnails.forEach((thumbnail) => {
       thumbnail.onclick = clickHandler;
-      main.appendChild(thumbnail);
+      domTarget.appendChild(thumbnail);
       imagesForBatchAppended[idx] = true;
     });
-  };
+  }
 
   function loadThumbnailBatches(imageUrlBatches) {
     let currentBatch = 0;
 
     function loadThumbnailsAndAppend(main) {
       let batch = loadImagesForBatch(
-        imageUrlBatches[currentBatch], clickHandler
+        imageUrlBatches[currentBatch],
+        clickHandler
       );
       return batch.then((thumbnails) => {
         appendThumbnails(thumbnails, main, currentBatch);

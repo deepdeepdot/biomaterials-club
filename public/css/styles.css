@@ -57,7 +57,7 @@ button:active {
   position: absolute;
   bottom: 0;
   height: 10px;
-  background: linear-gradient(to bottom right,#ffe259,#ffa751);
+  background: linear-gradient(to bottom right, #ffe259, #ffa751);
   width: 1px;
 }
 

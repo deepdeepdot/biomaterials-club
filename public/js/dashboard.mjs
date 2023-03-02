@@ -86,7 +86,7 @@ function setupImageListeners({ imgs, popupModal, bounceOptions, batchSize }) {
   imgs.forEach((img) => {
     img.addEventListener('click', clickHandler, false);
   });
-    // Get them from `window`, since we are using ES6 modules
+  // Get them from `window`, since we are using ES6 modules
   ImageLoader.loadImages(window.images, { batchSize, clickHandler });
 }
 
@@ -114,20 +114,22 @@ function setupImages(popupModal, batchSize, startTime) {
       let isSuperFast = timeDiff < 2 * SECOND;
       let isFast3G = timeDiff < 12 * SECOND;
 
+      let theBatchSize;
+
       if (isSuperFast) {
-        batchSize = 50;
+        theBatchSize = batchSize;
       } else if (isFast3G) {
-        batchSize = 20;
+        theBatchSize = 20;
       } else {
-        batchSize = 10; // super slow speed
+        theBatchSize = 10; // super slow speed
       }
-      console.log(`Batch size: ${batchSize}`);
+      console.log(`Batch size: ${theBatchSize}`);
 
       setupImageListeners({
         imgs,
         popupModal,
         bounceOptions,
-        batchSize
+        batchSize: theBatchSize,
       });
     });
 }

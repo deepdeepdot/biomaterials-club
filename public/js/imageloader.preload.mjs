@@ -37,7 +37,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
   let thumbnails = [];
 
   function incrementProgressBar(count, total) {
-    let proportion = Math.floor(100 * count / total);
+    let proportion = Math.floor((100 * count) / total);
     bottom.style.width = proportion + '%';
   }
 
@@ -81,17 +81,15 @@ function setupIntersectionObserverForThumbnails(
 
   function checkIntersection(entry) {
     if (!done && entry.isIntersecting) {
-      thumbnailBatches
-        .loadThumbnailsAndAppend(main)
-        .then((currentBatch) => {
-          done = currentBatch == totalBatches;
-          if (done) {
-            TRACE('done io!', 's')
-            io.unobserve(bottom);
-          }
-        });
+      thumbnailBatches.loadThumbnailsAndAppend(main).then((currentBatch) => {
+        done = currentBatch == totalBatches;
+        if (done) {
+          TRACE('done io!', 's');
+          io.unobserve(bottom);
+        }
+      });
     }
-  };
+  }
 
   let ioCallback = (entries) => {
     entries.forEach(checkIntersection);
@@ -119,13 +117,13 @@ function createImageLoader() {
       TRACE(`Appended ${idx} batch... already appended. Skipping`);
       return;
     }
-    TRACE(`Appended ${idx} batch`)
+    TRACE(`Appended ${idx} batch`);
     thumbnails.forEach((thumbnail) => {
       thumbnail.onclick = clickHandler;
       main.appendChild(thumbnail);
       imagesForBatchAppended[idx] = true;
     });
-  };
+  }
 
   function loadThumbnailBatches(imageUrlBatches) {
     let preloadImagesForBatch = []; // To allow eager preload batch, very messy!
@@ -146,8 +144,8 @@ function createImageLoader() {
               TRACE(`>>> appendThumbnails()...${i + 1}`);
               appendThumbnails(preloadImagesForBatch[i + 1], main, i + 1);
             }, 1000);
-          })
-        }
+          });
+        };
         setTimeout(loadNextBatch, 200);
       }
     }
@@ -157,7 +155,8 @@ function createImageLoader() {
     function loadThumbnailsAndAppend(main) {
       // TODO: should we add a check on requests past the batchNum?
 
-      let isPreloadReady = PRELOAD_BATCHES && preloadImagesForBatch[currentBatch];
+      let isPreloadReady =
+        PRELOAD_BATCHES && preloadImagesForBatch[currentBatch];
       // Notes:
       // What if preload is in progress? are we going to "lose" it?
       // We'll have 2 concurrent loadBatch() happening, potentially compounded by a third request!
