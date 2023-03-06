@@ -4,12 +4,14 @@
 let imageUrls = [....]
 ```
 
-2. Using node, copy/paste contents from `slack_2_download_images.js`.
+2. Check /download_slack, make sure it's not there, or it's an empty folder
+
+3. Using node, copy/paste contents from `slack_2_download_images.js`.
 
 Replace `imageUrls` in `executeImageDownload()`
 Execute `executeImageDownload()`
 
-3. Continuing using node, copy/paste first 95 lines in `slack_3_rename_files`
+4. Continuing using node, copy/paste first 95 lines in `slack_3_rename_files`
 
 ```js
 let imageUrls = [
@@ -23,7 +25,23 @@ let prefixMapping = getPrefixMapping(filenames);
 prefixMapping;
 
 // Edit prefixMapping according to dates
+
+let prefixMapping = {
+  img_983: '20230302',
+  img_256: '20230303',
+  img_255: '20230303'
+}
+
 // The execute
 
 renameFiles(imageUrls, prefixMapping);
 ```
+
+5. Optimize images in /download_slack
+
+imagemin ./download_slack  --out-dir opt
+6. Move the renamed files from /download_slack to /public/images
+
+7. Run `npm run thumbnails`
+
+8. Run `npm run html` to recreate the index.html
