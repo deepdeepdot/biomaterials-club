@@ -4,6 +4,10 @@
 let imageUrls = [....]
 ```
 
+Hint: Use jsonformatter to format imageUrls
+https://jsonformatter.curiousconcept.com/#
+
+
 2. Check /download_slack, make sure it's not there, or it's an empty folder
 
 3. Using node, copy/paste contents from `slack_2_download_images.js`.
@@ -30,6 +34,18 @@ let prefixMapping = {
   img_983: '20230302',
   img_256: '20230303',
   img_255: '20230303'
+}
+
+
+prefixMapping =
+{
+  img_132: '20230307',
+  img_133: '20230307',
+  img_134: '20230307',
+  img_148: '20230307',
+  img_136: '20230314',
+  img_137: '20230314',
+  img_184: '20230314'
 }
 
 // The execute
