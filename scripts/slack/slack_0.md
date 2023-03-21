@@ -48,14 +48,27 @@ prefixMapping =
   img_184: '20230314'
 }
 
+prefixMapping =
+{
+  img_467: '20230320',
+  img_468: '20230320',
+  img_138: '20230320',
+  img_139: '20230320',
+  img_140: '20230320',
+  img_211: '20230320',
+  img_210: '20230320',
+  img_209: '20230320',
+  img_208: '20230320'
+}
+
 // The execute
 
 renameFiles(imageUrls, prefixMapping);
 ```
 
 5. Optimize images in /download_slack
+`imagemin ./download_slack  --out-dir opt`
 
-imagemin ./download_slack  --out-dir opt
 6. Move the renamed files from /download_slack to /public/images
 
 7. Run `npm run thumbnails`
