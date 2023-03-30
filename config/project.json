@@ -5,6 +5,6 @@
         "thumbnailsFolder": "./public/images/th"
     },
     "create_index_html": {
-        "version": "v1.0.52"
+        "version": "v1.0.53"
     }
 }

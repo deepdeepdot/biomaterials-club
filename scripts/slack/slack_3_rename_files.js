@@ -184,6 +184,11 @@ let prefixMapping =
   img_536: '20230228'
 }
 
+let prefixMapping = {
+  img_144: '20230325',
+  img_148: '20230327'
+}
+
 renameFiles(imageUrls, prefixMapping);
 
 */
