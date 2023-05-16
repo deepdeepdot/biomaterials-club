@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 let axios = require('axios');
 
 const { download } = require('./slack_2_download_images');
