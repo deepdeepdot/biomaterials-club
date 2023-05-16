@@ -16,6 +16,13 @@
 
     <link rel="stylesheet" href="css/styles.css" />
     <link rel="stylesheet" href="css/responsive.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "dashboard": "../js/dashboard.mjs"
+        }
+      }
+    </script>
   </head>
 
   <body class="gradient-bg">
@@ -167,7 +174,7 @@
         <img loading="lazy" src="images/th/20230303_03.jpg" />
         <img loading="lazy" src="images/th/20230303_02.jpg" />
         <script type="module">
-          import { setupDashboard } from './js/dashboard.mjs';
+          import { setupDashboard } from 'dashboard';
           var startTime = window.performance.now();
           window.images = [
             '20230303_01.jpg',
@@ -510,14 +517,6 @@
     <!-- page -->
   </body>
 </html>
-
-<script type="importmap">
-    {
-      "imports": {
-        "dashboard": "../js/dashboard.mjs"
-      }
-    }
-</script>
 
 <script type="module">
   import { setColumnSize, togglePoem, setBackground } from 'dashboard';
