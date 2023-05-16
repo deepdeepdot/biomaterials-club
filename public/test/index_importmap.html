@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Biomaterials Studio @Genspace</title>
+    <link rel="shortcut icon" type="image/png" href="genspace-icon.png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Amatic+SC"
+    />
+
+    <base href=".." target="_blank" />
+
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
+  </head>
+
+  <body class="gradient-bg">
+    <div class="page">
+      <div class="modal position style transparent invisible">
+        <span class="close">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="32"
+            height="32"
+            viewBox="0 0 24 24"
+          >
+            <path
+              fill="orange"
+              d="m12 13.4l-4.9 4.9q-.275.275-.7.275q-.425 0-.7-.275q-.275-.275-.275-.7q0-.425.275-.7l4.9-4.9l-4.9-4.9q-.275-.275-.275-.7q0-.425.275-.7q.275-.275.7-.275q.425 0 .7.275l4.9 4.9l4.9-4.9q.275-.275.7-.275q.425 0 .7.275q.275.275.275.7q0 .425-.275.7L13.4 12l4.9 4.9q.275.275.275.7q0 .425-.275.7q-.275.275-.7.275q-.425 0-.7-.275Z"
+            />
+          </svg>
+        </span>
+        <div id="modal-content"></div>
+      </div>
+
+      <button class="toggle toggle-bananas command" id="bananas">Go Bananas!</button>
+      <button class="toggle toggle-poem command" onclick="togglePoem(this)">
+        Show Poem
+      </button>
+
+      <div class="dashboard">
+        <div class="dashboard-left command">
+          <button onclick="setBackground('gradient')">
+            Background Gradient
+          </button>
+          <button onclick="setBackground('gradient2')">
+            Background Gradient 2
+          </button>
+          <button onclick="setBackground('gradient3')">
+            Background Gradient 3
+          </button>
+          <button onclick="setBackground('black')">Background Black</button>
+          <button onclick="setBackground('blue')">Background Blue lines</button>
+          <button onclick="setBackground('green')">Background Plant</button>
+        </div>
+        <div class="dashboard-right command">
+          <button onclick="setColumnSize(3)">3 Columns</button>
+          <button onclick="setColumnSize(5)">5 Columns</button>
+          <button onclick="setColumnSize(7)">7 Columns</button>
+          <button onclick="setColumnSize(10)">10 Columns</button>
+          <button onclick="setColumnSize(12)" class="desktop">
+            12 Columns
+          </button>
+          <button onclick="setColumnSize(20)" class="desktop">
+            20 Columns
+          </button>
+        </div>
+      </div>
+
+      <div class="banner">
+        <div class="middle">
+          <h1>BioMaterials Studio</h1>
+          <div>
+            <img
+              class="animated-hue"
+              width="250"
+              src="https://images.squarespace-cdn.com/content/v1/588b7cc315d5dbdea1425e5e/1570552144192-LKZBXTCCBNBD5IE3NRVM/a1.png?format=250w"
+            />
+          </div>
+          <pre class="poem anim">
+
+ We live in a world of plastics and pollution,
+ A world of destruction, of land and of ocean,
+ Where our air and water is filled with debris,
+ And the future of our planet is unclear to me.
+
+ But biomaterials offer a new solution,
+ A future of hope for us all to live in,
+ A future of clean air, water, and land,
+ A future we can all understand.
+
+ Biomaterials offer a new way,
+ A way to reduce our plastic waste,
+ A way to restore the Earth’s balance and peace,
+ A way to create a future that will never cease.
+
+ Biomaterials are made from renewable sources,
+ From plants and animals and more,
+ They require less energy to create and use,
+ And can help us reduce our global emissions too.
+
+ No longer will our planet suffer
+ From the effects of plastic pollution,
+ Biomaterials will help us create a better world,
+ A world of clean air and water and land,
+ A world of hope and new possibilities.
+
+ By GPT3 ChatAI. v1.0.53
+
+          </pre>
+        </div>
+      </div>
+
+      <main class="main">
+        <img loading="lazy" src="images/th/20230330_05.jpg" />
+        <img loading="lazy" src="images/th/20230330_04.jpg" />
+        <img loading="lazy" src="images/th/20230330_03.jpg" />
+        <img loading="lazy" src="images/th/20230330_02.jpg" />
+        <img loading="lazy" src="images/th/20230330_01.jpg" />
+        <img loading="lazy" src="images/th/20230320_21.jpg" />
+        <img loading="lazy" src="images/th/20230320_20.jpg" />
+        <img loading="lazy" src="images/th/20230320_19.jpg" />
+        <img loading="lazy" src="images/th/20230320_18.jpg" />
+        <img loading="lazy" src="images/th/20230320_17.jpg" />
+        <img loading="lazy" src="images/th/20230320_16.jpg" />
+        <img loading="lazy" src="images/th/20230320_15.jpg" />
+        <img loading="lazy" src="images/th/20230320_14.jpg" />
+        <img loading="lazy" src="images/th/20230320_13.jpg" />
+        <img loading="lazy" src="images/th/20230320_12.jpg" />
+        <img loading="lazy" src="images/th/20230320_11.jpg" />
+        <img loading="lazy" src="images/th/20230320_10.jpg" />
+        <img loading="lazy" src="images/th/20230320_09.jpg" />
+        <img loading="lazy" src="images/th/20230320_08.jpg" />
+        <img loading="lazy" src="images/th/20230320_07.jpg" />
+        <img loading="lazy" src="images/th/20230320_06.jpg" />
+        <img loading="lazy" src="images/th/20230320_05.jpg" />
+        <img loading="lazy" src="images/th/20230320_04.jpg" />
+        <img loading="lazy" src="images/th/20230320_03.jpg" />
+        <img loading="lazy" src="images/th/20230320_02.jpg" />
+        <img loading="lazy" src="images/th/20230320_01.jpg" />
+        <img loading="lazy" src="images/th/20230314_07.jpg" />
+        <img loading="lazy" src="images/th/20230314_06.jpg" />
+        <img loading="lazy" src="images/th/20230314_05.jpg" />
+        <img loading="lazy" src="images/th/20230314_04.jpg" />
+        <img loading="lazy" src="images/th/20230314_03.jpg" />
+        <img loading="lazy" src="images/th/20230314_02.jpg" />
+        <img loading="lazy" src="images/th/20230314_01.jpg" />
+        <img loading="lazy" src="images/th/20230307_11.jpg" />
+        <img loading="lazy" src="images/th/20230307_10.jpg" />
+        <img loading="lazy" src="images/th/20230307_09.jpg" />
+        <img loading="lazy" src="images/th/20230307_08.jpg" />
+        <img loading="lazy" src="images/th/20230307_07.jpg" />
+        <img loading="lazy" src="images/th/20230307_06.jpg" />
+        <img loading="lazy" src="images/th/20230307_05.jpg" />
+        <img loading="lazy" src="images/th/20230307_04.jpg" />
+        <img loading="lazy" src="images/th/20230307_03.jpg" />
+        <img loading="lazy" src="images/th/20230307_02.jpg" />
+        <img loading="lazy" src="images/th/20230307_01.jpg" />
+        <img loading="lazy" src="images/th/20230303_07.jpg" />
+        <img loading="lazy" src="images/th/20230303_06.jpg" />
+        <img loading="lazy" src="images/th/20230303_05.jpg" />
+        <img loading="lazy" src="images/th/20230303_04.jpg" />
+        <img loading="lazy" src="images/th/20230303_03.jpg" />
+        <img loading="lazy" src="images/th/20230303_02.jpg" />
+        <script type="module">
+          import { setupDashboard } from './js/dashboard.mjs';
+          var startTime = window.performance.now();
+          window.images = [
+            '20230303_01.jpg',
+            '20230302_03.jpg',
+            '20230302_02.jpg',
+            '20230302_01.jpg',
+            '20230228_22.png',
+            '20230228_21.png',
+            '20230228_20.png',
+            '20230228_19.png',
+            '20230228_18.png',
+            '20230228_17.png',
+            '20230228_16.png',
+            '20230228_15.png',
+            '20230228_14.png',
+            '20230228_13.png',
+            '20230228_12.png',
+            '20230228_11.png',
+            '20230228_10.png',
+            '20230228_09.png',
+            '20230228_08.png',
+            '20230228_07.png',
+            '20230228_06.png',
+            '20230228_05.png',
+            '20230228_04.png',
+            '20230228_03.png',
+            '20230225_02.jpg',
+            '20230225_01.jpg',
+            '20230223_10.jpg',
+            '20230223_09.jpg',
+            '20230223_08.jpg',
+            '20230223_07.jpg',
+            '20230223_06.jpg',
+            '20230223_05.jpg',
+            '20230223_04.jpg',
+            '20230223_03.jpg',
+            '20230223_02.jpg',
+            '20230223_01.jpg',
+            '20230222_12.jpg',
+            '20230222_11.jpg',
+            '20230222_10.jpg',
+            '20230222_09.jpg',
+            '20230222_08.jpg',
+            '20230222_07.jpg',
+            '20230222_06.jpg',
+            '20230222_05.jpg',
+            '20230222_04.jpg',
+            '20230222_03.jpg',
+            '20230222_02.jpg',
+            '20230222_01.jpg',
+            '20230220_8.jpg',
+            '20230220_5.jpg',
+            '20230220_2.jpg',
+            '20230220_19.jpg',
+            '20230220_18.jpg',
+            '20230220_17.jpg',
+            '20230220_16.jpg',
+            '20230220_15.jpg',
+            '20230220_14.jpg',
+            '20230220_13.jpg',
+            '20230220_12.jpg',
+            '20230220_11.jpg',
+            '20230220_10.jpg',
+            '20230220_1.jpg',
+            '20230219_2.jpg',
+            '20230219_1.jpg',
+            '20230213_9.jpg',
+            '20230213_8.jpg',
+            '20230213_7.jpg',
+            '20230213_6.jpg',
+            '20230213_5.jpg',
+            '20230213_4.jpg',
+            '20230213_3.jpg',
+            '20230213_2.jpg',
+            '20230213_15.jpg',
+            '20230213_14.jpg',
+            '20230213_13.jpg',
+            '20230213_12.jpg',
+            '20230213_11.jpg',
+            '20230213_10.jpg',
+            '20230213_1.jpg',
+            '20230212_1.jpg',
+            '20230206_9.jpg',
+            '20230206_8.jpg',
+            '20230206_7.jpg',
+            '20230206_6.jpg',
+            '20230206_5.jpg',
+            '20230206_4.jpg',
+            '20230206_3.jpg',
+            '20230206_2.jpg',
+            '20230206_13.jpg',
+            '20230206_12.jpg',
+            '20230206_11.jpg',
+            '20230206_10.jpg',
+            '20230206_1.jpg',
+            '20230205_7.jpg',
+            '20230205_6.jpg',
+            '20230205_5.jpg',
+            '20230205_4.jpg',
+            '20230205_3.jpg',
+            '20230205_2.jpg',
+            '20230205_1.jpg',
+            '20230201_20.jpg',
+            '20230201_19.jpg',
+            '20230201_18.jpg',
+            '20230201_17.jpg',
+            '20230201_16.jpg',
+            '20230201_15.jpg',
+            '20230201_14.jpg',
+            '20230201_13.jpg',
+            '20230201_12.jpg',
+            '20230201_11.jpg',
+            '20230201_10.jpg',
+            '20230201_09.jpg',
+            '20230201_08.jpg',
+            '20230201_07.jpg',
+            '20230201_06.jpg',
+            '20230201_05.jpg',
+            '20230201_04.jpg',
+            '20230201_03.jpg',
+            '20230201_02.jpg',
+            '20230201_01.jpg',
+            '20230123_18.jpg',
+            '20230123_17.jpg',
+            '20230123_16.jpg',
+            '20230123_15.jpg',
+            '20230123_14.jpg',
+            '20230123_13.jpg',
+            '20230123_12.jpg',
+            '20230123_11.jpg',
+            '20230123_10.jpg',
+            '20230123_09.jpg',
+            '20230123_08.jpg',
+            '20230123_07.jpg',
+            '20230123_06.jpg',
+            '20230123_05.jpg',
+            '20230123_04.jpg',
+            '20230123_03.jpg',
+            '20230123_02.jpg',
+            '20230123_01.jpg',
+            '20230119_15.jpg',
+            '20230119_14.jpg',
+            '20230119_13.jpg',
+            '20230119_12.jpg',
+            '20230119_11.jpg',
+            '20230119_10.jpg',
+            '20230119_09.jpg',
+            '20230119_08.jpg',
+            '20230119_07.jpg',
+            '20230119_06.jpg',
+            '20230119_05.jpg',
+            '20230119_04.jpg',
+            '20230119_03.jpg',
+            '20230119_02.jpg',
+            '20230119_01.jpg',
+            '20230109_7.jpg',
+            '20230109_6.jpg',
+            '20230109_5.jpg',
+            '20230109_4.jpg',
+            '20230109_3.jpg',
+            '20230109_2.jpg',
+            '20230109_1.jpg',
+            '20230106_4.jpg',
+            '20230106_3.jpg',
+            '20230106_2.jpg',
+            '20230106_1.jpg',
+            '20230104_7.jpg',
+            '20230104_6.jpg',
+            '20230104_5.jpg',
+            '20230104_4.jpg',
+            '20230104_3.jpg',
+            '20230104_2.jpg',
+            '20230104_1.jpg',
+            '20221224_2.jpg',
+            '20221224_1.jpg',
+            '20221208_6.jpg',
+            '20221208_5.jpg',
+            '20221208_4.jpg',
+            '20221208_3.jpg',
+            '20221208_2.jpg',
+            '20221208_1.jpg',
+            '20221202_2.jpg',
+            '20221202_1.jpg',
+            '20221130_9.jpg',
+            '20221130_8.jpg',
+            '20221130_7.jpg',
+            '20221130_6.jpg',
+            '20221130_5.jpg',
+            '20221130_4.jpg',
+            '20221130_3.jpg',
+            '20221130_2.jpg',
+            '20221130_1.jpg',
+            '20221119_6.jpg',
+            '20221119_5.jpg',
+            '20221119_4.jpg',
+            '20221119_3.jpg',
+            '20221119_2.jpg',
+            '20221119_1.jpg',
+            '20221116_9.jpg',
+            '20221116_8.jpg',
+            '20221116_7.jpg',
+            '20221116_6.jpg',
+            '20221116_5.jpg',
+            '20221116_4.jpg',
+            '20221116_3.jpg',
+            '20221116_2.jpg',
+            '20221116_11.jpg',
+            '20221116_10.jpg',
+            '20221116_1.jpg',
+            '20221110_3.jpg',
+            '20221110_2.jpg',
+            '20221110_1.jpg',
+            '20221108_1.jpg',
+            '20221107_4.jpg',
+            '20221107_3.jpg',
+            '20221107_2.jpg',
+            '20221107_1.jpg',
+            '20221102_6.jpg',
+            '20221102_5.jpg',
+            '20221102_4.jpg',
+            '20221102_3.jpg',
+            '20221102_2.jpg',
+            '20221102_1.jpg',
+            '20221027.jpg',
+            '20221026_7.jpg',
+            '20221026_6.jpg',
+            '20221026_5.jpg',
+            '20221026_4.jpg',
+            '20221026_3.jpg',
+            '20221026_2.jpg',
+            '20221026_1.jpg',
+            '20221024_2.jpg',
+            '20221024_1.jpg',
+            '20221022_8.jpg',
+            '20221022_7.jpg',
+            '20221022_6.jpg',
+            '20221022_5.jpg',
+            '20221022_4.jpg',
+            '20221022_3.jpg',
+            '20221022_2.jpg',
+            '20221022_1.jpg',
+            '20221015.jpg',
+            '20221013_9.jpg',
+            '20221013_8.jpg',
+            '20221013_7.jpg',
+            '20221013_6.jpg',
+            '20221013_5.jpg',
+            '20221013_4.jpg',
+            '20221013_3.jpg',
+            '20221013_2.jpg',
+            '20221013_11.jpg',
+            '20221013_10.jpg',
+            '20221013_1.jpg',
+            '20221012_6.jpg',
+            '20221012_5.jpg',
+            '20221012_4.jpg',
+            '20221012_3.jpg',
+            '20221012_2.jpg',
+            '20221012_1.jpg',
+            '20221011.png',
+            '20221001_3.jpg',
+            '20221001_2.jpg',
+            '20221001_1.jpg',
+            '20220923_5.jpg',
+            '20220923_4.jpg',
+            '20220923_3.jpg',
+            '20220923_2.jpg',
+            '20220923_1.jpg',
+            '20220917_2.jpg',
+            '20220917_1.jpg',
+            '20220916.jpg',
+            '20220910_2.jpg',
+            '20220910_1.jpg',
+            '20220902.jpg',
+            '20220831_9.jpg',
+            '20220831_8.jpg',
+            '20220831_7.jpg',
+            '20220831_6.jpg',
+            '20220831_5.jpg',
+            '20220831_4.jpg',
+            '20220831_3.jpg',
+            '20220831_2.jpg',
+            '20220831_10.jpg',
+            '20220831_1.jpg',
+            '20220819_8.jpg',
+            '20220819_7.jpg',
+            '20220819_6.jpg',
+            '20220819_5.jpg',
+            '20220819_4.jpg',
+            '20220819_3.jpg',
+            '20220819_2.jpg',
+            '20220819_1.jpg',
+            '20220817_6.jpg',
+            '20220817_5.jpg',
+            '20220817_4.jpg',
+            '20220817_3.jpg',
+            '20220817_2.jpg',
+            '20220817_1.jpg',
+            '20220810_4.jpg',
+            '20220810_3.jpg',
+            '20220810_2.jpg',
+            '20220810_1.jpg',
+            '20220803_4.jpg',
+            '20220803_3.jpg',
+            '20220803_2.jpg',
+            '20220803_1.jpg',
+            '20220802_2.jpg',
+            '20220802_1.jpg',
+            '20220731_3.jpg',
+            '20220731_2.jpg',
+            '20220731_1.jpg',
+            '20220728_8.jpg',
+            '20220728_7.jpg',
+            '20220728_6.jpg',
+            '20220728_5.jpg',
+            '20220728_4.jpg',
+            '20220728_3.jpg',
+            '20220728_2.jpg',
+            '20220728_122218_720.jpg',
+            '20220728_122144_720.jpg',
+            '20220728_122131_720.jpg',
+            '20220728_1.jpg',
+            '20220723_3.jpg',
+            '20220723_2.jpg',
+            '20220723_1.jpg',
+            '20220721_6.jpg',
+            '20220721_5.jpg',
+            '20220721_4.jpg',
+            '20220721_3.jpg',
+            '20220721_2.jpg',
+            '20220721_1.jpg',
+            '20220704.jpg',
+            '20220703.png',
+          ];
+          setupDashboard(startTime);
+        </script>
+      </main>
+      <div class="bottom"></div>
+    </div>
+    <!-- page -->
+  </body>
+</html>
+
+<script type="importmap">
+    {
+      "imports": {
+        "dashboard": "../js/dashboard.mjs"
+      }
+    }
+</script>
+
+<script type="module">
+  import { setColumnSize, togglePoem, setBackground } from 'dashboard';
+
+  window.setColumnSize = setColumnSize;
+  window.setBackground = setBackground;
+  window.togglePoem = togglePoem;
+</script>
