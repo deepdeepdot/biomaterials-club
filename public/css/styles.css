@@ -59,7 +59,7 @@ button:active {
   position: relative;
 }
 
-.bottom {
+.progress-bar {
   transition: 0.3s width;
   position: absolute;
   bottom: 0;

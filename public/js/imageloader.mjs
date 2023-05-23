@@ -30,15 +30,23 @@ function splitIntoBatches(images, batchSize) {
   return batches;
 }
 
+let progressBar = {
+  domNode: document.querySelector('.progress-bar'),
+  setWidth: (width) => {
+    progressBar.domNode.style.width = `${width}%`;
+  },
+  incrementProgressBar: (count, total) => {
+    let proportion = Math.floor((100 * count) / total);
+    progressBar.setWidth(proportion);
+  },
+  reset: () => {
+    progressBar.setWidth(0);
+  }
+};
+
 function loadImagesForBatch(imageUrls, clickHandler) {
   let counterWait = createCounterWait();
-  let bottom = document.querySelector('.bottom');
   let thumbnails = [];
-
-  function incrementProgressBar(count, total) {
-    let proportion = Math.floor((100 * count) / total);
-    bottom.style.width = `${proportion}%`;
-  }
 
   function loadImages(urls) {
     let counter = 0;
@@ -49,7 +57,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
       thumbnail.onload = () => {
         counterWait.incrementCount();
         counter += 1;
-        incrementProgressBar(counter, urls.length);
+        progressBar.incrementProgressBar(counter, urls.length);
       };
       thumbnails.push(thumbnail);
     });
@@ -60,9 +68,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
   return counterWait
     .waitFor('loadImagesForBatch', (count) => count >= imageUrls.length)
     .then(() => {
-      setTimeout(() => {
-        bottom.style.width = '0%'; // reset width
-      }, 1000);
+      setTimeout(progressBar.reset, 1000);
       return thumbnails;
     });
 }
@@ -72,7 +78,6 @@ function setupIntersectionObserverForThumbnails(
   totalBatches,
   main
 ) {
-  let bottom = document.querySelector('.bottom');
   let done = false;
   let io;
 
@@ -80,7 +85,7 @@ function setupIntersectionObserverForThumbnails(
     done = currentBatch === totalBatches;
     if (done) {
       TRACE('done io!', 'stronger');
-      io.unobserve(bottom);
+      io.unobserve(progressBar.domNode);
     }
   };
 
@@ -101,15 +106,14 @@ function setupIntersectionObserverForThumbnails(
   };
 
   io = new IntersectionObserver(ioCallback, ioOptions);
-  io.observe(bottom);
+  io.observe(progressBar.domNode);
 }
 
 function createImageLoader() {
   let main = document.querySelector('.main');
-  let batchSize;
-  let clickHandler;
-
   let imagesForBatchAppended = [];
+  let clickHandler;
+  let batchSize;
 
   function appendThumbnails(thumbnails, domTarget, idx) {
     if (imagesForBatchAppended[idx]) {

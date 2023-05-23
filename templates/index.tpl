@@ -120,7 +120,7 @@ ${imagesAsJS}
           setupDashboard(startTime);
         </script>
       </main>
-      <div class="bottom"></div>
+      <div class="progress-bar"></div>
     </div>
     <!-- page -->
   </body>

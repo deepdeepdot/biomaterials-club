@@ -33,12 +33,12 @@ function splitIntoBatches(images, batchSize) {
 
 function loadImagesForBatch(imageUrls, clickHandler) {
   let counterWait = createCounterWait();
-  let bottom = document.querySelector('.bottom');
+  let progressBar = document.querySelector('.progress-bar');
   let thumbnails = [];
 
   function incrementProgressBar(count, total) {
     let proportion = Math.floor((100 * count) / total);
-    bottom.style.width = proportion + '%';
+    progressBar.style.width = proportion + '%';
   }
 
   function loadImages(urls) {
@@ -64,7 +64,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
     })
     .then(() => {
       setTimeout(() => {
-        bottom.style.width = '0%'; // reset width
+        progressBar.style.width = '0%'; // reset width
       }, 1000);
       return thumbnails;
     });
@@ -75,7 +75,7 @@ function setupIntersectionObserverForThumbnails(
   totalBatches,
   main
 ) {
-  let bottom = document.querySelector('.bottom');
+  let progressBar = document.querySelector('.progress-bar');
   let done = false;
   let io;
 
@@ -85,7 +85,7 @@ function setupIntersectionObserverForThumbnails(
         done = currentBatch == totalBatches;
         if (done) {
           TRACE('done io!', 's');
-          io.unobserve(bottom);
+          io.unobserve(progressBar);
         }
       });
     }
@@ -102,7 +102,7 @@ function setupIntersectionObserverForThumbnails(
   };
 
   io = new IntersectionObserver(ioCallback, ioOptions);
-  io.observe(bottom);
+  io.observe(progressBar);
 }
 
 function createImageLoader() {
