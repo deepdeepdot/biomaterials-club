@@ -11,9 +11,15 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "comma-dangle": 0,
+    "dot-notation": 0,
+    "implicit-arrow-linebreak": 0,
+    "import/extensions": [ "error", { "js": "ignorePackages", "mjs": "ignorePackages" } ],
+    "no-param-reassign": 0,
+    "no-unused-vars": 1,
+    "object-curly-newline": 0,
+    "operator-linebreak": 0,
     "prefer-const": 0,
-    "prefer-destructuring": 1,
-    "no-param-reassign": 1,
-    "no-unused-vars": 1
+    "prefer-destructuring": 1
   },
 };

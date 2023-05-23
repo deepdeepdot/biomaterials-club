@@ -1,4 +1,5 @@
 // @ts-check
+
 import { bounce, reset } from './anim.mjs';
 
 // ---------------- LightBox Modal

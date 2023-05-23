@@ -3,7 +3,9 @@
 import fs from 'fs';
 import sharp from 'sharp';
 import imageTraverser from './utils/imageTraverser.js';
-import project from '../config/project.json' assert { type: 'json' };
+
+let path = './config/project.json';
+let project = JSON.parse(fs.readFileSync(path, 'utf-8'));
 
 const { thumbnailWidth, imageSourceFolder, thumbnailsFolder } =
   project['create_thumbnails'];
@@ -19,6 +21,7 @@ function processFile(file) {
   let resizing = resize(file, thumbnailWidth);
 
   return new Promise((resolve, reject) => {
+    /* eslint-disable no-console */
     resizing.toFile(outfile, (err, info) => {
       if (err) {
         console.log(err);
@@ -28,6 +31,7 @@ function processFile(file) {
         resolve(info);
       }
     });
+    /* eslint-enable no-console */
   });
 }
 

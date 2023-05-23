@@ -335,7 +335,7 @@ function downloadSlackImages(imageUrls, folder = './download_slack') {
     try {
       let idx = url.lastIndexOf('/');
       let filename = url.substring(idx + 1);
-      download(url, folder + '/' + filename);
+      download(url, `${folder}/${filename}`);
     } catch (e) {
       console.log(e);
     }

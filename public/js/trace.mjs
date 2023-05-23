@@ -16,7 +16,9 @@ function TRACE(message, type) {
   }
   css += '; padding: 10px; border-radius: 10px;';
 
+  /* eslint-disable no-console */
   console.log('%c %s', css, message);
+  /* eslint-enable no-console */
 }
 
 export default TRACE;

@@ -10,7 +10,7 @@ let $ = (selector) => document.querySelector(selector);
 // ---------------- Column Size + Background
 
 export function setColumnSize(size) {
-  let style = document.documentElement.style;
+  let { style } = document.documentElement;
   style.setProperty('--grid-columns', size);
 }
 
@@ -41,11 +41,9 @@ export function togglePoem(button) {
 
   function updateButtonMessage() {
     let showing = button.innerText.startsWith('Show');
-    if (showing) {
-      button.innerText = 'Hide Poem';
-    } else {
-      button.innerText = 'Show Poem';
-    }
+
+    button.innerText = showing ? 'Hide Poem' : 'Show Poem';
+
     if (showing && bananaVisible) {
       toggleBananas();
     }
@@ -93,7 +91,9 @@ function setupImageListeners({ imgs, popupModal, bounceOptions, batchSize }) {
 const SECOND = 1000;
 
 function getBounceOptions(timeDiff) {
+  /* eslint-disable no-console */
   console.log(`timeDiff: ${timeDiff}`);
+  /* eslint-enable no-console */
   let isSuperFast = timeDiff < 3 * SECOND;
   let bounceOptions = {
     duration: isSuperFast ? 200 : 1000, // desktop vs mobile
@@ -123,7 +123,9 @@ function setupImages(popupModal, batchSize, startTime) {
       } else {
         theBatchSize = 10; // super slow speed
       }
+      /* eslint-disable no-console */
       console.log(`Batch size: ${theBatchSize}`);
+      /* eslint-enable no-console */
 
       setupImageListeners({
         imgs,

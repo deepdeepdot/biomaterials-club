@@ -33,7 +33,9 @@
         <div id="modal-content"></div>
       </div>
 
-      <button class="toggle toggle-bananas command" id="bananas">Go Bananas!</button>
+      <button class="toggle toggle-bananas command" id="bananas">
+        Go Bananas!
+      </button>
       <button class="toggle toggle-poem command" onclick="togglePoem(this)">
         Show Poem
       </button>

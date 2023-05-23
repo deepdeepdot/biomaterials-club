@@ -10,7 +10,7 @@ export function reset(img) {
   img.removeAttribute('class');
 }
 
-export let bounce = (
+export const bounce = (
   img,
   options = {
     scale: 1.4,
@@ -20,6 +20,7 @@ export let bounce = (
   img.addEventListener('transitionend', () => {
     reset(img);
   });
+
   img.style.position = 'relative';
   img.style['z-index'] = 2;
   img.style.borderColor = 'orange';

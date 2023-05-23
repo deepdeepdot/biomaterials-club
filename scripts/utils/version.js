@@ -1,8 +1,9 @@
 // @ts-check
 import fs from 'fs';
-import project from '../../config/project.json' assert { type: 'json' };
 
 const VERSION_FILE = './config/project.json';
+
+let project = JSON.parse(fs.readFileSync(VERSION_FILE, 'utf-8'));
 
 function getNewVersion(version) {
   let idx = version.lastIndexOf('.');
@@ -19,11 +20,9 @@ function updateVersion(version, newVersion) {
   fs.writeFileSync(VERSION_FILE, replaced);
 }
 
-function incrementVersion() {
+export default function incrementVersion() {
   let { version } = project['create_index_html'];
   let newVersion = getNewVersion(version);
   updateVersion(version, newVersion);
   return newVersion;
 }
-
-export default incrementVersion;

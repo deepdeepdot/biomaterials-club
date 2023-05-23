@@ -1,4 +1,5 @@
 // @ts-check
+
 import createCounterWait from './counterwait.mjs';
 import TRACE from './trace.mjs';
 
@@ -41,7 +42,7 @@ let progressBar = {
   },
   reset: () => {
     progressBar.setWidth(0);
-  }
+  },
 };
 
 function loadImagesForBatch(imageUrls, clickHandler) {
@@ -87,7 +88,7 @@ function setupIntersectionObserverForThumbnails(
       TRACE('done io!', 'stronger');
       io.unobserve(progressBar.domNode);
     }
-  };
+  }
 
   function checkIntersection(entry) {
     if (!done && entry.isIntersecting) {
@@ -97,7 +98,7 @@ function setupIntersectionObserverForThumbnails(
 
   function ioCallback(entries) {
     entries.forEach(checkIntersection);
-  };
+  }
 
   let ioOptions = {
     threshold: 0,
@@ -110,7 +111,6 @@ function setupIntersectionObserverForThumbnails(
 }
 
 function createImageLoader() {
-  let main = document.querySelector('.main');
   let imagesForBatchAppended = [];
   let clickHandler;
   let batchSize;
@@ -150,6 +150,7 @@ function createImageLoader() {
   function loadImages(imageUrls, options) {
     ({ batchSize = 50, clickHandler } = options);
 
+    let main = document.querySelector('.main');
     let imageUrlBatches = splitIntoBatches(imageUrls, batchSize);
     let totalBatches = Math.ceil(imageUrls.length / batchSize);
     let thumbnailBatches = loadThumbnailBatches(imageUrlBatches);
@@ -165,6 +166,6 @@ function createImageLoader() {
   };
 }
 
-let ImageLoader = createImageLoader();
+const ImageLoader = createImageLoader();
 
 export default ImageLoader;

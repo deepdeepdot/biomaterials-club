@@ -7,7 +7,6 @@ let imageUrls = [....]
 Hint: Use jsonformatter to format imageUrls
 https://jsonformatter.curiousconcept.com/#
 
-
 2. Check /download_slack, make sure it's not there, or it's an empty folder
 
 3. Using node, copy/paste contents from `slack_2_download_images.js`.
@@ -33,23 +32,20 @@ prefixMapping;
 let prefixMapping = {
   img_983: '20230302',
   img_256: '20230303',
-  img_255: '20230303'
-}
+  img_255: '20230303',
+};
 
-
-prefixMapping =
-{
+prefixMapping = {
   img_132: '20230307',
   img_133: '20230307',
   img_134: '20230307',
   img_148: '20230307',
   img_136: '20230314',
   img_137: '20230314',
-  img_184: '20230314'
-}
+  img_184: '20230314',
+};
 
-prefixMapping =
-{
+prefixMapping = {
   img_467: '20230320',
   img_468: '20230320',
   img_138: '20230320',
@@ -58,11 +54,10 @@ prefixMapping =
   img_211: '20230320',
   img_210: '20230320',
   img_209: '20230320',
-  img_208: '20230320'
-}
+  img_208: '20230320',
+};
 
-prefixMapping =
-{
+prefixMapping = {
   img_136: '20230313', //
   img_137: '20230313', //
   img_184: '20230314', //
@@ -112,16 +107,15 @@ prefixMapping =
   img_544: '20230509', //
   img_521: '20230509', //
   img_587: '20230511', //
-  img_578: '20230511' //
-}
+  img_578: '20230511', //
+};
 
-prefixMapping =
-{
+prefixMapping = {
   pxl_202: '20230515',
   img_705: '20230516',
   img_706: '20230516',
-  img_271: '20230520'
-}
+  img_271: '20230520',
+};
 
 // The execute
 
@@ -129,7 +123,7 @@ renameFiles(imageUrls, prefixMapping);
 ```
 
 5. Optimize images in /download_slack
-`imagemin ./download_slack  --out-dir opt`
+   `imagemin ./download_slack  --out-dir opt`
 
 6. Move the renamed files from /download_slack to /public/images
 

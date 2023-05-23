@@ -1,3 +1,5 @@
+/* eslint import/extensions: ["off"] */
+
 // @ts-check
 import fs from 'fs';
 import imageTraverser from './utils/imageTraverser.js';
@@ -36,6 +38,7 @@ let readTextFile = (file) =>
 function getHtml(imageTags, imagesAsJS) {
   let version = incrementVersion();
   let template = readTextFile('./templates/index.tpl');
+  /* eslint-disable no-template-curly-in-string */
   let html = template
     .replace('${imageTags}', imageTags)
     .replace('${imagesAsJS}', imagesAsJS)

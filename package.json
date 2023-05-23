@@ -6,12 +6,13 @@
     "web": "npx vite --port 8000 public",
     "html": "node scripts/create_index_html",
     "thumbnails": "node scripts/create_thumbnails.js",
-    "pretty": "npx prettier --write --single-quote ./public ./scripts",
+    "pretty": "npx prettier --write --single-quote --config ./config/prettierrc.json ./public ./scripts",
     "lint": "npx eslint -c config/.eslintrc.cjs public/js/dashboard.mjs",
     "lint:all": "npx eslint -c config/.eslintrc.cjs public/js/*.mjs scripts/*.js scripts/utils/*.js",
     "rome": "npx rome check ./scripts ./public",
     "check:css": "dprint check --config config/dprint.json ./public/*.css",
-    "--not-ready-fmt:css": "dprint fmt --config config/dprint.json ./public/*.css"
+    "--not-ready-fmt:css": "dprint fmt --config config/dprint.json ./public/css/*.css",
+    "check:css:path": "dprint output-file-paths ./public/css/*.css"
   },
   "dependencies": {
     "dprint": "^0.34.1",

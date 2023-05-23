@@ -5,7 +5,7 @@ import TRACE from './trace.mjs';
 const PRELOAD_BATCHES = 0;
 const USE_CACHE_BUSTER = false;
 
-let cacheBuster = USE_CACHE_BUSTER ? '?ts=' + Date.now() : '';
+let cacheBuster = USE_CACHE_BUSTER ? `?ts=${Date.now()}` : '';
 
 // ----------------------------- Image Loader
 
@@ -38,7 +38,7 @@ function loadImagesForBatch(imageUrls, clickHandler) {
 
   function incrementProgressBar(count, total) {
     let proportion = Math.floor((100 * count) / total);
-    progressBar.style.width = proportion + '%';
+    progressBar.style.width = `${proportion}%`;
   }
 
   function loadImages(urls) {
@@ -82,7 +82,7 @@ function setupIntersectionObserverForThumbnails(
   function checkIntersection(entry) {
     if (!done && entry.isIntersecting) {
       thumbnailBatches.loadThumbnailsAndAppend(main).then((currentBatch) => {
-        done = currentBatch == totalBatches;
+        done = currentBatch === totalBatches;
         if (done) {
           TRACE('done io!', 's');
           io.unobserve(progressBar);

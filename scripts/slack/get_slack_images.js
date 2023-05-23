@@ -167,7 +167,7 @@ function downloadSlackImages(
   // Bunch of promises! We can do something here
   imageUrls.forEach((url) => {
     let filename = getFilenameFromUrl(url);
-    download(url, folder + '/' + filename, headers)
+    download(url, `${folder}/${filename}`, headers)
       .then(() => console.log(`Downloaded: ${filename}`))
       .catch((e) => console.log(`FAILED ${filename}: ${e}`));
   });
