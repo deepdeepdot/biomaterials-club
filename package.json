@@ -10,6 +10,8 @@
     "html": "node scripts/create_index_html",
     "thumbnails": "node scripts/create_thumbnails.js",
     "pretty": "npx prettier --write --single-quote --config ./config/prettierrc.json ./public ./scripts",
+    "pretty:cannot:--ignore-path": "npx prettier --write --single-quote --config ./config/prettierrc.json --ignore-path ./config/prettierignore ./public ./scripts",
+    "pretty:cannot": "https://github.com/prettier/prettier/issues/4708",
     "lint": "npx eslint -c config/.eslintrc.cjs public/js/dashboard.mjs",
     "lint:all": "npx eslint -c config/.eslintrc.cjs public/js/*.mjs scripts/*.js scripts/utils/*.js",
     "rome": "npx rome check ./scripts ./public",
