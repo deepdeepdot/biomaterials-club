@@ -6,5 +6,9 @@
     },
     "create_index_html": {
         "version": "v1.0.56"
+    },
+    "web_server": {
+        "dir": "./public",
+        "port": 8000
     }
 }

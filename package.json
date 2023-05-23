@@ -3,16 +3,22 @@
   "scripts": {
     "test": "jest --config=./config/jest.config.json",
     "e2e": "DISPLAY=squirrel:0.0 cypress open",
-    "web": "npx vite --port 8000 public",
+    "web": "node scripts/web_server.js",
+    "web3": "python3 -m http.server 8000 --directory ./public",
+    "web:vite": "npx vite --port 8000 public",
+    "web:vite:cannot": "https://github.com/vitejs/vite/issues/6393#issuecomment-1006819717",
     "html": "node scripts/create_index_html",
     "thumbnails": "node scripts/create_thumbnails.js",
     "pretty": "npx prettier --write --single-quote --config ./config/prettierrc.json ./public ./scripts",
+    "pretty:cannot:--ignore-path": "npx prettier --write --single-quote --config ./config/prettierrc.json --ignore-path ./config/prettierignore ./public ./scripts",
+    "pretty:cannot": "https://github.com/prettier/prettier/issues/4708",
     "lint": "npx eslint -c config/.eslintrc.cjs public/js/dashboard.mjs",
     "lint:all": "npx eslint -c config/.eslintrc.cjs public/js/*.mjs scripts/*.js scripts/utils/*.js",
     "rome": "npx rome check ./scripts ./public",
-    "check:css": "dprint check --config config/dprint.json ./public/*.css",
+    "check:css": "dprint check --config config/dprint.json ./public/css/*.css",
     "--not-ready-fmt:css": "dprint fmt --config config/dprint.json ./public/css/*.css",
-    "check:css:path": "dprint output-file-paths ./public/css/*.css"
+    "check:css:path": "dprint output-file-paths ./public/css/*.css",
+    "dprint:upgrade": "dprint config update"
   },
   "dependencies": {
     "dprint": "^0.34.1",
