@@ -1,7 +1,7 @@
 // @ts-check
 
-import createCounterWait from 'counterwait';
-import TRACE from 'trace';
+import createCounterWait from './counterwait.mjs';
+import TRACE from './trace.mjs';
 
 const USE_CACHE_BUSTER = false;
 

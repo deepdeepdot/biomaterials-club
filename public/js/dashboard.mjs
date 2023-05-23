@@ -1,9 +1,9 @@
 // @ts-check
 
-import ImageLoader from 'imageloader';
-import setupLightBoxModal from 'lightbox';
-import createCounterWait from 'counterwait';
-import { bounce } from 'anim';
+import ImageLoader from './imageloader.mjs';
+import setupLightBoxModal from './lightbox.mjs';
+import createCounterWait from './counterwait.mjs';
+import { bounce } from './anim.mjs';
 
 let $ = (selector) => document.querySelector(selector);
 

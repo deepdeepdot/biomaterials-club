@@ -5,7 +5,7 @@
         "thumbnailsFolder": "./public/images/th"
     },
     "create_index_html": {
-        "version": "v1.0.57"
+        "version": "v1.0.58"
     },
     "web_server": {
         "dir": "./public",

@@ -124,20 +124,8 @@
 
       <main class="main">
 ${imageTags}
-        <script type="importmap">
-          {
-            "imports": {
-              "anim": "./js/anim.mjs",
-              "counterwait": "./js/counterwait.mjs",
-              "dashboard": "./js/dashboard.mjs",
-              "imageloader": "./js/imageloader.mjs",
-              "lightbox": "./js/lightbox.mjs",
-              "trace": "./js/trace.mjs"
-            }
-          }
-        </script>
         <script type="module">
-          import { setupDashboard } from 'dashboard';
+          import { setupDashboard } from './js/dashboard.mjs';
           var startTime = window.performance.now();
 ${imagesAsJS}
           setupDashboard(startTime);
@@ -150,7 +138,7 @@ ${imagesAsJS}
 </html>
 
 <script type="module">
-  import { setColumnSize, togglePoem, setBackground } from 'dashboard';
+  import { setColumnSize, togglePoem, setBackground } from './js/dashboard.mjs';
 
   window.dashboard = {
     setColumnSize,

@@ -116,7 +116,7 @@
  A world of clean air and water and land,
  A world of hope and new possibilities.
 
- By Chat GPT. v1.0.57
+ By Chat GPT. v1.0.58
 
           </pre>
         </div>
@@ -173,20 +173,8 @@
         <img loading="lazy" src="images/th/20230410_01.jpg" />
         <img loading="lazy" src="images/th/20230408_01.jpg" />
         <img loading="lazy" src="images/th/20230404_05.jpg" />
-        <script type="importmap">
-          {
-            "imports": {
-              "anim": "./js/anim.mjs",
-              "counterwait": "./js/counterwait.mjs",
-              "dashboard": "./js/dashboard.mjs",
-              "imageloader": "./js/imageloader.mjs",
-              "lightbox": "./js/lightbox.mjs",
-              "trace": "./js/trace.mjs"
-            }
-          }
-        </script>
         <script type="module">
-          import { setupDashboard } from 'dashboard';
+          import { setupDashboard } from './js/dashboard.mjs';
           var startTime = window.performance.now();
           window.images = [
             '20230404_04.jpg',
@@ -623,7 +611,7 @@
 </html>
 
 <script type="module">
-  import { setColumnSize, togglePoem, setBackground } from 'dashboard';
+  import { setColumnSize, togglePoem, setBackground } from './js/dashboard.mjs';
 
   window.dashboard = {
     setColumnSize,
