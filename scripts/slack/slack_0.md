@@ -115,7 +115,13 @@ prefixMapping =
   img_578: '20230511' //
 }
 
-// Need more images, many are still unmapped?
+prefixMapping =
+{
+  pxl_202: '20230515',
+  img_705: '20230516',
+  img_706: '20230516',
+  img_271: '20230520'
+}
 
 // The execute
 

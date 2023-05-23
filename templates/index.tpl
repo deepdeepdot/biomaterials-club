@@ -105,7 +105,7 @@
  A world of clean air and water and land,
  A world of hope and new possibilities.
 
- By GPT3 ChatAI. ${version}
+ By Chat GPT. ${version}
 
           </pre>
         </div>

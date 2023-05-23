@@ -189,6 +189,22 @@ let prefixMapping = {
   img_148: '20230327'
 }
 
+prefixMapping =
+{
+  pxl_202: '20230515',
+  img_705: '20230516',
+  img_706: '20230516',
+  img_271: '20230520'
+}
+
+// > [Error: ENOENT: no such file or directory, rename './download_slack/pxl_20230515_234924032_exported_0_720.jpg' -> './download_slack/20230516_01.jpg'] {
+//   errno: -2,
+//   code: 'ENOENT',
+//   syscall: 'rename',
+//   path: './download_slack/pxl_20230515_234924032_exported_0_720.jpg',
+//   dest: './download_slack/20230516_01.jpg'
+// }
+
 renameFiles(imageUrls, prefixMapping);
 
 */
