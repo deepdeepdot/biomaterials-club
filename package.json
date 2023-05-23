@@ -10,9 +10,10 @@
     "lint": "npx eslint -c config/.eslintrc.cjs public/js/dashboard.mjs",
     "lint:all": "npx eslint -c config/.eslintrc.cjs public/js/*.mjs scripts/*.js scripts/utils/*.js",
     "rome": "npx rome check ./scripts ./public",
-    "check:css": "dprint check --config config/dprint.json ./public/*.css",
+    "check:css": "dprint check --config config/dprint.json ./public/css/*.css",
     "--not-ready-fmt:css": "dprint fmt --config config/dprint.json ./public/css/*.css",
-    "check:css:path": "dprint output-file-paths ./public/css/*.css"
+    "check:css:path": "dprint output-file-paths ./public/css/*.css",
+    "dprint:upgrade": "dprint config update"
   },
   "dependencies": {
     "dprint": "^0.34.1",
