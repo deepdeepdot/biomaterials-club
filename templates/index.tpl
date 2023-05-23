@@ -36,34 +36,43 @@
       <button class="toggle toggle-bananas command" id="bananas">
         Go Bananas!
       </button>
-      <button class="toggle toggle-poem command" onclick="togglePoem(this)">
+      <button
+        class="toggle toggle-poem command"
+        onclick="dashboard.togglePoem(this)"
+      >
         Show Poem
       </button>
 
       <div class="dashboard">
         <div class="dashboard-left command">
-          <button onclick="setBackground('gradient')">
+          <button onclick="dashboard.setBackground('gradient')">
             Background Gradient
           </button>
-          <button onclick="setBackground('gradient2')">
+          <button onclick="dashboard.setBackground('gradient2')">
             Background Gradient 2
           </button>
-          <button onclick="setBackground('gradient3')">
+          <button onclick="dashboard.setBackground('gradient3')">
             Background Gradient 3
           </button>
-          <button onclick="setBackground('black')">Background Black</button>
-          <button onclick="setBackground('blue')">Background Blue lines</button>
-          <button onclick="setBackground('green')">Background Plant</button>
+          <button onclick="dashboard.setBackground('black')">
+            Background Black
+          </button>
+          <button onclick="dashboard.setBackground('blue')">
+            Background Blue lines
+          </button>
+          <button onclick="dashboard.setBackground('green')">
+            Background Plant
+          </button>
         </div>
         <div class="dashboard-right command">
-          <button onclick="setColumnSize(3)">3 Columns</button>
-          <button onclick="setColumnSize(5)">5 Columns</button>
-          <button onclick="setColumnSize(7)">7 Columns</button>
-          <button onclick="setColumnSize(10)">10 Columns</button>
-          <button onclick="setColumnSize(12)" class="desktop">
+          <button onclick="dashboard.setColumnSize(3)">3 Columns</button>
+          <button onclick="dashboard.setColumnSize(5)">5 Columns</button>
+          <button onclick="dashboard.setColumnSize(7)">7 Columns</button>
+          <button onclick="dashboard.setColumnSize(10)">10 Columns</button>
+          <button onclick="dashboard.setColumnSize(12)" class="desktop">
             12 Columns
           </button>
-          <button onclick="setColumnSize(20)" class="desktop">
+          <button onclick="dashboard.setColumnSize(20)" class="desktop">
             20 Columns
           </button>
         </div>
@@ -143,7 +152,9 @@ ${imagesAsJS}
 <script type="module">
   import { setColumnSize, togglePoem, setBackground } from 'dashboard';
 
-  window.setColumnSize = setColumnSize;
-  window.setBackground = setBackground;
-  window.togglePoem = togglePoem;
+  window.dashboard = {
+    setColumnSize,
+    togglePoem,
+    setBackground
+  };
 </script>
